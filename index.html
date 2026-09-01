@@ -29,7 +29,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 }
 #cursorGlow{display:none;}
 #vignette{display:none}
-main{position:relative;z-index:4;height:calc(100vh / 1.48);min-height:0;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.48);transform-origin:center center}
+main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.48);transform-origin:center centertransform:scale(1.48) translateY(70px);}
 .hero{width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
@@ -113,7 +113,7 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 .work-dot{width:7px;height:7px;border-radius:50%;border:1px solid #20b8ff;background:#10242e;cursor:pointer;padding:0}
 .work-dot.active{background:var(--blue);box-shadow:0 0 4px rgba(32,184,255,.18)}
 @keyframes pulse{0%,100%{transform:scale(.98);opacity:.55}50%{transform:scale(1.05);opacity:1}}
-@media(max-width:700px){main{height:auto;min-height:100vh;transform:scale(1)}} @media(max-width:520px){body{overflow:auto}}
+@media(max-width:700px){main{transform:scale(1)}} @media(max-width:520px){body{overflow:auto}}
 
 #bgVideo{
   position:fixed;
