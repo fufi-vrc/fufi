@@ -219,43 +219,29 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 #cursorGridField{
   --gx:50vw;
   --gy:50vh;
-  --reveal:0px;
   position:fixed;
   inset:0;
   z-index:3;
   pointer-events:none;
   opacity:0;
-  transition:opacity .16s ease;
+  transition:opacity .10s ease;
   background:
-    linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);
+    linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px);
   background-size:24px 24px;
   -webkit-mask-image:
-    radial-gradient(circle 150px at var(--gx) var(--gy),
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,.22) 32%,
-      rgba(0,0,0,.72) 58%,
-      #000 100%);
+    radial-gradient(circle 125px at var(--gx) var(--gy),
+      #000 0%,
+      rgba(0,0,0,.95) 45%,
+      rgba(0,0,0,.45) 68%,
+      transparent 100%);
   mask-image:
-    radial-gradient(circle 150px at var(--gx) var(--gy),
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,.22) 32%,
-      rgba(0,0,0,.72) 58%,
-      #000 100%);
+    radial-gradient(circle 125px at var(--gx) var(--gy),
+      #000 0%,
+      rgba(0,0,0,.95) 45%,
+      rgba(0,0,0,.45) 68%,
+      transparent 100%);
 }
-#cursorGridField::after{
-  content:"";
-  position:absolute;
-  left:var(--gx);
-  top:var(--gy);
-  width:190px;
-  height:190px;
-  transform:translate(-50%,-50%);
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:50%;
-  opacity:.45;
-}
-
 </style>
 </head>
 <body>
@@ -334,8 +320,8 @@ if (cursorGridField) {
 
   const paintGrid = () => {
     gridFrame = 0;
-    gridX += (targetX - gridX) * 0.18;
-    gridY += (targetY - gridY) * 0.18;
+    gridX += (targetX - gridX) * 0.38;
+    gridY += (targetY - gridY) * 0.38;
     cursorGridField.style.setProperty("--gx", `${gridX.toFixed(1)}px`);
     cursorGridField.style.setProperty("--gy", `${gridY.toFixed(1)}px`);
 
