@@ -23,11 +23,11 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
     #050506;
 }
 #dots{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.42}
-.dotbg{
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,23,68,.72);box-shadow:0 0 6px rgba(255,23,68,.25);will-change:transform}.dotbg{
   position:absolute;width:2px;height:2px;border-radius:50%;
   background:rgba(255,23,68,.6);
   box-shadow:0 0 7px rgba(255,23,68,.2);
-}#movingParticles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.moving-particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,23,68,.65);box-shadow:0 0 7px rgba(255,23,68,.28);will-change:transform;transform:translate3d(0,0,0)}
+}
 #cursorGlow{
   position:fixed;left:50%;top:50%;width:260px;height:260px;
   margin:-130px 0 0 -130px;border-radius:50%;
@@ -135,7 +135,7 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)}
 </head>
 <body>
 <div id="scene"></div>
-<div id="dots"></div><div id="movingParticles"></div>
+<div id="dots"></div><div id="particles"></div>
 <div id="cursorGlow"></div>
 <div id="vignette"></div>
 
@@ -472,6 +472,38 @@ window.addEventListener("mousemove", e => {
   targetY = e.clientY;
 }, {passive:true});
 
+
+const particleLayer = $("particles");
+const particleState = [];
+if (particleLayer) {
+  for (let i = 0; i < 20; i++) {
+    const el = document.createElement("span");
+    el.className = "particle";
+    particleLayer.appendChild(el);
+    particleState.push({
+      el,
+      x: Math.random() * innerWidth,
+      y: Math.random() * innerHeight,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: -(Math.random() * 0.22 + 0.05)
+    });
+  }
+}
+
+function updateParticles() {
+  for (const p of particleState) {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.y < -8) {
+      p.y = innerHeight + 8;
+      p.x = Math.random() * innerWidth;
+    }
+    if (p.x < -8) p.x = innerWidth + 8;
+    if (p.x > innerWidth + 8) p.x = -8;
+    p.el.style.transform = `translate3d(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px,0)`;
+  }
+}
+
 function animate() {
   x += (targetX - x) * 0.12;
   y += (targetY - y) * 0.12;
@@ -486,7 +518,7 @@ function animate() {
   cursorGlow.style.transform =
     `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
 
-  animateParticles();
+  updateParticles();
   requestAnimationFrame(animate);
 }
 
@@ -505,38 +537,6 @@ for (let i=0;i<24;i++) {
   d.style.top = (Math.random()*100) + "%";
   dots.appendChild(d);
 }
-
-// Lightweight moving red particles, updated inside the existing 60fps RAF loop.
-const movingParticles = document.getElementById("movingParticles");
-const particleState = [];
-for (let i = 0; i < 28; i++) {
-  const node = document.createElement("span");
-  node.className = "moving-particle";
-  movingParticles.appendChild(node);
-  particleState.push({
-    el: node,
-    x: Math.random() * innerWidth,
-    y: Math.random() * innerHeight,
-    vx: (Math.random() - 0.5) * 0.42,
-    vy: (Math.random() - 0.5) * 0.30,
-    s: 0.75 + Math.random() * 0.75
-  });
-}
-
-function animateParticles() {
-  for (const p of particleState) {
-    p.x += p.vx;
-    p.y += p.vy;
-
-    if (p.x < -8) p.x = innerWidth + 8;
-    if (p.x > innerWidth + 8) p.x = -8;
-    if (p.y < -8) p.y = innerHeight + 8;
-    if (p.y > innerHeight + 8) p.y = -8;
-
-    p.el.style.transform = `translate3d(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px,0) scale(${p.s})`;
-  }
-}
-
 // Work gallery: two square-ish cards, one-step circular navigation.
 const workImages = [
   "works/work1.webp",
