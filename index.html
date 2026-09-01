@@ -23,7 +23,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
     #050506;
 }
 #dots{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.42}
-#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,23,68,.72);box-shadow:0 0 6px rgba(255,23,68,.25);will-change:transform}.dotbg{
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,23,68,.72);will-change:transform}.dotbg{
   position:absolute;width:2px;height:2px;border-radius:50%;
   background:rgba(255,23,68,.6);
   box-shadow:0 0 7px rgba(255,23,68,.2);
@@ -37,7 +37,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
     rgba(255,23,68,.11) 30%,
     rgba(255,23,68,.035) 53%,
     transparent 72%);
-  filter:blur(8px);
+  
   will-change:left,top;
 }
 #cursorGlow{position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(255,23,68,.22),rgba(255,23,68,.07) 35%,transparent 70%);filter:blur(7px);mix-blend-mode:screen;will-change:transform}
@@ -477,7 +477,7 @@ window.addEventListener("mousemove", e => {
 const particleLayer = $("particles");
 const particleState = [];
 if (particleLayer) {
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 14; i++) {
     const el = document.createElement("span");
     el.className = "particle";
     particleLayer.appendChild(el);
@@ -505,22 +505,36 @@ function updateParticles() {
   }
 }
 
-function animate() {
-  x += (targetX - x) * 0.12;
-  y += (targetY - y) * 0.12;
+let lastParticleTime = 0;
+function animate(now) {
+  x += (targetX - x) * 0.10;
+  y += (targetY - y) * 0.10;
 
   const nx = (x / innerWidth - .5) * 2;
   const ny = (y / innerHeight - .5) * 2;
 
-  // Only transforms/position, no layout reads: smooth at high refresh rates.
-  hero.style.transform = `rotateX(${(-ny*2.4).toFixed(2)}deg) rotateY(${(nx*3.2).toFixed(2)}deg)`;
-  avatarWrap.style.transform = `translate3d(${(-nx*8).toFixed(1)}px,${(-ny*8).toFixed(1)}px,0)`;
-  card.style.transform = `translate3d(${(nx*7).toFixed(1)}px,${(ny*5).toFixed(1)}px,0)`;
-  about.style.transform = `translate3d(${(nx*5.5).toFixed(1)}px,${(ny*4).toFixed(1)}px,0)`;
+  // Keep the main profile movement subtle so the browser can composite it cheaply.
+  hero.style.transform =
+    `translate3d(${(nx * 3).toFixed(1)}px,${(ny * 3).toFixed(1)}px,0)`;
+
+  avatarWrap.style.transform =
+    `translate3d(${(-nx * 8).toFixed(1)}px,${(-ny * 8).toFixed(1)}px,0)`;
+
+  card.style.transform =
+    `translate3d(${(nx * 7).toFixed(1)}px,${(ny * 5).toFixed(1)}px,0)`;
+
+  about.style.transform =
+    `translate3d(${(nx * 5.5).toFixed(1)}px,${(ny * 4).toFixed(1)}px,0)`;
+
   cursorGlow.style.transform =
     `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
 
-  updateParticles();
+  // Particles don't need to update every frame.
+  if (now - lastParticleTime > 33) {
+    updateParticles();
+    lastParticleTime = now;
+  }
+
   requestAnimationFrame(animate);
 }
 
@@ -528,7 +542,7 @@ setInterval(updateTimer, 1000);
 fetchPresence();
 setInterval(fetchPresence, 5000);
 connect();
-animate();
+requestAnimationFrame(animate);
 
 // A few static-ish particles with CSS transitions; no canvas work.
 const dots = $("dots");
