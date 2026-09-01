@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fufi — Profile</title>
+  <meta name="description" content="Personal profile of fufi">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="network"></canvas>
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="vignette"></div>
+
+  <main class="page" id="page">
+    <header class="hero" data-parallax="strong">
+      <div class="avatar-wrap float">
+        <img class="avatar" src="assets/avatar.png" alt="fufi">
+        <span class="online-dot"></span>
+      </div>
+
+      <h1>fufi</h1>
+      <p class="tagline">Привет! Я Вирал. Ебанутый фуряшка!</p>
+
+      <section class="discord-card" data-parallax="card">
+        <div class="discord-avatar">
+          <img src="assets/avatar.png" alt="">
+          <span class="mini-dot"></span>
+        </div>
+        <div class="discord-info">
+          <div class="discord-top">
+            <span>DISCORD</span>
+            <span class="playing">Играет в игру</span>
+          </div>
+          <strong>Team Fortress 2</strong>
+          <div class="progress"><span></span></div>
+          <small>прошло: 12:47</small>
+        </div>
+      </section>
+    </header>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
