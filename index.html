@@ -42,7 +42,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 }
 #vignette{position:fixed;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,.76) 100%)}
-main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px}
+main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.35);transform-origin:center center}
 .hero{width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
@@ -75,12 +75,6 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
 .sub{color:#6f696d;margin-top:6px}
 .timer{color:#6f696d;margin-top:3px;min-height:9px}
 .connection{font-size:8px;color:#565055;margin-top:10px}
-.about{width:min(330px,100%);margin:12px auto 0;padding:14px 16px;text-align:left;
-background:linear-gradient(135deg,rgba(22,18,20,.86),rgba(8,7,8,.78));
-border:1px solid rgba(255,23,68,.16);border-radius:15px;
-box-shadow:0 12px 35px rgba(0,0,0,.28);backdrop-filter:blur(4px)}
-.about-kicker{font-size:8px;letter-spacing:.13em;font-weight:800;color:var(--red);margin-bottom:7px}
-.about p{margin:3px 0;color:#827b7f;font-size:9px;line-height:1.55}
 .works-panel{
   width:min(720px,100%);
   padding:28px;
@@ -111,6 +105,18 @@ box-shadow:0 12px 35px rgba(0,0,0,.28);backdrop-filter:blur(4px)}
   box-shadow:inset 0 0 40px rgba(0,0,0,.35);
 }
 .work-card img{width:100%;height:100%;display:block;object-fit:contain;padding:8px;filter:saturate(.98);transition:opacity .22s ease,transform .3s ease}
+.works-stage{overflow:hidden}
+.works-stage.anim-next .work-card{animation:galleryInNext .38s cubic-bezier(.22,.7,.2,1) both}
+.works-stage.anim-prev .work-card{animation:galleryInPrev .38s cubic-bezier(.22,.7,.2,1) both}
+@keyframes galleryInNext{
+  from{opacity:.05;transform:translateX(34px);filter:blur(1px)}
+  to{opacity:1;transform:translateX(0);filter:blur(0)}
+}
+@keyframes galleryInPrev{
+  from{opacity:.05;transform:translateX(-34px);filter:blur(1px)}
+  to{opacity:1;transform:translateX(0);filter:blur(0)}
+}
+
 .work-card:hover img{transform:scale(1.015)}
 .works-arrow{
   position:absolute;z-index:3;top:50%;transform:translateY(-50%);
@@ -128,7 +134,7 @@ box-shadow:0 12px 35px rgba(0,0,0,.28);backdrop-filter:blur(4px)}
 .work-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(255,23,68,.32);background:#211317;cursor:pointer;padding:0}
 .work-dot.active{background:var(--red);box-shadow:0 0 10px rgba(255,23,68,.55)}
 @keyframes pulse{0%,100%{transform:scale(.98);opacity:.55}50%{transform:scale(1.05);opacity:1}}
-@media(max-width:520px){body{overflow:auto}}
+@media(max-width:900px){main{transform:scale(1.12)}} @media(max-width:520px){body{overflow:auto}main{transform:scale(1)}}
 </style>
 </head>
 <body>
@@ -180,12 +186,6 @@ box-shadow:0 12px 35px rgba(0,0,0,.28);backdrop-filter:blur(4px)}
       </div>
     </section>
     <div class="connection" id="connection">Подключение к Discord Presence</div>
-
-    <section class="about" aria-label="Описание">
-      <div class="about-kicker">О СЕБЕ</div>
-      <p>Рисую аватары для VRChat 💵</p>
-      <p>Базы по типу Rexouium, Mayu, Regulus, Novabeast и тому подобные аватары.</p>
-    </section>
   </header>
 </main>
 
@@ -521,7 +521,7 @@ function buildWorkDots() {
     const b = document.createElement("button");
     b.className = "work-dot" + (i === 0 ? " active" : "");
     b.setAttribute("aria-label", "Показать работу " + (i + 1));
-    b.addEventListener("click", () => { workIndex = i; renderWorks(); });
+    b.addEventListener("click", () => { if (galleryAnimating || i === workIndex) return; const dir = i > workIndex ? "next" : "prev"; workIndex = i; renderWorks(dir, true); });
     worksDots.appendChild(b);
   });
 }
@@ -532,36 +532,53 @@ function preload(src) {
   return im;
 }
 
-function renderWorks() {
+let galleryAnimating = false;
+
+function renderWorks(direction = "next", animate = true) {
   const a = workIndex;
   const b = (workIndex + 1) % workImages.length;
-  workA.style.opacity = "0.18";
-  workB.style.opacity = "0.18";
+  const stage = document.getElementById("worksStage");
 
-  setTimeout(() => {
+  const applyImages = () => {
     workA.src = workImages[a];
     workB.src = workImages[b];
     workA.alt = "Пример работы " + (a + 1);
     workB.alt = "Пример работы " + (b + 1);
     worksCounter.textContent =
       String(a + 1).padStart(2,"0") + " / " + String(workImages.length).padStart(2,"0");
-    workA.onload = () => workA.style.opacity = "1";
-    workB.onload = () => workB.style.opacity = "1";
     [...worksDots.children].forEach((d,i)=>d.classList.toggle("active",i===a));
-  }, 90);
+  };
+
+  if (!animate) {
+    applyImages();
+    return;
+  }
+
+  galleryAnimating = true;
+  stage.classList.remove("anim-next","anim-prev");
+  void stage.offsetWidth;
+  applyImages();
+  stage.classList.add(direction === "next" ? "anim-next" : "anim-prev");
+
+  setTimeout(() => {
+    stage.classList.remove("anim-next","anim-prev");
+    galleryAnimating = false;
+  }, 410);
 }
 
 document.getElementById("worksPrev").addEventListener("click", () => {
+  if (galleryAnimating) return;
   workIndex = (workIndex - 1 + workImages.length) % workImages.length;
-  renderWorks();
+  renderWorks("prev", true);
 });
 document.getElementById("worksNext").addEventListener("click", () => {
+  if (galleryAnimating) return;
   workIndex = (workIndex + 1) % workImages.length;
-  renderWorks();
+  renderWorks("next", true);
 });
 buildWorkDots();
 workImages.forEach(preload);
-renderWorks();
+renderWorks("next", false);
 
 </script>
 </body>
