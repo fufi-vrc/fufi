@@ -185,7 +185,7 @@ function activityImageUrl(activity, key, ext = "png") {
   }
 
   // Some clients may already provide a complete URL.
-  if (/^https?:\\/\\//i.test(value)) return value;
+  if (/^https?:\/\//i.test(value)) return value;
 
   return null;
 }
@@ -228,9 +228,12 @@ async function fetchInitial() {
   try {
     const r = await fetch(REST_URL, {cache:"no-store"});
     const j = await r.json();
-    if (j.success) renderPresence(j.data);
+    if (j.success) {
+      renderPresence(j.data);
+      el.connection.textContent = "Live • Lanyard";
+    }
   } catch (e) {
-    el.connection.textContent = "Не удалось получить Presence";
+    // WebSocket may still work; don't overwrite the connection state here.
   }
 }
 
@@ -288,6 +291,7 @@ function connect() {
 
 setInterval(updateTimer, 1000);
 fetchInitial();
+setInterval(fetchInitial, 5000);
 connect();
 
 window.addEventListener("mousemove", (e) => {
