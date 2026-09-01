@@ -6,7 +6,7 @@
 <title>fufi</title>
 <style>
 :root {
-  --red:#ff1744;
+  --red:#36b7ff;
   --bg:#050506;
   --text:#f6f3f4;
   --muted:#8b8589;
@@ -17,33 +17,44 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 #scene{
   position:fixed;inset:0;
   background:
-    radial-gradient(700px 420px at 50% 42%,rgba(255,0,50,.09),transparent 68%),
-    radial-gradient(420px 340px at 14% 22%,rgba(255,0,50,.05),transparent 70%),
-    radial-gradient(420px 340px at 86% 74%,rgba(255,0,50,.045),transparent 70%),
-    #050506;
+    radial-gradient(700px 420px at 50% 42%,rgba(30,150,255,.08),transparent 68%),
+    radial-gradient(420px 340px at 14% 22%,rgba(30,120,255,.045),transparent 70%),
+    radial-gradient(420px 340px at 86% 74%,rgba(30,120,255,.04),transparent 70%),
+    rgba(3,6,10,.18);
 }
+#bgVideo{
+  position:fixed;inset:0;width:100%;height:100%;
+  object-fit:cover;z-index:-10;pointer-events:none;
+  transform:scale(1.035);
+  filter:blur(6px) brightness(.42) saturate(.82);
+  will-change:transform;
+}
+#videoOverlay{
+  position:fixed;inset:0;z-index:-9;pointer-events:none;
+  background:
+    linear-gradient(rgba(3,8,14,.18),rgba(3,7,13,.50)),
+    radial-gradient(circle at 50% 45%,rgba(25,150,235,.10),transparent 58%);
+}
+
 #dots{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.42}
-#floatingShapes{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
-.float-shape{position:absolute;width:6px;height:6px;border:1px solid rgba(255,23,68,.42);border-radius:2px;opacity:.22;will-change:transform;transform:translate3d(0,0,0)}
-.float-shape.dot{width:4px;height:4px;border:0;border-radius:50%;background:rgba(255,23,68,.48);opacity:.28}
-.float-shape.line{width:16px;height:1px;border:0;border-radius:99px;background:rgba(255,23,68,.28);opacity:.17}.dotbg{
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(54,183,255,.72);box-shadow:0 0 6px rgba(54,183,255,.25);will-change:transform}.dotbg{
   position:absolute;width:2px;height:2px;border-radius:50%;
-  background:rgba(255,23,68,.6);
-  box-shadow:0 0 7px rgba(255,23,68,.2);
+  background:rgba(54,183,255,.6);
+  box-shadow:0 0 7px rgba(54,183,255,.2);
 }
 #cursorGlow{
   position:fixed;left:50%;top:50%;width:260px;height:260px;
   margin:-130px 0 0 -130px;border-radius:50%;
   pointer-events:none;z-index:2;
   background:radial-gradient(circle,
-    rgba(255,23,68,.26) 0%,
-    rgba(255,23,68,.11) 30%,
-    rgba(255,23,68,.035) 53%,
+    rgba(54,183,255,.26) 0%,
+    rgba(54,183,255,.11) 30%,
+    rgba(54,183,255,.035) 53%,
     transparent 72%);
-  
+  filter:blur(8px);
   will-change:left,top;
 }
-#cursorGlow{position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(255,23,68,.22),rgba(255,23,68,.07) 35%,transparent 70%);filter:blur(7px);mix-blend-mode:screen;will-change:transform}
+#cursorGlow{position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(54,183,255,.22),rgba(54,183,255,.07) 35%,transparent 70%);filter:blur(7px);mix-blend-mode:screen;will-change:transform}
 #vignette{position:fixed;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,.76) 100%)}
 main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.48);transform-origin:center center}
@@ -51,17 +62,17 @@ main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-col
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
   border:2px solid rgba(255,255,255,.10);
-  box-shadow:0 0 0 6px rgba(255,23,68,.045),0 0 40px rgba(255,23,68,.28),0 12px 30px rgba(0,0,0,.4)}
-.ring{position:absolute;inset:-10px;border:1px solid rgba(255,23,68,.28);border-radius:50%;
+  box-shadow:0 0 0 6px rgba(54,183,255,.045),0 0 40px rgba(54,183,255,.28),0 12px 30px rgba(0,0,0,.4)}
+.ring{position:absolute;inset:-10px;border:1px solid rgba(54,183,255,.28);border-radius:50%;
   animation:pulse 2.6s ease-in-out infinite}
 .status-dot{position:absolute;right:2px;bottom:4px;width:12px;height:12px;border-radius:50%;
   border:2px solid #050506;background:#545054}
-.status-dot.online{background:var(--red);box-shadow:0 0 13px rgba(255,23,68,.95)}
-h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 20px rgba(255,23,68,.16)}
+.status-dot.online{background:var(--red);box-shadow:0 0 13px rgba(54,183,255,.95)}
+h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 20px rgba(54,183,255,.16)}
 .card{contain:layout paint;width:min(330px,100%);margin:auto;padding:14px;display:flex;gap:11px;text-align:left;
   background:linear-gradient(135deg,rgba(22,18,20,.95),rgba(9,8,9,.92));
-  border:1px solid rgba(255,23,68,.22);border-radius:16px;
-  box-shadow:0 18px 55px rgba(0,0,0,.45),0 0 28px rgba(255,23,68,.05);
+  border:1px solid rgba(54,183,255,.22);border-radius:16px;
+  box-shadow:0 18px 55px rgba(0,0,0,.45),0 0 28px rgba(54,183,255,.05);
   will-change:transform;transform-style:preserve-3d}
 .icon{width:50px;height:50px;flex:none;border-radius:13px;overflow:hidden;background:#171216;
   border:1px solid rgba(255,255,255,.06);display:grid;place-items:center;color:#767075;font-size:19px}
@@ -72,16 +83,16 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
 .status.online{color:var(--red)}
 .top-right{color:#686266;white-space:nowrap}
 .title{display:block;font-size:12px;margin:6px 0 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bar{height:3px;background:#301117;border-radius:5px;overflow:hidden}
-.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff1744,#ff526e);
-  box-shadow:0 0 9px rgba(255,23,68,.6)}
+.bar{height:3px;background:#102b3b;border-radius:5px;overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#36b7ff,#62ceff);
+  box-shadow:0 0 9px rgba(54,183,255,.6)}
 .sub,.timer{display:block;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sub{color:#6f696d;margin-top:6px}
 .timer{color:#6f696d;margin-top:3px;min-height:9px}
 .connection{font-size:8px;color:#565055;margin-top:10px}
 .about{width:min(330px,100%);margin:12px auto 0;padding:14px 16px;text-align:left;
 background:linear-gradient(135deg,rgba(22,18,20,.86),rgba(8,7,8,.78));
-border:1px solid rgba(255,23,68,.16);border-radius:15px;
+border:1px solid rgba(54,183,255,.16);border-radius:15px;
 box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 .about-kicker{font-size:8px;letter-spacing:.13em;font-weight:800;color:var(--red);margin-bottom:7px}
 .about p{margin:3px 0;color:#827b7f;font-size:9px;line-height:1.55}
@@ -89,11 +100,11 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
   contain:layout style paint;
   width:min(720px,100%);
   padding:28px;
-  border:1px solid rgba(255,23,68,.23);
+  border:1px solid rgba(54,183,255,.23);
   border-radius:20px;
   background:
     linear-gradient(145deg,rgba(20,15,18,.90),rgba(8,7,8,.78));
-  box-shadow:0 24px 70px rgba(0,0,0,.42),0 0 38px rgba(255,23,68,.045);
+  box-shadow:0 24px 70px rgba(0,0,0,.42),0 0 38px rgba(54,183,255,.045);
   transform-style:preserve-3d;
   will-change:transform;
 }
@@ -106,9 +117,9 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
   height:385px;
   border-radius:15px;
   overflow:hidden;
-  border:1px solid rgba(255,23,68,.18);
+  border:1px solid rgba(54,183,255,.18);
   background:
-    radial-gradient(circle at 50% 50%,rgba(255,23,68,.035),transparent 62%),
+    radial-gradient(circle at 50% 50%,rgba(54,183,255,.035),transparent 62%),
     #0a0809;
   display:grid;
   place-items:center;
@@ -120,7 +131,7 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 .works-arrow{
   position:absolute;z-index:3;top:50%;transform:translateY(-50%);
   width:40px;height:40px;border-radius:50%;
-  border:1px solid rgba(255,23,68,.26);
+  border:1px solid rgba(54,183,255,.26);
   background:rgba(8,7,9,.88);
   color:#f3eef0;font-size:29px;line-height:1;
   display:grid;place-items:center;cursor:pointer;
@@ -128,17 +139,22 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
   transition:transform .18s ease,border-color .18s ease,background .18s ease;
 }
 .works-arrow.left{left:-20px}.works-arrow.right{right:-20px}
-.works-arrow:hover{transform:translateY(-50%) scale(1.08);border-color:rgba(255,23,68,.65);background:rgba(26,10,14,.96)}
+.works-arrow:hover{transform:translateY(-50%) scale(1.08);border-color:rgba(54,183,255,.65);background:rgba(26,10,14,.96)}
 .works-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
-.work-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(255,23,68,.32);background:#211317;cursor:pointer;padding:0}
-.work-dot.active{background:var(--red);box-shadow:0 0 10px rgba(255,23,68,.55)}
+.work-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(54,183,255,.32);background:#102632;cursor:pointer;padding:0}
+.work-dot.active{background:var(--red);box-shadow:0 0 10px rgba(54,183,255,.55)}
 @keyframes pulse{0%,100%{transform:scale(.98);opacity:.55}50%{transform:scale(1.05);opacity:1}}
 @media(max-width:700px){main{transform:scale(1)}} @media(max-width:520px){body{overflow:auto}}
 </style>
 </head>
 <body>
+<video id="bgVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+  <source src="background.mp4" type="video/mp4">
+</video>
+<div id="videoOverlay"></div>
+
 <div id="scene"></div>
-<div id="dots"></div><div id="floatingShapes"></div>
+<div id="dots"></div><div id="particles"></div>
 <div id="cursorGlow"></div>
 <div id="vignette"></div>
 
@@ -196,6 +212,19 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 
 <script>
 "use strict";
+
+const bgVideo = document.getElementById("bgVideo");
+if (bgVideo) {
+  bgVideo.play().catch(() => {});
+  bgVideo.addEventListener("ended", () => {
+    bgVideo.currentTime = 0;
+    bgVideo.play().catch(() => {});
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && bgVideo.paused) bgVideo.play().catch(() => {});
+  });
+}
+
 
 const ID = "593103680962822157";
 const REST = "https://api.lanyard.rest/v1/users/" + ID;
@@ -477,78 +506,53 @@ window.addEventListener("mousemove", e => {
 }, {passive:true});
 
 
-// Lightweight floating background shapes.
-const floatingShapes = document.getElementById("floatingShapes");
-const shapeState = [];
-
-if (floatingShapes) {
-  for (let i = 0; i < 18; i++) {
+const particleLayer = $("particles");
+const particleState = [];
+if (particleLayer) {
+  for (let i = 0; i < 20; i++) {
     const el = document.createElement("span");
-    const kind = i % 3 === 0 ? "line" : (i % 3 === 1 ? "dot" : "");
-    el.className = "float-shape" + (kind ? " " + kind : "");
-    floatingShapes.appendChild(el);
-
-    shapeState.push({
+    el.className = "particle";
+    particleLayer.appendChild(el);
+    particleState.push({
       el,
       x: Math.random() * innerWidth,
       y: Math.random() * innerHeight,
-      vx: (Math.random() - 0.5) * 0.11,
-      vy: (Math.random() - 0.5) * 0.075 - 0.008,
-      rot: Math.random() * 360,
-      vr: (Math.random() - 0.5) * 0.10,
-      phase: Math.random() * Math.PI * 2
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: -(Math.random() * 0.22 + 0.05)
     });
   }
 }
 
-function updateFloatingShapes(t) {
-  for (const s of shapeState) {
-    s.x += s.vx;
-    s.y += s.vy;
-    s.rot += s.vr;
-
-    const swayX = Math.sin(t * 0.00045 + s.phase) * 0.13;
-    const swayY = Math.cos(t * 0.00035 + s.phase) * 0.09;
-
-    if (s.x < -30) s.x = innerWidth + 30;
-    if (s.x > innerWidth + 30) s.x = -30;
-    if (s.y < -30) s.y = innerHeight + 30;
-    if (s.y > innerHeight + 30) s.y = -30;
-
-    s.el.style.transform =
-      `translate3d(${(s.x + swayX).toFixed(1)}px,${(s.y + swayY).toFixed(1)}px,0) rotate(${s.rot.toFixed(1)}deg)`;
+function updateParticles() {
+  for (const p of particleState) {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.y < -8) {
+      p.y = innerHeight + 8;
+      p.x = Math.random() * innerWidth;
+    }
+    if (p.x < -8) p.x = innerWidth + 8;
+    if (p.x > innerWidth + 8) p.x = -8;
+    p.el.style.transform = `translate3d(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px,0)`;
   }
 }
 
-function animate(now) {
-  x += (targetX - x) * 0.10;
-  y += (targetY - y) * 0.10;
+function animate() {
+  x += (targetX - x) * 0.12;
+  y += (targetY - y) * 0.12;
 
   const nx = (x / innerWidth - .5) * 2;
   const ny = (y / innerHeight - .5) * 2;
 
-  // Keep the main profile movement subtle so the browser can composite it cheaply.
-  hero.style.transform =
-    `translate3d(${(nx * 3).toFixed(1)}px,${(ny * 3).toFixed(1)}px,0)`;
-
-  avatarWrap.style.transform =
-    `translate3d(${(-nx * 8).toFixed(1)}px,${(-ny * 8).toFixed(1)}px,0)`;
-
-  card.style.transform =
-    `translate3d(${(nx * 7).toFixed(1)}px,${(ny * 5).toFixed(1)}px,0)`;
-
-  about.style.transform =
-    `translate3d(${(nx * 5.5).toFixed(1)}px,${(ny * 4).toFixed(1)}px,0)`;
-
+  // Only transforms/position, no layout reads: smooth at high refresh rates.
+  hero.style.transform = `rotateX(${(-ny*2.4).toFixed(2)}deg) rotateY(${(nx*3.2).toFixed(2)}deg)`;
+  avatarWrap.style.transform = `translate3d(${(-nx*8).toFixed(1)}px,${(-ny*8).toFixed(1)}px,0)`;
+  card.style.transform = `translate3d(${(nx*7).toFixed(1)}px,${(ny*5).toFixed(1)}px,0)`;
+  about.style.transform = `translate3d(${(nx*5.5).toFixed(1)}px,${(ny*4).toFixed(1)}px,0)`;
   cursorGlow.style.transform =
     `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
 
-  // Particles don't need to update every frame.
-  if (now - lastParticleTime > 33) {
-    updateFloatingShapes(now);
-    lastParticleTime = now;
-  }
-
+  updateParticles();
   requestAnimationFrame(animate);
 }
 
@@ -556,8 +560,17 @@ setInterval(updateTimer, 1000);
 fetchPresence();
 setInterval(fetchPresence, 5000);
 connect();
-requestAnimationFrame(animate);
+animate();
 
+// A few static-ish particles with CSS transitions; no canvas work.
+const dots = $("dots");
+for (let i=0;i<24;i++) {
+  const d = document.createElement("i");
+  d.className = "dotbg";
+  d.style.left = (Math.random()*100) + "%";
+  d.style.top = (Math.random()*100) + "%";
+  dots.appendChild(d);
+}
 // Work gallery: two square-ish cards, one-step circular navigation.
 const workImages = [
   "works/work1.webp",
