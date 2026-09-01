@@ -20,7 +20,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
     radial-gradient(700px 420px at 50% 42%,rgba(30,150,255,.08),transparent 68%),
     radial-gradient(420px 340px at 14% 22%,rgba(30,120,255,.045),transparent 70%),
     radial-gradient(420px 340px at 86% 74%,rgba(30,120,255,.04),transparent 70%),
-    rgba(3,6,10,.18);
+    #03060a;
 }
 #bgVideo{
   position:fixed;inset:0;width:100%;height:100%;
@@ -157,11 +157,6 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 </style>
 </head>
 <body>
-<video id="bgVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-  <source src="background.mp4" type="video/mp4">
-</video>
-<div id="videoOverlay"></div>
-
 <div id="scene"></div>
 <div id="dots"></div><div id="particles"></div>
 <div id="cursorGlow"></div>
@@ -222,17 +217,6 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 <script>
 "use strict";
 
-const bgVideo = document.getElementById("bgVideo");
-if (bgVideo) {
-  bgVideo.play().catch(() => {});
-  bgVideo.addEventListener("ended", () => {
-    bgVideo.currentTime = 0;
-    bgVideo.play().catch(() => {});
-  });
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden && bgVideo.paused) bgVideo.play().catch(() => {});
-  });
-}
 
 
 const ID = "593103680962822157";
