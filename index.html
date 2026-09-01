@@ -19,29 +19,29 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
   background:#050506;
 }
 #dots{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:1}
-#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#20b8ff;box-shadow:0 0 6px #20b8ff;will-change:transform}.dotbg{
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#20b8ff;box-shadow:0 0 3px rgba(32,184,255,.18);will-change:transform}.dotbg{
   position:absolute;width:2px;height:2px;border-radius:50%;
   background:#20b8ff;
-  box-shadow:0 0 7px #20b8ff;
+  box-shadow:0 0 3px rgba(32,184,255,.18);
 }
-#cursorGlow{display:none}
+#cursorGlow{display:none;}
 #vignette{display:none}
 main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.48);transform-origin:center center}
 .hero{width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
   border:2px solid #ffffff;
-  box-shadow:0 0 0 6px #0b3144,0 0 40px #20b8ff,0 12px 30px #000000}
+  box-shadow:0 0 0 6px #0b3144,0 0 10px rgba(32,184,255,.20),0 12px 30px #000000}
 .ring{position:absolute;inset:-10px;border:1px solid #20b8ff;border-radius:50%;
   animation:pulse 2.6s ease-in-out infinite}
 .status-dot{position:absolute;right:2px;bottom:4px;width:12px;height:12px;border-radius:50%;
   border:2px solid #050506;background:#545054}
-.status-dot.online{background:var(--blue);box-shadow:0 0 13px #20b8ff}
+.status-dot.online{background:var(--blue);box-shadow:0 0 5px rgba(32,184,255,.22)}
 h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 20px #20b8ff}
 .card{contain:layout paint;width:min(330px,100%);margin:auto;padding:14px;display:flex;gap:11px;text-align:left;
   background:#0b1422;
   border:1px solid #20b8ff;border-radius:16px;
-  box-shadow:0 18px 55px #000000,0 0 28px #20b8ff;
+  box-shadow:0 18px 55px #000000,0 0 8px rgba(32,184,255,.16);
   will-change:transform;transform-style:preserve-3d}
 .icon{width:50px;height:50px;flex:none;border-radius:13px;overflow:hidden;background:#0b1422;
   border:1px solid #4a4a4a;display:grid;place-items:center;color:#767075;font-size:19px}
@@ -54,7 +54,7 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
 .title{display:block;font-size:12px;margin:6px 0 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar{height:3px;background:#082433;border-radius:5px;overflow:hidden}
 .bar span{display:block;height:100%;width:0;background:#20b8ff;
-  box-shadow:0 0 9px #20b8ff}
+  box-shadow:0 0 4px rgba(32,184,255,.18)}
 .sub,.timer{display:block;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sub{color:#6f696d;margin-top:6px}
 .timer{color:#6f696d;margin-top:3px;min-height:9px}
@@ -72,7 +72,7 @@ box-shadow:0 12px 35px #000000;will-change:transform}
   border:1px solid #20b8ff;
   border-radius:20px;
   background:#0b1422;
-  box-shadow:0 24px 70px #000000,0 0 38px #20b8ff;
+  box-shadow:0 24px 70px #000000,0 0 10px rgba(32,184,255,.18);
   transform-style:preserve-3d;
   will-change:transform;
 }
@@ -108,29 +108,34 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 .works-arrow:hover{transform:translateY(-50%) scale(1.08);border-color:#20b8ff;background:#122633}
 .works-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
 .work-dot{width:7px;height:7px;border-radius:50%;border:1px solid #20b8ff;background:#10242e;cursor:pointer;padding:0}
-.work-dot.active{background:var(--blue);box-shadow:0 0 10px #20b8ff}
+.work-dot.active{background:var(--blue);box-shadow:0 0 4px rgba(32,184,255,.18)}
 @keyframes pulse{0%,100%{transform:scale(.98);opacity:.55}50%{transform:scale(1.05);opacity:1}}
 @media(max-width:700px){main{transform:scale(1)}} @media(max-width:520px){body{overflow:auto}}
 
-/* subtle dark-blue panel texture */
-.works-panel,.about,.status-card{
-  background:
-    linear-gradient(135deg,#0d2238 0%,#08182a 48%,#071320 100%) !important;
-  overflow:hidden;
-}
-.works-panel::after,.about::after,.status-card::after{
-  content:"";
-  position:absolute;
+#bgVideo{
+  position:fixed;
   inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-10;
   pointer-events:none;
-  background:
-    linear-gradient(120deg,transparent 0%,rgba(72,170,235,.035) 48%,transparent 66%),
-    repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 1px,transparent 1px 11px);
 }
-
+#videoOverlay{
+  position:fixed;
+  inset:0;
+  z-index:-9;
+  pointer-events:none;
+  background:rgba(2,7,14,.40);
+}
 </style>
 </head>
 <body>
+<video id="bgVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+  <source src="background.mp4" type="video/mp4">
+</video>
+<div id="videoOverlay" aria-hidden="true"></div>
+
 <div id="scene"></div>
 <div id="dots"></div><div id="particles"></div>
 <div id="cursorGlow"></div>
@@ -190,6 +195,15 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 
 <script>
 "use strict";
+const bgVideo = document.getElementById("bgVideo");
+if (bgVideo) {
+  bgVideo.play().catch(() => {});
+  bgVideo.addEventListener("ended", () => {
+    bgVideo.currentTime = 0;
+    bgVideo.play().catch(() => {});
+  });
+}
+
 
 const ID = "593103680962822157";
 const REST = "https://api.lanyard.rest/v1/users/" + ID;
