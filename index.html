@@ -42,8 +42,8 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 }
 #vignette{position:fixed;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,.76) 100%)}
-main{position:relative;z-index:4;min-height:100vh;display:grid;place-items:center;padding:24px}
-.hero{width:min(420px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
+main{position:relative;z-index:4;min-height:100vh;display:grid;place-items:center;padding:24px 24px 120px}
+.hero{width:min(420px,100%);text-align:center;will-change:transform;transform-style:preserve-3d;transform:translateY(-7vh)}
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
   border:2px solid rgba(255,255,255,.10);
@@ -75,13 +75,24 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
 .sub{color:#6f696d;margin-top:6px}
 .timer{color:#6f696d;margin-top:3px;min-height:9px}
 .connection{font-size:8px;color:#565055;margin-top:10px}
+.about{width:min(330px,100%);margin:12px auto 0;padding:14px 16px;text-align:left;
+background:linear-gradient(135deg,rgba(22,18,20,.86),rgba(8,7,8,.78));
+border:1px solid rgba(255,23,68,.16);border-radius:15px;
+box-shadow:0 12px 35px rgba(0,0,0,.28)}
+.about-title{font-size:8px;letter-spacing:.13em;font-weight:800;color:var(--red);margin-bottom:7px}
+.about p{margin:3px 0;color:#827b7f;font-size:9px;line-height:1.55}
+#particles{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.particle{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(255,23,68,.8);
+box-shadow:0 0 10px rgba(255,23,68,.55),0 0 18px rgba(255,23,68,.22);
+will-change:transform;opacity:.25}
+.particle.big{width:4px;height:4px;opacity:.45}
 @keyframes pulse{0%,100%{transform:scale(.98);opacity:.55}50%{transform:scale(1.05);opacity:1}}
-@media(max-width:520px){body{overflow:auto}}
+@media(max-width:520px){body{overflow:auto}.hero{transform:translateY(-3vh)}}
 </style>
 </head>
 <body>
 <div id="scene"></div>
-<div id="dots"></div>
+<div id="dots"></div><div id="particles"></div>
 <div id="cursorGlow"></div>
 <div id="vignette"></div>
 
@@ -109,6 +120,12 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
       </div>
     </section>
     <div class="connection" id="connection">Подключение к Discord Presence</div>
+
+    <section class="about">
+      <div class="about-title">О СЕБЕ</div>
+      <p>Рисую аватары для VRChat 💵</p>
+      <p>Базы по типу Rexouium, Mayu, Regulus, Novabeast и тому подобные аватары.</p>
+    </section>
   </header>
 </main>
 
@@ -170,34 +187,144 @@ function loadImage(url, ok, fail) {
   im.src = url;
 }
 
+const ICON_ALIASES = {
+  "discord": "discord",
+  "steam": "steam",
+  "spotify": "spotify",
+  "vrchat": "vrchat",
+  "vrchat creator companion": "vrchat",
+  "vcc": "vrchat",
+  "unity": "unity",
+  "unreal engine": "unrealengine",
+  "visual studio code": "visualstudiocode",
+  "vs code": "visualstudiocode",
+  "visual studio": "visualstudio",
+  "obs studio": "obsstudio",
+  "obs": "obsstudio",
+  "blender": "blender",
+  "photoshop": "adobephotoshop",
+  "adobe photoshop": "adobephotoshop",
+  "premiere pro": "adobepremierepro",
+  "adobe premiere pro": "adobepremierepro",
+  "after effects": "adobeaftereffects",
+  "adobe after effects": "adobeaftereffects",
+  "illustrator": "adobeillustrator",
+  "adobe illustrator": "adobeillustrator",
+  "lightroom": "adobelightroom",
+  "adobe lightroom": "adobelightroom",
+  "telegram": "telegram",
+  "whatsapp": "whatsapp",
+  "facebook": "facebook",
+  "instagram": "instagram",
+  "twitter": "x",
+  "x": "x",
+  "twitch": "twitch",
+  "youtube": "youtube",
+  "reddit": "reddit",
+  "github": "github",
+  "gitlab": "gitlab",
+  "bitbucket": "bitbucket",
+  "google chrome": "googlechrome",
+  "chrome": "googlechrome",
+  "mozilla firefox": "firefox",
+  "firefox": "firefox",
+  "microsoft edge": "microsoftedge",
+  "edge": "microsoftedge",
+  "opera": "opera",
+  "opera gx": "operagx",
+  "brave": "brave",
+  "discord ptb": "discord",
+  "discord canary": "discord",
+  "nvidia app": "nvidia",
+  "nvidia geforce experience": "nvidia",
+  "xbox": "xbox",
+  "playstation": "playstation",
+  "ea app": "ea",
+  "epic games launcher": "epicgames",
+  "epic games": "epicgames",
+  "battle.net": "battle.net",
+  "ubisoft connect": "ubisoft",
+  "riot client": "riotgames",
+  "steamvr": "steam",
+  "github desktop": "github",
+  "parsec": "parsec",
+  "anydesk": "anydesk",
+  "teamviewer": "teamviewer",
+  "zoom": "zoom",
+  "microsoft teams": "microsoftteams",
+  "slack": "slack",
+  "notion": "notion",
+  "figma": "figma",
+  "postman": "postman",
+  "docker": "docker",
+  "node.js": "nodedotjs",
+  "node": "nodedotjs",
+  "python": "python",
+  "rust": "rust",
+  "java": "openjdk",
+  "kotlin": "kotlin",
+  "go": "go",
+  "c++": "cplusplus",
+  "php": "php",
+  "mysql": "mysql",
+  "mongodb": "mongodb",
+  "visual studio code insiders": "visualstudiocode",
+  "audacity": "audacity",
+  "davinci resolve": "davinciresolve",
+  "capcut": "capcut",
+  "handbrake": "handbrake",
+  "7-zip": "7zip",
+  "winrar": "winrar",
+  "vlc": "vlcmediaplayer",
+  "qbittorrent": "qbittorrent",
+  "spotify player": "spotify"
+};
+
+const ICON_CDN = "https://cdn.jsdelivr.net/npm/simple-icons@v14/icons/";
+
+function slugForActivity(name) {
+  const normalized = String(name || "").trim().toLowerCase();
+  if (ICON_ALIASES[normalized]) return ICON_ALIASES[normalized];
+
+  // Match known entries when the Discord activity contains extra text.
+  const found = Object.keys(ICON_ALIASES)
+    .sort((a,b) => b.length - a.length)
+    .find(k => normalized.includes(k));
+  return found ? ICON_ALIASES[found] : null;
+}
+
 function setIcon(activity) {
   const assets = activity && activity.assets;
   let url = null;
+
   if (assets && assets.large_image) {
     const v = assets.large_image;
     if (v.startsWith("mp:")) url = "https://media.discordapp.net/" + v.slice(3);
-    else if (activity.application_id) url =
-      "https://cdn.discordapp.com/app-assets/" + activity.application_id + "/" + v + ".png";
-    else if (/^https?:\/\//i.test(v)) url = v;
+    else if (activity.application_id) {
+      url = "https://cdn.discordapp.com/app-assets/" + activity.application_id + "/" + v + ".png";
+    } else if (/^https?:\/\//i.test(v)) url = v;
   }
+
   if (!url && assets && assets.small_image) {
     const v = assets.small_image;
     if (v.startsWith("mp:")) url = "https://media.discordapp.net/" + v.slice(3);
-    else if (activity.application_id) url =
-      "https://cdn.discordapp.com/app-assets/" + activity.application_id + "/" + v + ".png";
-    else if (/^https?:\/\//i.test(v)) url = v;
+    else if (activity.application_id) {
+      url = "https://cdn.discordapp.com/app-assets/" + activity.application_id + "/" + v + ".png";
+    } else if (/^https?:\/\//i.test(v)) url = v;
   }
 
-  const name = activity?.name || "";
-  if (!url && /VRChat Creator Companion/i.test(name)) { icon.innerHTML = '<span class="vcc-icon"></span>'; return; }
-  if (!url && /^VRChat$/i.test(name)) url = "https://hello.vrchat.com/favicon.ico";
-  if (!url && /Spotify/i.test(name)) url = "https://open.spotify.com/favicon.ico";
-  if (!url && /Steam/i.test(name)) url = "https://store.steampowered.com/favicon.ico";
+  const slug = slugForActivity(activity?.name);
+  if (!url && slug) url = ICON_CDN + slug + ".svg";
 
-  if (url) loadImage(url, im => {
-    icon.replaceChildren(im);
-  }, () => icon.innerHTML = "<span>▶</span>");
-  else icon.innerHTML = "<span>▶</span>";
+  if (url) {
+    loadImage(url, im => {
+      icon.replaceChildren(im);
+    }, () => {
+      icon.innerHTML = "<span>▶</span>";
+    });
+  } else {
+    icon.innerHTML = "<span>▶</span>";
+  }
 }
 
 function render(p) {
@@ -306,15 +433,48 @@ setInterval(fetchPresence, 5000);
 connect();
 animate();
 
-// A few static-ish particles with CSS transitions; no canvas work.
+// Lightweight floating particles.
 const dots = $("dots");
-for (let i=0;i<24;i++) {
+for (let i=0;i<18;i++) {
   const d = document.createElement("i");
   d.className = "dotbg";
   d.style.left = (Math.random()*100) + "%";
   d.style.top = (Math.random()*100) + "%";
   dots.appendChild(d);
 }
+
+const particleLayer = $("particles");
+const particles = [];
+for (let i=0;i<26;i++) {
+  const p = document.createElement("span");
+  p.className = "particle" + (Math.random() > .84 ? " big" : "");
+  particleLayer.appendChild(p);
+  particles.push({
+    el:p,
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    vx:(Math.random()-.5)*0.16,
+    vy:-(Math.random()*0.18+0.03),
+    phase:Math.random()*Math.PI*2,
+    drift:Math.random()*0.45+0.15
+  });
+}
+
+function animateParticles(t) {
+  for (const p of particles) {
+    p.x += p.vx + Math.sin(t*0.00045 + p.phase)*p.drift*0.08;
+    p.y += p.vy;
+    if (p.y < -12) {
+      p.y = innerHeight + 12;
+      p.x = Math.random()*innerWidth;
+    }
+    if (p.x < -12) p.x = innerWidth + 12;
+    if (p.x > innerWidth + 12) p.x = -12;
+    p.el.style.transform = `translate3d(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px,0)`;
+  }
+  requestAnimationFrame(animateParticles);
+}
+requestAnimationFrame(animateParticles);
 </script>
 </body>
 </html>
