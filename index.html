@@ -29,20 +29,8 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 }
 #cursorGlow{display:none;}
 #vignette{display:none}
-main{
-  position:relative;
-  z-index:4;
-  min-height:100vh;
-  display:grid;
-  grid-template-columns:minmax(500px,720px) minmax(360px,460px);
-  align-items:center;
-  justify-content:center;
-  gap:clamp(70px,8vw,150px);
-  padding:42px 56px;
-  transform:scale(1.48);
-  transform-origin:center center;
-}
-.hero{width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
+main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.48);transform-origin:center centertransform:scale(1.48) translateY(70px);}
+.hero{position:relative;width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
   border:2px solid #ffffff;
@@ -256,10 +244,12 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 }
 
 .discord-contact{
-  position:fixed !important;
-  right:clamp(250px,14vw,285px) !important;
-  top:calc(50% + 145px) !important;
+  position:absolute !important;
+  left:50% !important;
+  top:calc(100% + 12px) !important;
+  right:auto !important;
   bottom:auto !important;
+  transform:translateX(-50%);
   width:225px !important;
   min-height:42px;
   padding:8px 10px !important;
@@ -303,14 +293,6 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 }
 @media(max-width:600px){
   .discord-contact{left:16px;right:16px;bottom:16px;width:auto}
-}
-
-
-@media(max-width:1100px){
-  .discord-contact{right:24px !important;top:auto !important;bottom:24px !important;width:225px !important;}
-}
-@media(max-width:700px){
-  .discord-contact{left:16px !important;right:16px !important;top:auto !important;bottom:16px !important;width:auto !important;}
 }
 
 </style>
@@ -376,6 +358,16 @@ box-shadow:0 12px 35px #000000;will-change:transform}
       <p>Рисую аватары для VRChat 💵</p>
       <p>Базы по типу Rexouium, Mayu, Regulus, Novabeast и тому подобные аватары.</p>
     </section>
+    <div class="discord-contact" aria-label="Discord">
+  <div class="discord-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24">
+      <path fill="currentColor" d="M19.5 5.1A16.2 16.2 0 0 0 15.7 4l-.5 1a13.8 13.8 0 0 0-6.4 0l-.5-1a16.2 16.2 0 0 0-3.8 1.1C2.1 8.7 1.4 12.2 1.7 15.7a15.8 15.8 0 0 0 4.7 2.4l1.1-1.5c-.6-.2-1.2-.5-1.7-.8l.4-.3a11.2 11.2 0 0 0 11.6 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.5a15.8 15.8 0 0 0 4.7-2.4c.3-4-.4-7.4-2.8-10.6ZM8.7 14.2c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm6.6 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z"/>
+    </svg>
+  </div>
+  <div class="discord-copy">
+    <span>DISCORD</span>
+    <strong>.toppaz</strong>
+  </div>
   </header>
 </main>
 
@@ -824,16 +816,6 @@ renderWorks();
 
 </script>
 
-<div class="discord-contact" aria-label="Discord">
-  <div class="discord-icon" aria-hidden="true">
-    <svg viewBox="0 0 24 24">
-      <path fill="currentColor" d="M19.5 5.1A16.2 16.2 0 0 0 15.7 4l-.5 1a13.8 13.8 0 0 0-6.4 0l-.5-1a16.2 16.2 0 0 0-3.8 1.1C2.1 8.7 1.4 12.2 1.7 15.7a15.8 15.8 0 0 0 4.7 2.4l1.1-1.5c-.6-.2-1.2-.5-1.7-.8l.4-.3a11.2 11.2 0 0 0 11.6 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.5a15.8 15.8 0 0 0 4.7-2.4c.3-4-.4-7.4-2.8-10.6ZM8.7 14.2c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm6.6 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z"/>
-    </svg>
-  </div>
-  <div class="discord-copy">
-    <span>DISCORD</span>
-    <strong>.toppaz</strong>
-  </div>
 </div>
 
 </body>
