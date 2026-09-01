@@ -43,7 +43,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 #cursorGlow{position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(255,23,68,.22),rgba(255,23,68,.07) 35%,transparent 70%);filter:blur(7px);mix-blend-mode:screen;will-change:transform}
 #vignette{position:fixed;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,.76) 100%)}
-main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56pxtransform:scale(1.18);transform-origin:center center}
+main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.48);transform-origin:center center}
 .hero{width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
@@ -79,7 +79,7 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
 .about{width:min(330px,100%);margin:12px auto 0;padding:14px 16px;text-align:left;
 background:linear-gradient(135deg,rgba(22,18,20,.86),rgba(8,7,8,.78));
 border:1px solid rgba(255,23,68,.16);border-radius:15px;
-box-shadow:0 12px 35px rgba(0,0,0,.25)}
+box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 .about-kicker{font-size:8px;letter-spacing:.13em;font-weight:800;color:var(--red);margin-bottom:7px}
 .about p{margin:3px 0;color:#827b7f;font-size:9px;line-height:1.55}
 .works-panel{
@@ -183,7 +183,7 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)}
     </section>
     <div class="connection" id="connection">Подключение к Discord Presence</div>
 
-    <section class="about" aria-label="Описание">
+    <section class="about" id="about" aria-label="Описание">
       <div class="about-kicker">О СЕБЕ</div>
       <p>Рисую аватары для VRChat 💵</p>
       <p>Базы по типу Rexouium, Mayu, Regulus, Novabeast и тому подобные аватары.</p>
@@ -202,6 +202,7 @@ const $ = id => document.getElementById(id);
 const hero = $("hero");
 const avatarWrap = $("avatarWrap");
 const card = $("card");
+const about = $("about");
 const cursorGlow = $("cursorGlow");
 const status = $("status");
 const statusDot = $("statusDot");
@@ -515,6 +516,7 @@ function animate() {
   hero.style.transform = `rotateX(${(-ny*2.4).toFixed(2)}deg) rotateY(${(nx*3.2).toFixed(2)}deg)`;
   avatarWrap.style.transform = `translate3d(${(-nx*8).toFixed(1)}px,${(-ny*8).toFixed(1)}px,0)`;
   card.style.transform = `translate3d(${(nx*7).toFixed(1)}px,${(ny*5).toFixed(1)}px,0)`;
+  about.style.transform = `translate3d(${(nx*5.5).toFixed(1)}px,${(ny*4).toFixed(1)}px,0)`;
   cursorGlow.style.transform =
     `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
 
