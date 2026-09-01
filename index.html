@@ -102,7 +102,7 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 .works-kicker{font-size:9px;letter-spacing:.16em;font-weight:800;color:var(--red);margin-bottom:6px}
 .works-head h2{margin:0;font-size:24px;font-weight:800;letter-spacing:.02em}
 .works-counter{font-size:9px;color:#716a6f;letter-spacing:.08em;padding-bottom:3px}
-.works-stage{position:relative;display:grid;will-change:transform;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
+.works-stage{position:relative;display:grid;pointer-events:auto;will-change:transform;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
 .work-card{
   height:385px;
   border-radius:15px;
@@ -116,7 +116,7 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
   box-shadow:inset 0 0 24px rgba(0,0,0,.28);
   contain:paint;
 }
-.work-card img{width:100%;height:100%;display:block;object-fit:contain;padding:8px;opacity:1;backface-visibility:hidden;transform:translateZ(0)}
+.work-card img{width:100%;height:100%;display:block;object-fit:contain;padding:8px;opacity:1;backface-visibility:hidden;transform:translateZ(0)transition:opacity .18s ease,transform .18s ease;}
 
 .works-arrow{
   position:absolute;z-index:3;top:50%;transform:translateY(-50%);
@@ -127,11 +127,11 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
   display:grid;place-items:center;cursor:pointer;
   box-shadow:0 8px 24px rgba(0,0,0,.4);
   transition:transform .18s ease,border-color .18s ease,background .18s ease;
-pointer-events:auto;}
+z-index:50;pointer-events:auto;
 .works-arrow.left{left:-20px}.works-arrow.right{right:-20px}
 .works-arrow:hover{transform:translateY(-50%) scale(1.08);border-color:rgba(54,183,255,.65);background:rgba(26,10,14,.96)}
-.works-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
-.work-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(54,183,255,.32);background:#102632;cursor:pointer;padding:0}
+.works-dots{display:flex;justify-content:center;gap:7px;margin-top:16pxposition:relative;z-index:50;pointer-events:auto;
+.work-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(54,183,255,.32);background:#102632;cursor:pointer;padding:0pointer-events:auto;
 .work-dot.active{background:var(--red);box-shadow:0 0 10px rgba(54,183,255,.55)}
 @keyframes pulse{0%,100%{transform:scale(.98);opacity:.55}50%{transform:scale(1.05);opacity:1}}
 @media(max-width:700px){main{transform:scale(1)}} @media(max-width:520px){body{overflow:auto}}
@@ -527,67 +527,120 @@ for (let i=0;i<24;i++) {
   d.style.top = (Math.random()*100) + "%";
   dots.appendChild(d);
 }
-// Work gallery: two square-ish cards, one-step circular navigation.
+// Work gallery
 const workImages = [
   "works/work1.webp",
   "works/work2.webp",
   "works/work3.webp",
   "works/work4.webp"
 ];
+
 const workA = document.getElementById("workA");
 const workB = document.getElementById("workB");
 const worksCounter = document.getElementById("worksCounter");
 const worksDots = document.getElementById("worksDots");
-let workIndex = 0;
+const worksPrev = document.getElementById("worksPrev");
+const worksNext = document.getElementById("worksNext");
 
-function buildWorkDots() {
-  worksDots.innerHTML = "";
-  workImages.forEach((_, i) => {
-    const b = document.createElement("button");
-    b.className = "work-dot" + (i === 0 ? " active" : "");
-    b.setAttribute("aria-label", "Показать работу " + (i + 1));
-    b.addEventListener("click", () => { workIndex = i; renderWorks(); });
-    worksDots.appendChild(b);
+let workIndex = 0;
+let galleryLock = false;
+
+function preloadWorks() {
+  for (const src of workImages) {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
+  }
+}
+
+function updateWorkUI() {
+  const nextIndex = (workIndex + 1) % workImages.length;
+
+  workA.src = workImages[workIndex];
+  workB.src = workImages[nextIndex];
+
+  workA.alt = "Пример работы " + (workIndex + 1);
+  workB.alt = "Пример работы " + (nextIndex + 1);
+
+  worksCounter.textContent =
+    String(workIndex + 1).padStart(2, "0") + " / " +
+    String(workImages.length).padStart(2, "0");
+
+  [...worksDots.children].forEach((dot, i) => {
+    dot.classList.toggle("active", i === workIndex);
   });
 }
 
-function preload(src) {
-  const im = new Image();
-  im.src = src;
-  return im;
-}
+function animateWorkChange(direction) {
+  if (galleryLock) return;
+  galleryLock = true;
 
-function renderWorks() {
-  const a = workIndex;
-  const b = (workIndex + 1) % workImages.length;
-  workA.style.opacity = "0.18";
-  workB.style.opacity = "0.18";
+  const offset = direction === "next" ? 18 : -18;
+  workA.style.opacity = "0";
+  workB.style.opacity = "0";
+  workA.style.transform = `translate3d(${offset}px,0,0)`;
+  workB.style.transform = `translate3d(${offset}px,0,0)`;
 
   setTimeout(() => {
-    workA.src = workImages[a];
-    workB.src = workImages[b];
-    workA.alt = "Пример работы " + (a + 1);
-    workB.alt = "Пример работы " + (b + 1);
-    worksCounter.textContent =
-      String(a + 1).padStart(2,"0") + " / " + String(workImages.length).padStart(2,"0");
-    workA.onload = () => workA.style.opacity = "1";
-    workB.onload = () => workB.style.opacity = "1";
-    [...worksDots.children].forEach((d,i)=>d.classList.toggle("active",i===a));
+    updateWorkUI();
+
+    requestAnimationFrame(() => {
+      workA.style.opacity = "1";
+      workB.style.opacity = "1";
+      workA.style.transform = "translate3d(0,0,0)";
+      workB.style.transform = "translate3d(0,0,0)";
+    });
+
+    setTimeout(() => {
+      galleryLock = false;
+    }, 190);
   }, 90);
 }
 
-document.getElementById("worksPrev").addEventListener("click", () => {
-  workIndex = (workIndex - 1 + workImages.length) % workImages.length;
-  renderWorks();
-});
-document.getElementById("worksNext").addEventListener("click", () => {
-  workIndex = (workIndex + 1) % workImages.length;
-  renderWorks();
-});
-buildWorkDots();
-workImages.forEach(preload);
-renderWorks();
+function buildWorkDots() {
+  worksDots.replaceChildren();
 
+  workImages.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "work-dot" + (i === 0 ? " active" : "");
+    dot.setAttribute("aria-label", "Показать работу " + (i + 1));
+
+    dot.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (galleryLock || i === workIndex) return;
+      const direction = i > workIndex ? "next" : "prev";
+      workIndex = i;
+      animateWorkChange(direction);
+    });
+
+    worksDots.appendChild(dot);
+  });
+}
+
+worksPrev.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  if (galleryLock) return;
+  workIndex = (workIndex - 1 + workImages.length) % workImages.length;
+  animateWorkChange("prev");
+});
+
+worksNext.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  if (galleryLock) return;
+  workIndex = (workIndex + 1) % workImages.length;
+  animateWorkChange("next");
+});
+
+buildWorkDots();
+preloadWorks();
+updateWorkUI();
 </script>
 </body>
 </html>
