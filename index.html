@@ -39,11 +39,11 @@ main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-col
 .status-dot.online{background:var(--blue);box-shadow:0 0 13px #20b8ff}
 h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 20px #20b8ff}
 .card{contain:layout paint;width:min(330px,100%);margin:auto;padding:14px;display:flex;gap:11px;text-align:left;
-  background:#171216;
+  background:#0b1422;
   border:1px solid #20b8ff;border-radius:16px;
   box-shadow:0 18px 55px #000000,0 0 28px #20b8ff;
   will-change:transform;transform-style:preserve-3d}
-.icon{width:50px;height:50px;flex:none;border-radius:13px;overflow:hidden;background:#171216;
+.icon{width:50px;height:50px;flex:none;border-radius:13px;overflow:hidden;background:#0b1422;
   border:1px solid #4a4a4a;display:grid;place-items:center;color:#767075;font-size:19px}
 .icon img{width:100%;height:100%;object-fit:cover;display:block}.vcc-icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:#20b8d7;color:#08252b;font-weight:900;font-size:18px;letter-spacing:-.08em;box-shadow:inset 0 -2px 0 #000000}.vcc-icon::after{content:"CC"}
 .info{min-width:0;flex:1}
@@ -60,7 +60,7 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
 .timer{color:#6f696d;margin-top:3px;min-height:9px}
 .connection{font-size:8px;color:#565055;margin-top:10px}
 .about{width:min(330px,100%);margin:12px auto 0;padding:14px 16px;text-align:left;
-background:#171216;
+background:#0b1422;
 border:1px solid #20b8ff;border-radius:15px;
 box-shadow:0 12px 35px #000000;will-change:transform}
 .about-kicker{font-size:8px;letter-spacing:.13em;font-weight:800;color:var(--blue);margin-bottom:7px}
@@ -71,7 +71,7 @@ box-shadow:0 12px 35px #000000;will-change:transform}
   padding:28px;
   border:1px solid #20b8ff;
   border-radius:20px;
-  background:#171216;
+  background:#0b1422;
   box-shadow:0 24px 70px #000000,0 0 38px #20b8ff;
   transform-style:preserve-3d;
   will-change:transform;
@@ -448,10 +448,7 @@ function connect() {
   };
 }
 
-window.addEventListener("mousemove", e => {
-  targetX = e.clientX;
-  targetY = e.clientY;
-}, {passive:true});
+// Parallax disabled: mouse movement no longer affects the interface.
 
 
 const particleLayer = $("particles");
@@ -486,20 +483,7 @@ function updateParticles() {
 }
 
 function animate() {
-  x += (targetX - x) * 0.12;
-  y += (targetY - y) * 0.12;
-
-  const nx = (x / innerWidth - .5) * 2;
-  const ny = (y / innerHeight - .5) * 2;
-
-  // Only transforms/position, no layout reads: smooth at high refresh rates.
-  hero.style.transform = `rotateX(${(-ny*2.4).toFixed(2)}deg) rotateY(${(nx*3.2).toFixed(2)}deg)`;
-  avatarWrap.style.transform = `translate3d(${(-nx*8).toFixed(1)}px,${(-ny*8).toFixed(1)}px,0)`;
-  card.style.transform = `translate3d(${(nx*7).toFixed(1)}px,${(ny*5).toFixed(1)}px,0)`;
-  about.style.transform = `translate3d(${(nx*5.5).toFixed(1)}px,${(ny*4).toFixed(1)}px,0)`;
-  cursorGlow.style.transform =
-    `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
-
+  // No parallax transforms; only lightweight background particles are animated.
   updateParticles();
   requestAnimationFrame(animate);
 }
