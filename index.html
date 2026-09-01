@@ -215,38 +215,51 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 }
 
 
-#cursorGrid{
+
+#cursorGridField{
+  --gx:50vw;
+  --gy:50vh;
+  --reveal:0px;
   position:fixed;
-  left:0;
-  top:0;
-  width:260px;
-  height:260px;
-  margin:-130px 0 0 -130px;
-  border-radius:50%;
+  inset:0;
+  z-index:3;
   pointer-events:none;
-  z-index:20;
   opacity:0;
-  transform:translate3d(-999px,-999px,0);
-  will-change:transform,opacity;
+  transition:opacity .16s ease;
   background:
-    linear-gradient(rgba(255,255,255,.11) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.11) 1px,transparent 1px);
-  background-size:13px 13px;
-  -webkit-mask-image:radial-gradient(circle,#000 0 42%,rgba(0,0,0,.78) 53%,transparent 72%);
-  mask-image:radial-gradient(circle,#000 0 42%,rgba(0,0,0,.78) 53%,transparent 72%);
+    linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);
+  background-size:24px 24px;
+  -webkit-mask-image:
+    radial-gradient(circle 150px at var(--gx) var(--gy),
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,.22) 32%,
+      rgba(0,0,0,.72) 58%,
+      #000 100%);
+  mask-image:
+    radial-gradient(circle 150px at var(--gx) var(--gy),
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,.22) 32%,
+      rgba(0,0,0,.72) 58%,
+      #000 100%);
 }
-#cursorGrid::before{
+#cursorGridField::after{
   content:"";
   position:absolute;
-  inset:42%;
-  border:1px solid rgba(255,255,255,.30);
+  left:var(--gx);
+  top:var(--gy);
+  width:190px;
+  height:190px;
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(255,255,255,.22);
   border-radius:50%;
+  opacity:.45;
 }
 
 </style>
 </head>
 <body>
-<div id="cursorGrid" aria-hidden="true"></div>
+<div id="cursorGridField" aria-hidden="true"></div>
 <video id="bgVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
   <source src="background.mp4" type="video/mp4">
 </video>
@@ -311,35 +324,45 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 
 <script>
 "use strict";
-const cursorGrid = document.getElementById("cursorGrid");
-if (cursorGrid) {
-  let gridX = -999, gridY = -999;
-  let targetGridX = -999, targetGridY = -999;
-  let gridRaf = 0;
+const cursorGridField = document.getElementById("cursorGridField");
+if (cursorGridField) {
+  let gridX = innerWidth * 0.5;
+  let gridY = innerHeight * 0.5;
+  let targetX = gridX;
+  let targetY = gridY;
+  let gridFrame = 0;
 
-  const updateCursorGrid = () => {
-    gridRaf = 0;
-    gridX += (targetGridX - gridX) * 0.42;
-    gridY += (targetGridY - gridY) * 0.42;
-    cursorGrid.style.transform =
-      `translate3d(${gridX.toFixed(1)}px,${gridY.toFixed(1)}px,0)`;
+  const paintGrid = () => {
+    gridFrame = 0;
+    gridX += (targetX - gridX) * 0.18;
+    gridY += (targetY - gridY) * 0.18;
+    cursorGridField.style.setProperty("--gx", `${gridX.toFixed(1)}px`);
+    cursorGridField.style.setProperty("--gy", `${gridY.toFixed(1)}px`);
 
-    if (Math.abs(targetGridX-gridX) > 0.4 || Math.abs(targetGridY-gridY) > 0.4) {
-      gridRaf = requestAnimationFrame(updateCursorGrid);
+    if (Math.abs(targetX-gridX) > 0.25 || Math.abs(targetY-gridY) > 0.25) {
+      gridFrame = requestAnimationFrame(paintGrid);
     }
   };
 
   window.addEventListener("pointermove", (event) => {
-    targetGridX = event.clientX;
-    targetGridY = event.clientY;
-    cursorGrid.style.opacity = "1";
-    if (!gridRaf) gridRaf = requestAnimationFrame(updateCursorGrid);
+    targetX = event.clientX;
+    targetY = event.clientY;
+    cursorGridField.style.opacity = "1";
+    if (!gridFrame) gridFrame = requestAnimationFrame(paintGrid);
   }, {passive:true});
 
   window.addEventListener("pointerleave", () => {
-    cursorGrid.style.opacity = "0";
+    cursorGridField.style.opacity = "0";
   });
+
+  window.addEventListener("pointerenter", (event) => {
+    targetX = event.clientX;
+    targetY = event.clientY;
+    cursorGridField.style.opacity = "1";
+    if (!gridFrame) gridFrame = requestAnimationFrame(paintGrid);
+  }, {passive:true});
 }
+
 
 
 const bgVideo = document.getElementById("bgVideo");
