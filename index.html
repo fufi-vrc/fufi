@@ -194,36 +194,6 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 }
 
 
-#cursorFx{
-  position:fixed;
-  left:0;
-  top:0;
-  width:22px;
-  height:22px;
-  margin:-11px 0 0 -11px;
-  border:1px solid rgba(255,255,255,.52);
-  border-radius:50%;
-  pointer-events:none;
-  z-index:20;
-  transform:translate3d(-100px,-100px,0);
-  will-change:transform;
-  box-shadow:0 0 7px rgba(255,255,255,.08);
-}
-#cursorFx::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:4px;
-  height:4px;
-  margin:-2px 0 0 -2px;
-  border-radius:50%;
-  background:#eeeeee;
-}
-
-
-
-
 /* graphite transparent glass */
 .works-panel,.card,.about,.status-card{
   background:
@@ -244,11 +214,39 @@ box-shadow:0 12px 35px #000000;will-change:transform}
     linear-gradient(120deg,rgba(255,255,255,.035),transparent 30%,transparent 72%,rgba(255,255,255,.018));
 }
 
+
+#cursorGrid{
+  position:fixed;
+  left:0;
+  top:0;
+  width:260px;
+  height:260px;
+  margin:-130px 0 0 -130px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:20;
+  opacity:0;
+  transform:translate3d(-999px,-999px,0);
+  will-change:transform,opacity;
+  background:
+    linear-gradient(rgba(255,255,255,.11) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.11) 1px,transparent 1px);
+  background-size:13px 13px;
+  -webkit-mask-image:radial-gradient(circle,#000 0 42%,rgba(0,0,0,.78) 53%,transparent 72%);
+  mask-image:radial-gradient(circle,#000 0 42%,rgba(0,0,0,.78) 53%,transparent 72%);
+}
+#cursorGrid::before{
+  content:"";
+  position:absolute;
+  inset:42%;
+  border:1px solid rgba(255,255,255,.30);
+  border-radius:50%;
+}
+
 </style>
 </head>
 <body>
-<div id="cursorFx" aria-hidden="true"></div>
-
+<div id="cursorGrid" aria-hidden="true"></div>
 <video id="bgVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
   <source src="background.mp4" type="video/mp4">
 </video>
@@ -313,31 +311,33 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 
 <script>
 "use strict";
-const cursorFx = document.getElementById("cursorFx");
-if (cursorFx) {
-  let cx = -100, cy = -100;
-  let tx = -100, ty = -100;
-  let cursorFrame = 0;
+const cursorGrid = document.getElementById("cursorGrid");
+if (cursorGrid) {
+  let gridX = -999, gridY = -999;
+  let targetGridX = -999, targetGridY = -999;
+  let gridRaf = 0;
+
+  const updateCursorGrid = () => {
+    gridRaf = 0;
+    gridX += (targetGridX - gridX) * 0.42;
+    gridY += (targetGridY - gridY) * 0.42;
+    cursorGrid.style.transform =
+      `translate3d(${gridX.toFixed(1)}px,${gridY.toFixed(1)}px,0)`;
+
+    if (Math.abs(targetGridX-gridX) > 0.4 || Math.abs(targetGridY-gridY) > 0.4) {
+      gridRaf = requestAnimationFrame(updateCursorGrid);
+    }
+  };
 
   window.addEventListener("pointermove", (event) => {
-    tx = event.clientX;
-    ty = event.clientY;
-
-    if (!cursorFrame) {
-      cursorFrame = requestAnimationFrame(() => {
-        cx += (tx - cx) * 0.35;
-        cy += (ty - cy) * 0.35;
-        cursorFx.style.transform = `translate3d(${cx.toFixed(1)}px,${cy.toFixed(1)}px,0)`;
-        cursorFrame = 0;
-      });
-    }
+    targetGridX = event.clientX;
+    targetGridY = event.clientY;
+    cursorGrid.style.opacity = "1";
+    if (!gridRaf) gridRaf = requestAnimationFrame(updateCursorGrid);
   }, {passive:true});
 
   window.addEventListener("pointerleave", () => {
-    cursorFx.style.opacity = "0";
-  });
-  window.addEventListener("pointerenter", () => {
-    cursorFx.style.opacity = "1";
+    cursorGrid.style.opacity = "0";
   });
 }
 
