@@ -26,14 +26,11 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
   position:fixed;inset:0;width:100%;height:100%;
   object-fit:cover;z-index:-10;pointer-events:none;
   transform:none;
-  filter:blur(2px) brightness(.42) saturate(.82);
   will-change:transform;
 }
 #videoOverlay{
   position:fixed;inset:0;z-index:-9;pointer-events:none;
-  background:
-    linear-gradient(rgba(3,8,14,.18),rgba(3,7,13,.50)),
-    radial-gradient(circle at 50% 45%,rgba(25,150,235,.10),transparent 58%);
+  background:rgba(3,8,14,.48);
 }
 
 #cursorGlow{
@@ -45,10 +42,9 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
     rgba(54,183,255,.11) 30%,
     rgba(54,183,255,.035) 53%,
     transparent 72%);
-  filter:blur(8px);
   will-change:left,top;
 }
-#cursorGlow{position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(54,183,255,.22),rgba(54,183,255,.07) 35%,transparent 70%);filter:blur(7px);mix-blend-mode:screen;will-change:transform}
+#cursorGlow{position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(54,183,255,.22),rgba(54,183,255,.07) 35%,transparent 70%);mix-blend-mode:screen;will-change:transform}
 #vignette{position:fixed;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,.76) 100%)}
 main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.48);transform-origin:center center}
