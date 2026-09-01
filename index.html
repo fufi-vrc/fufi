@@ -367,8 +367,8 @@ function animateAll() {
     `translate3d(${(nx*34).toFixed(1)}px,${(ny*26).toFixed(1)}px,0)`;
   glowB.style.transform =
     `translate3d(${(nx*-28).toFixed(1)}px,${(ny*-22).toFixed(1)}px,0)`;
-  cursorGlow.style.left = `${(currentX - 110).toFixed(1)}px`;
-  cursorGlow.style.top = `${(currentY - 110).toFixed(1)}px`;
+  cursorGlow.style.left = `${currentX.toFixed(1)}px`;
+  cursorGlow.style.top = `${currentY.toFixed(1)}px`;
 
   drawNetwork();
   requestAnimationFrame(animateAll);
@@ -430,3 +430,6 @@ function drawNetwork() {
 addEventListener("resize",resize,{passive:true});
 resize();
 animateAll();
+</script>
+</body>
+</html>
