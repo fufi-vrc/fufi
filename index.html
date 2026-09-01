@@ -23,7 +23,10 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
     #050506;
 }
 #dots{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.42}
-#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,23,68,.72);will-change:transform}.dotbg{
+#floatingShapes{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.float-shape{position:absolute;width:6px;height:6px;border:1px solid rgba(255,23,68,.42);border-radius:2px;opacity:.22;will-change:transform;transform:translate3d(0,0,0)}
+.float-shape.dot{width:4px;height:4px;border:0;border-radius:50%;background:rgba(255,23,68,.48);opacity:.28}
+.float-shape.line{width:16px;height:1px;border:0;border-radius:99px;background:rgba(255,23,68,.28);opacity:.17}.dotbg{
   position:absolute;width:2px;height:2px;border-radius:50%;
   background:rgba(255,23,68,.6);
   box-shadow:0 0 7px rgba(255,23,68,.2);
@@ -135,7 +138,7 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 </head>
 <body>
 <div id="scene"></div>
-<div id="dots"></div><div id="particles"></div>
+<div id="dots"></div><div id="floatingShapes"></div>
 <div id="cursorGlow"></div>
 <div id="vignette"></div>
 
@@ -474,38 +477,49 @@ window.addEventListener("mousemove", e => {
 }, {passive:true});
 
 
-const particleLayer = $("particles");
-const particleState = [];
-if (particleLayer) {
-  for (let i = 0; i < 14; i++) {
+// Lightweight floating background shapes.
+const floatingShapes = document.getElementById("floatingShapes");
+const shapeState = [];
+
+if (floatingShapes) {
+  for (let i = 0; i < 18; i++) {
     const el = document.createElement("span");
-    el.className = "particle";
-    particleLayer.appendChild(el);
-    particleState.push({
+    const kind = i % 3 === 0 ? "line" : (i % 3 === 1 ? "dot" : "");
+    el.className = "float-shape" + (kind ? " " + kind : "");
+    floatingShapes.appendChild(el);
+
+    shapeState.push({
       el,
       x: Math.random() * innerWidth,
       y: Math.random() * innerHeight,
-      vx: (Math.random() - 0.5) * 0.22,
-      vy: -(Math.random() * 0.22 + 0.05)
+      vx: (Math.random() - 0.5) * 0.11,
+      vy: (Math.random() - 0.5) * 0.075 - 0.008,
+      rot: Math.random() * 360,
+      vr: (Math.random() - 0.5) * 0.10,
+      phase: Math.random() * Math.PI * 2
     });
   }
 }
 
-function updateParticles() {
-  for (const p of particleState) {
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.y < -8) {
-      p.y = innerHeight + 8;
-      p.x = Math.random() * innerWidth;
-    }
-    if (p.x < -8) p.x = innerWidth + 8;
-    if (p.x > innerWidth + 8) p.x = -8;
-    p.el.style.transform = `translate3d(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px,0)`;
+function updateFloatingShapes(t) {
+  for (const s of shapeState) {
+    s.x += s.vx;
+    s.y += s.vy;
+    s.rot += s.vr;
+
+    const swayX = Math.sin(t * 0.00045 + s.phase) * 0.13;
+    const swayY = Math.cos(t * 0.00035 + s.phase) * 0.09;
+
+    if (s.x < -30) s.x = innerWidth + 30;
+    if (s.x > innerWidth + 30) s.x = -30;
+    if (s.y < -30) s.y = innerHeight + 30;
+    if (s.y > innerHeight + 30) s.y = -30;
+
+    s.el.style.transform =
+      `translate3d(${(s.x + swayX).toFixed(1)}px,${(s.y + swayY).toFixed(1)}px,0) rotate(${s.rot.toFixed(1)}deg)`;
   }
 }
 
-let lastParticleTime = 0;
 function animate(now) {
   x += (targetX - x) * 0.10;
   y += (targetY - y) * 0.10;
@@ -531,7 +545,7 @@ function animate(now) {
 
   // Particles don't need to update every frame.
   if (now - lastParticleTime > 33) {
-    updateParticles();
+    updateFloatingShapes(now);
     lastParticleTime = now;
   }
 
@@ -544,15 +558,6 @@ setInterval(fetchPresence, 5000);
 connect();
 requestAnimationFrame(animate);
 
-// A few static-ish particles with CSS transitions; no canvas work.
-const dots = $("dots");
-for (let i=0;i<24;i++) {
-  const d = document.createElement("i");
-  d.className = "dotbg";
-  d.style.left = (Math.random()*100) + "%";
-  d.style.top = (Math.random()*100) + "%";
-  dots.appendChild(d);
-}
 // Work gallery: two square-ish cards, one-step circular navigation.
 const workImages = [
   "works/work1.webp",
