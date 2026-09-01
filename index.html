@@ -27,7 +27,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
   position:absolute;width:2px;height:2px;border-radius:50%;
   background:rgba(255,23,68,.6);
   box-shadow:0 0 7px rgba(255,23,68,.2);
-}
+}#movingParticles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.moving-particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,23,68,.65);box-shadow:0 0 7px rgba(255,23,68,.28);will-change:transform;transform:translate3d(0,0,0)}
 #cursorGlow{
   position:fixed;left:50%;top:50%;width:260px;height:260px;
   margin:-130px 0 0 -130px;border-radius:50%;
@@ -43,7 +43,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 #cursorGlow{position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(255,23,68,.22),rgba(255,23,68,.07) 35%,transparent 70%);filter:blur(7px);mix-blend-mode:screen;will-change:transform}
 #vignette{position:fixed;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,.76) 100%)}
-main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px}
+main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56pxtransform:scale(1.18);transform-origin:center center}
 .hero{width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
@@ -130,12 +130,12 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)}
 .work-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(255,23,68,.32);background:#211317;cursor:pointer;padding:0}
 .work-dot.active{background:var(--red);box-shadow:0 0 10px rgba(255,23,68,.55)}
 @keyframes pulse{0%,100%{transform:scale(.98);opacity:.55}50%{transform:scale(1.05);opacity:1}}
-@media(max-width:520px){body{overflow:auto}}
+@media(max-width:700px){main{transform:scale(1)}} @media(max-width:520px){body{overflow:auto}}
 </style>
 </head>
 <body>
 <div id="scene"></div>
-<div id="dots"></div>
+<div id="dots"></div><div id="movingParticles"></div>
 <div id="cursorGlow"></div>
 <div id="vignette"></div>
 
@@ -486,6 +486,7 @@ function animate() {
   cursorGlow.style.transform =
     `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
 
+  animateParticles();
   requestAnimationFrame(animate);
 }
 
@@ -504,6 +505,38 @@ for (let i=0;i<24;i++) {
   d.style.top = (Math.random()*100) + "%";
   dots.appendChild(d);
 }
+
+// Lightweight moving red particles, updated inside the existing 60fps RAF loop.
+const movingParticles = document.getElementById("movingParticles");
+const particleState = [];
+for (let i = 0; i < 28; i++) {
+  const node = document.createElement("span");
+  node.className = "moving-particle";
+  movingParticles.appendChild(node);
+  particleState.push({
+    el: node,
+    x: Math.random() * innerWidth,
+    y: Math.random() * innerHeight,
+    vx: (Math.random() - 0.5) * 0.42,
+    vy: (Math.random() - 0.5) * 0.30,
+    s: 0.75 + Math.random() * 0.75
+  });
+}
+
+function animateParticles() {
+  for (const p of particleState) {
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.x < -8) p.x = innerWidth + 8;
+    if (p.x > innerWidth + 8) p.x = -8;
+    if (p.y < -8) p.y = innerHeight + 8;
+    if (p.y > innerHeight + 8) p.y = -8;
+
+    p.el.style.transform = `translate3d(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px,0) scale(${p.s})`;
+  }
+}
+
 // Work gallery: two square-ish cards, one-step circular navigation.
 const workImages = [
   "works/work1.webp",
