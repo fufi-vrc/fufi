@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>fufi</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23a9d8ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M32 54S8 40 8 23C8 14 14 9 22 9c5 0 8 3 10 7 2-4 5-7 10-7 8 0 14 5 14 14 0 17-24 31-24 31Z' fill='url(%23g)' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E">
 <style>
 :root {
   --blue:#c8c8c8;
@@ -128,9 +127,11 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 #videoOverlay{
   position:fixed;
   inset:0;
-  z-index:1;
+  z-index:2;
   pointer-events:none;
-  background:rgba(0,0,0,.36);
+  background:
+    linear-gradient(rgba(0,0,0,.46),rgba(2,8,17,.50)),
+    rgba(3,10,20,.18);
 }
 
 /* lightweight liquid-glass treatment: opaque, no backdrop blur */
