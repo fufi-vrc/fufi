@@ -36,12 +36,6 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
     radial-gradient(circle at 50% 45%,rgba(25,150,235,.10),transparent 58%);
 }
 
-#dots{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.42}
-#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(54,183,255,.72);box-shadow:0 0 6px rgba(54,183,255,.25);will-change:transform}.dotbg{
-  position:absolute;width:2px;height:2px;border-radius:50%;
-  background:rgba(54,183,255,.6);
-  box-shadow:0 0 7px rgba(54,183,255,.2);
-}
 #cursorGlow{
   position:fixed;left:50%;top:50%;width:260px;height:260px;
   margin:-130px 0 0 -130px;border-radius:50%;
@@ -154,7 +148,6 @@ box-shadow:0 12px 35px rgba(0,0,0,.25)will-change:transform}
 <div id="videoOverlay"></div>
 
 <div id="scene"></div>
-<div id="dots"></div><div id="particles"></div>
 <div id="cursorGlow"></div>
 <div id="vignette"></div>
 
@@ -506,37 +499,6 @@ window.addEventListener("mousemove", e => {
 }, {passive:true});
 
 
-const particleLayer = $("particles");
-const particleState = [];
-if (particleLayer) {
-  for (let i = 0; i < 20; i++) {
-    const el = document.createElement("span");
-    el.className = "particle";
-    particleLayer.appendChild(el);
-    particleState.push({
-      el,
-      x: Math.random() * innerWidth,
-      y: Math.random() * innerHeight,
-      vx: (Math.random() - 0.5) * 0.22,
-      vy: -(Math.random() * 0.22 + 0.05)
-    });
-  }
-}
-
-function updateParticles() {
-  for (const p of particleState) {
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.y < -8) {
-      p.y = innerHeight + 8;
-      p.x = Math.random() * innerWidth;
-    }
-    if (p.x < -8) p.x = innerWidth + 8;
-    if (p.x > innerWidth + 8) p.x = -8;
-    p.el.style.transform = `translate3d(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px,0)`;
-  }
-}
-
 function animate() {
   x += (targetX - x) * 0.12;
   y += (targetY - y) * 0.12;
@@ -551,9 +513,7 @@ function animate() {
   about.style.transform = `translate3d(${(nx*5.5).toFixed(1)}px,${(ny*4).toFixed(1)}px,0)`;
   cursorGlow.style.transform =
     `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
-
-  updateParticles();
-  requestAnimationFrame(animate);
+requestAnimationFrame(animate);
 }
 
 setInterval(updateTimer, 1000);
