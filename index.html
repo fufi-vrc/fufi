@@ -148,12 +148,7 @@ function renderPresence(p) {
     el.statusText.textContent = "Discord";
     el.title.textContent = activity.name || "Активность";
     el.sub.textContent = activity.details || activity.state || (activity.type === 0 ? "Играет в игру" : "Активность");
-    if (activity.assets?.large_image) {
-      // Discord asset images are application-specific; leave the local icon clean if not directly resolvable.
-      el.icon.innerHTML = "<span>▶</span>";
-    } else {
-      el.icon.innerHTML = "<span>▶</span>";
-    }
+    setActivityIcon(activity);
     updateTimer();
     return;
   }
@@ -173,6 +168,60 @@ function updateTimer() {
   } else {
     el.progress.style.width = "0%";
   }
+}
+
+function activityImageUrl(activity, key, ext = "png") {
+  const value = activity?.assets?.[key];
+  if (!value) return null;
+
+  // Discord can send media-proxy assets as mp:<path>.
+  if (value.startsWith("mp:")) {
+    return "https://media.discordapp.net/" + value.slice(3);
+  }
+
+  // Normal Rich Presence assets are keyed application assets.
+  if (activity.application_id) {
+    return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${value}.${ext}`;
+  }
+
+  // Some clients may already provide a complete URL.
+  if (/^https?:\\/\\//i.test(value)) return value;
+
+  return null;
+}
+
+function setActivityIcon(activity) {
+  const large = activityImageUrl(activity, "large_image");
+  const small = activityImageUrl(activity, "small_image");
+  const candidates = [];
+  if (large) candidates.push(large);
+  if (small) candidates.push(small);
+
+  if (!candidates.length) {
+    el.icon.innerHTML = "<span>▶</span>";
+    return;
+  }
+
+  const img = new Image();
+  let index = 0;
+
+  const tryNext = () => {
+    if (index >= candidates.length) {
+      el.icon.innerHTML = "<span>▶</span>";
+      return;
+    }
+    const src = candidates[index++];
+    img.src = src;
+  };
+
+  img.onload = () => {
+    el.icon.innerHTML = "";
+    img.alt = "";
+    el.icon.appendChild(img);
+  };
+
+  img.onerror = tryNext;
+  tryNext();
 }
 
 async function fetchInitial() {
