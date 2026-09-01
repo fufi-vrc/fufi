@@ -189,7 +189,7 @@ function setIcon(activity) {
   }
 
   const name = activity?.name || "";
-  if (!url && /VRChat Creator Companion/i.test(name)) url = "https://vcc.docs.vrchat.com/favicon.ico";
+  if (!url && /VRChat Creator Companion/i.test(name)) url = "https://raw.githubusercontent.com/vrchat-community/creator-companion/main/WebApp/Dist/icon.png";
   if (!url && /^VRChat$/i.test(name)) url = "https://hello.vrchat.com/favicon.ico";
   if (!url && /Spotify/i.test(name)) url = "https://open.spotify.com/favicon.ico";
   if (!url && /Steam/i.test(name)) url = "https://store.steampowered.com/favicon.ico";
