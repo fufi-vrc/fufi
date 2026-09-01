@@ -111,6 +111,23 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 .work-dot.active{background:var(--blue);box-shadow:0 0 10px #20b8ff}
 @keyframes pulse{0%,100%{transform:scale(.98);opacity:.55}50%{transform:scale(1.05);opacity:1}}
 @media(max-width:700px){main{transform:scale(1)}} @media(max-width:520px){body{overflow:auto}}
+
+/* subtle dark-blue panel texture */
+.works-panel,.about,.status-card{
+  background:
+    linear-gradient(135deg,#0d2238 0%,#08182a 48%,#071320 100%) !important;
+  overflow:hidden;
+}
+.works-panel::after,.about::after,.status-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(120deg,transparent 0%,rgba(72,170,235,.035) 48%,transparent 66%),
+    repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 1px,transparent 1px 11px);
+}
+
 </style>
 </head>
 <body>
