@@ -61,7 +61,7 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
   will-change:transform;transform-style:preserve-3d}
 .icon{width:50px;height:50px;flex:none;border-radius:13px;overflow:hidden;background:#171216;
   border:1px solid rgba(255,255,255,.06);display:grid;place-items:center;color:#767075;font-size:19px}
-.icon img{width:100%;height:100%;object-fit:cover;display:block}
+.icon img{width:100%;height:100%;object-fit:cover;display:block}.vcc-icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:#20b8d7;color:#08252b;font-weight:900;font-size:18px;letter-spacing:-.08em;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12)}.vcc-icon::after{content:"CC"}
 .info{min-width:0;flex:1}
 .top{display:flex;justify-content:space-between;gap:8px;font-size:9px;line-height:1}
 .status{font-weight:800;letter-spacing:.09em;color:#7d767a}
@@ -189,7 +189,7 @@ function setIcon(activity) {
   }
 
   const name = activity?.name || "";
-  if (!url && /VRChat Creator Companion/i.test(name)) url = "https://raw.githubusercontent.com/vrchat-community/creator-companion/main/WebApp/Dist/icon.png";
+  if (!url && /VRChat Creator Companion/i.test(name)) { icon.innerHTML = '<span class="vcc-icon"></span>'; return; }
   if (!url && /^VRChat$/i.test(name)) url = "https://hello.vrchat.com/favicon.ico";
   if (!url && /Spotify/i.test(name)) url = "https://open.spotify.com/favicon.ico";
   if (!url && /Steam/i.test(name)) url = "https://store.steampowered.com/favicon.ico";
