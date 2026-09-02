@@ -48,7 +48,7 @@ h1{font-size:30px;line-height:1;margin:0 0 22px;font-weight:800;text-shadow:0 0 
   will-change:transform;transform-style:preserve-3d}
 .icon{width:50px;height:50px;flex:none;border-radius:13px;overflow:hidden;background:#222222;
   border:1px solid #4a4a4a;display:grid;place-items:center;color:#767075;font-size:19px}
-.icon img{width:100%;height:100%;object-fit:cover;display:block}.vcc-icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:#20b8d7;color:#08252b;font-weight:900;font-size:18px;letter-spacing:-.08em;box-shadow:inset 0 -2px 0 #000000}.vcc-icon::after{content:"CC"}
+.icon img{width:100%;height:100%;object-fit:cover;display:block}.vcc-icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:#20b8d7;color:#08252b;font-weight:900;font-size:16px;letter-spacing:-.08em;box-shadow:inset 0 -2px 0 #000000}.vcc-icon::after{content:"CC"}
 .info{min-width:0;flex:1}
 .top{display:flex;justify-content:space-between;gap:8px;font-size:9px;line-height:1}
 .status{font-weight:800;letter-spacing:.09em;color:#7d767a}
@@ -85,7 +85,7 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 .works-counter{font-size:9px;color:#716a6f;letter-spacing:.08em;padding-bottom:3px}
 .works-stage{position:relative;display:grid;will-change:transform;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
 .work-card{
-  height:425px;
+  height:395px;
   border-radius:15px;
   overflow:hidden;
   border:1px solid #c8c8c8;
@@ -346,9 +346,11 @@ box-shadow:0 12px 35px #000000;will-change:transform}
   transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 .card:hover,
-.about:hover,
-.discord-contact:hover{
+.about:hover{
   transform:translateY(-3px) scale(1.025);
+}
+.discord-contact:hover{
+  transform:translateX(-50%) translateY(-2px) scale(1.02);
 }
 .works-arrow:hover{
   transform:translateY(-50%) scale(1.08);
@@ -359,11 +361,11 @@ box-shadow:0 12px 35px #000000;will-change:transform}
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-top:12px;
+  margin-top:9px;
 }
 .price-card{
-  min-height:62px;
-  padding:10px 13px;
+  min-height:54px;
+  padding:8px 11px;
   border:1px solid rgba(225,225,225,.22);
   border-radius:12px;
   background:linear-gradient(135deg,rgba(62,62,62,.64),rgba(18,18,18,.78));
