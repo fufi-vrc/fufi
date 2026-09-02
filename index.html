@@ -71,7 +71,7 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 .works-panel{
   contain:layout style paint;
   width:min(720px,100%);
-  padding:28px;
+  padding:28px 28px 18px;
   border:1px solid #c8c8c8;
   border-radius:20px;
   background:#222222;
@@ -85,7 +85,7 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 .works-counter{font-size:9px;color:#716a6f;letter-spacing:.08em;padding-bottom:3px}
 .works-stage{position:relative;display:grid;will-change:transform;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
 .work-card{
-  height:385px;
+  height:425px;
   border-radius:15px;
   overflow:hidden;
   border:1px solid #c8c8c8;
@@ -337,6 +337,62 @@ box-shadow:0 12px 35px #000000;will-change:transform}
   z-index:-1;
 }
 
+
+/* subtle hover lift */
+.card,
+.about,
+.works-arrow,
+.discord-contact{
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover,
+.about:hover,
+.discord-contact:hover{
+  transform:translateY(-3px) scale(1.025);
+}
+.works-arrow:hover{
+  transform:translateY(-50%) scale(1.08);
+}
+
+
+.price-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+.price-card{
+  min-height:62px;
+  padding:10px 13px;
+  border:1px solid rgba(225,225,225,.22);
+  border-radius:12px;
+  background:linear-gradient(135deg,rgba(62,62,62,.64),rgba(18,18,18,.78));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 7px 16px rgba(0,0,0,.24);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  color:#f2f2f2;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.price-card:hover{
+  transform:translateY(-2px) scale(1.018);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 20px rgba(0,0,0,.28);
+}
+.price-label{
+  font-size:8px;
+  line-height:1.25;
+  letter-spacing:.12em;
+  color:#a5a5a5;
+  font-weight:700;
+}
+.price-card strong{
+  font-size:18px;
+  line-height:1;
+  white-space:nowrap;
+  color:#fafafa;
+}
+
 </style>
 </head>
 <body>
@@ -369,6 +425,18 @@ box-shadow:0 12px 35px #000000;will-change:transform}
     </div>
 
     <div class="works-dots" id="worksDots" aria-label="Навигация по работам"></div>
+
+    <div class="price-row" aria-label="Стоимость работ">
+      <div class="price-card">
+        <span class="price-label">ПРОСТАЯ РАБОТА</span>
+        <strong>от $3</strong>
+      </div>
+      <div class="price-card">
+        <span class="price-label">БОЛЕЕ СЛОЖНАЯ</span>
+        <strong>от $7</strong>
+      </div>
+    </div>
+
   </section>
 
   <header class="hero" id="hero">
