@@ -29,7 +29,19 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 }
 #cursorGlow{display:none;}
 #vignette{display:none}
-main{position:relative;z-index:4;min-height:100vh;display:grid;grid-template-columns:minmax(500px,720px) minmax(360px,460px);align-items:center;justify-content:center;gap:clamp(70px,8vw,150px);padding:42px 56px;transform:scale(1.48);transform-origin:center centertransform:scale(1.48) translateY(70px);}
+main{
+  position:relative;
+  z-index:4;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:minmax(500px,720px) minmax(360px,460px);
+  align-items:center;
+  justify-content:center;
+  gap:clamp(70px,8vw,150px);
+  padding:26px 56px;
+  transform:scale(1.48);
+  transform-origin:center center;
+}
 .hero{position:relative;width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
 .avatar-wrap{position:relative;width:104px;height:104px;margin:0 auto 20px;will-change:transform}
 .avatar{width:104px;height:104px;border-radius:50%;display:block;object-fit:cover;
@@ -85,7 +97,7 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 .works-counter{font-size:9px;color:#716a6f;letter-spacing:.08em;padding-bottom:3px}
 .works-stage{position:relative;display:grid;will-change:transform;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
 .work-card{
-  height:395px;
+  height:350px;
   border-radius:15px;
   overflow:hidden;
   border:1px solid #c8c8c8;
@@ -361,10 +373,23 @@ box-shadow:0 12px 35px #000000;will-change:transform}
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-top:9px;
+  margin-top:7px;
 }
 .price-card{
-  min-height:54px;
+  min-height:50px;
+  padding:8px 11px;
+  border:1px solid rgba(225,225,225,.22);
+  border-radius:12px;
+  background:linear-gradient(135deg,rgba(62,62,62,.64),rgba(18,18,18,.78));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 7px 16px rgba(0,0,0,.24);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  color:#f2f2f2;
+  transition:transform .18s ease,box-shadow .18s ease;
+
+  min-height:50px;
   padding:8px 11px;
   border:1px solid rgba(225,225,225,.22);
   border-radius:12px;
@@ -430,7 +455,7 @@ box-shadow:0 12px 35px #000000;will-change:transform}
 
     <div class="price-row" aria-label="Стоимость работ">
       <div class="price-card">
-        <span class="price-label">ПРОСТАЯ РАБОТА</span>
+        <span class="price-label">ПРОСТАЯ ТЕКСТУРКА</span>
         <strong>от $3</strong>
       </div>
       <div class="price-card">
