@@ -29,7 +29,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden}
 }
 #cursorGlow{display:none;}
 #vignette{display:none}
-main{top:135px;
+main{top:0;
   position:relative;
   z-index:4;
   min-height:100vh;
@@ -39,7 +39,7 @@ main{top:135px;
   justify-content:center;
   gap:clamp(70px,8vw,150px);
   padding:26px 56px;
-  transform:scale(1.48);
+  transform:translateY(100px) scale(1.48);
   transform-origin:center center;
 }
 .hero{position:relative;width:min(460px,100%);text-align:center;will-change:transform;transform-style:preserve-3d}
