@@ -487,6 +487,67 @@ position:relative;top:0;}
   .works-panel,.hero{top:0 !important;}
 }
 </style>
+
+<style id="discord-copy-and-price-note">
+.discord-contact.social-contact{
+  border:1px solid rgba(230,230,230,.22)!important;
+  cursor:pointer!important;
+  font:inherit!important;
+  text-align:left!important;
+}
+.discord-contact.social-contact:hover{transform:translateY(-2px) scale(1.025)!important}
+.price-card-simple{
+  position:relative;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:center;
+  gap:2px;
+}
+.price-main{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.price-note{
+  display:block;
+  font-size:7px;
+  line-height:1;
+  color:#7f797d;
+  letter-spacing:.02em;
+}
+</style>
+
+<style id="portfolio-3col-fix">
+@media (min-width: 901px){
+  main{
+    grid-template-columns:minmax(760px,800px) minmax(390px,460px) !important;
+    gap:clamp(46px,4vw,70px) !important;
+  }
+  .works-panel{
+    width:min(800px,100%) !important;
+    margin-left:50px !important;
+    padding:26px 24px 16px !important;
+  }
+  .works-stage{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:12px !important;
+  }
+  .work-card{
+    height:300px !important;
+    border-radius:15px !important;
+  }
+  .work-card img{
+    padding:6px !important;
+  }
+  .works-dots{margin-top:12px !important}
+  .price-row{gap:12px !important;margin-top:6px !important}
+}
+@media (max-width: 900px){
+  .works-stage{grid-template-columns:1fr 1fr !important;}
+}
+</style>
 </head>
 <body>
 <div id="cursorGridField" aria-hidden="true"></div>
@@ -520,13 +581,16 @@ position:relative;top:0;}
     <div class="works-dots" id="worksDots" aria-label="Навигация по работам"></div>
 
     <div class="price-row" aria-label="Стоимость работ">
-      <div class="price-card">
-        <span class="price-label">ПРОСТАЯ ТЕКСТУРКА</span>
-        <strong>от $2</strong>
+      <div class="price-card price-card-simple">
+        <div class="price-main">
+          <span class="price-label">ПРОСТАЯ ТЕКСТУРКА</span>
+          <strong>от $2</strong>
+        </div>
+        <small class="price-note">иногда бесплатно</small>
       </div>
       <div class="price-card">
         <span class="price-label">БОЛЕЕ СЛОЖНАЯ</span>
-        <strong>от $6</strong>
+        <strong>от $5</strong>
       </div>
     </div>
 
@@ -562,12 +626,12 @@ position:relative;top:0;}
       <p>Желательно с рефом/фурсоной.<br>На базах по типу Rexouium, Mayu, Regulus, Novabeast и тому подобные аватары/эдиты аватаров.💎<br>Че угодно нарисую, наверно :p</p>
     </section>
     <div class="social-row" aria-label="Социальные сети">
-  <a class="discord-contact social-contact" href="https://discord.com/" target="_blank" rel="noopener" aria-label="Discord">
+  <button type="button" class="discord-contact social-contact" id="discordCopy" aria-label="Скопировать Discord ник">
     <div class="discord-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.5 5.1A16.2 16.2 0 0 0 15.7 4l-.5 1a13.8 13.8 0 0 0-6.4 0l-.5-1a16.2 16.2 0 0 0-3.8 1.1C2.1 8.7 1.4 12.2 1.7 15.7a15.8 15.8 0 0 0 4.7 2.4l1.1-1.5c-.6-.2-1.2-.5-1.7-.8l.4-.3a11.2 11.2 0 0 0 11.6 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.5a15.8 15.8 0 0 0 4.7-2.4c.3-4-.4-7.4-2.8-10.6ZM8.7 14.2c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm6.6 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z"/></svg>
     </div>
     <div class="discord-copy"><span>DISCORD</span><strong>.toppaz</strong></div>
-  </a>
+  </button>
   <a class="steam-contact social-contact" href="https://steamcommunity.com/id/toppaz/" target="_blank" rel="noopener" aria-label="Steam">
     <div class="steam-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1024,5 +1088,25 @@ renderWorks();
 
 </div>
 
+
+<script id="discord-copy-script">
+(() => {
+  const btn = document.getElementById("discordCopy");
+  if (!btn) return;
+  btn.addEventListener("click", async () => {
+    const original = btn.querySelector(".discord-copy");
+    const text = ".toppaz";
+    try {
+      await navigator.clipboard.writeText(text);
+      const strong = btn.querySelector(".discord-copy strong");
+      if (strong) {
+        const old = strong.textContent;
+        strong.textContent = "скопировано";
+        setTimeout(() => { strong.textContent = old; }, 900);
+      }
+    } catch (_) {}
+  });
+})();
+</script>
 </body>
 </html>
