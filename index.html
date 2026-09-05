@@ -535,7 +535,7 @@ position:relative;top:0;}
     gap:12px !important;
   }
   .work-card{
-    height:300px !important;
+    height:285px !important;
     border-radius:15px !important;
   }
   .work-card img{
@@ -546,6 +546,26 @@ position:relative;top:0;}
 }
 @media (max-width: 900px){
   .works-stage{grid-template-columns:1fr 1fr !important;}
+}
+</style>
+
+<style id="portfolio-height-fix">
+@media (min-width:901px){
+  .works-panel{
+    padding:34px 24px 28px !important;
+  }
+  .works-stage{
+    min-height:330px !important;
+  }
+  .work-card{
+    height:330px !important;
+  }
+  .works-dots{
+    margin-top:14px !important;
+  }
+  .price-row{
+    margin-top:10px !important;
+  }
 }
 </style>
 </head>
@@ -575,6 +595,7 @@ position:relative;top:0;}
       <button class="works-arrow left" id="worksPrev" aria-label="Предыдущее фото">‹</button>
       <div class="work-card"><img id="workA" src="works/work2.webp" alt="Пример работы 1" decoding="async"></div>
       <div class="work-card"><img id="workB" src="works/work3.webp" alt="Пример работы 2" decoding="async"></div>
+      <div class="work-card"><img id="workC" src="works/work4.webp" alt="Пример работы 3" decoding="async"></div>
       <button class="works-arrow right" id="worksNext" aria-label="Следующее фото">›</button>
     </div>
 
@@ -1032,6 +1053,7 @@ for (let i=0;i<24;i++) {
 const workImages = ["works/work2.webp","works/work3.webp","works/work4.webp"];
 const workA = document.getElementById("workA");
 const workB = document.getElementById("workB");
+const workC = document.getElementById("workC");
 const worksCounter = document.getElementById("worksCounter");
 const worksDots = document.getElementById("worksDots");
 let workIndex = 0;
@@ -1056,18 +1078,23 @@ function preload(src) {
 function renderWorks() {
   const a = workIndex;
   const b = (workIndex + 1) % workImages.length;
+  const c = (workIndex + 2) % workImages.length;
   workA.style.opacity = "0.18";
   workB.style.opacity = "0.18";
+  workC.style.opacity = "0.18";
 
   setTimeout(() => {
     workA.src = workImages[a];
     workB.src = workImages[b];
+    workC.src = workImages[c];
     workA.alt = "Пример работы " + (a + 1);
     workB.alt = "Пример работы " + (b + 1);
+    workC.alt = "Пример работы " + (c + 1);
     worksCounter.textContent =
       String(a + 1).padStart(2,"0") + " / " + String(workImages.length).padStart(2,"0");
     workA.onload = () => workA.style.opacity = "1";
     workB.onload = () => workB.style.opacity = "1";
+    workC.onload = () => workC.style.opacity = "1";
     [...worksDots.children].forEach((d,i)=>d.classList.toggle("active",i===a));
   }, 90);
 }
