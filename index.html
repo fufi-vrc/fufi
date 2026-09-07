@@ -167,19 +167,6 @@ position:relative;top:0;}
     0 9px 24px rgba(0,0,0,.32),
     0 0 8px rgba(255,255,255,.065);
 }
-.works-panel::after,.card::after,.about::after,.status-card::after{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:inherit;
-  pointer-events:none;
-  background:
-    linear-gradient(120deg,rgba(255,255,255,.035),transparent 28%,transparent 72%,rgba(255,255,255,.02));
-}
-.works-panel > *,.card > *,.about > *,.status-card > *{
-  position:relative;
-  z-index:1;
-}
 
 
 /* transparent liquid glass */
@@ -187,14 +174,6 @@ position:relative;top:0;}
   background:linear-gradient(135deg,rgba(35,94,140,.34),rgba(10,26,42,.50) 48%,rgba(5,17,29,.58)) !important;
   border-color:rgba(220,220,220,.28);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -1px 0 rgba(0,0,0,.28),0 10px 28px rgba(0,0,0,.28),0 0 9px rgba(255,255,255,.06);
-}
-.works-panel::after,.card::after,.about::after,.status-card::after{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:inherit;
-  pointer-events:none;
-  background:linear-gradient(120deg,rgba(255,255,255,.035),transparent 28%,transparent 72%,rgba(255,255,255,.02));
 }
 .work-card{
   overflow:hidden;
@@ -215,15 +194,6 @@ position:relative;top:0;}
     inset 0 1px 0 rgba(255,255,255,.10),
     inset 0 -1px 0 rgba(0,0,0,.42),
     0 10px 28px rgba(0,0,0,.36) !important;
-}
-.works-panel::after,.card::after,.about::after,.status-card::after{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:inherit;
-  pointer-events:none;
-  background:
-    linear-gradient(120deg,rgba(255,255,255,.035),transparent 30%,transparent 72%,rgba(255,255,255,.018));
 }
 
 
@@ -334,38 +304,6 @@ position:relative;top:0;}
   background:radial-gradient(ellipse,rgba(255,255,255,.055) 0%,rgba(255,255,255,.018) 35%,rgba(255,255,255,0) 72%);
   pointer-events:none;
   z-index:-1;
-}
-.works-panel::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:110%;
-  height:120%;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:radial-gradient(ellipse,rgba(255,255,255,.035) 0%,rgba(255,255,255,.012) 38%,rgba(255,255,255,0) 72%);
-  pointer-events:none;
-  z-index:-1;
-}
-
-
-/* subtle hover lift */
-.card,
-.about,
-.works-arrow,
-.discord-contact{
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.card:hover,
-.about:hover{
-  transform:translateY(-3px) scale(1.025);
-}
-.discord-contact:hover{
-  transform:translateX(-50%) translateY(-2px) scale(1.02);
-}
-.works-arrow:hover{
-  transform:translateY(-50%) scale(1.08);
 }
 
 
@@ -663,49 +601,6 @@ body.pc-mode #pcView{position:fixed;top:50%;left:50%;transform:translate(-50%,-5
 .pc-value{font-size:15px !important}
 .pc-row{min-height:58px !important}
 </style>
-
-<style id="ios-hover-strong">
-/* Stronger iOS-style hover */
-.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
-  transition:
-    transform .42s cubic-bezier(.2,.9,.2,1),
-    box-shadow .42s cubic-bezier(.2,.9,.2,1),
-    border-color .32s ease,
-    background .32s ease !important;
-  will-change:transform,box-shadow;
-}
-.works-panel:hover,.card:hover,.about:hover,.status-card:hover,.price-card:hover,.social-contact:hover,.pc-row:hover{
-  transform:translateY(-7px) scale(1.028) !important;
-  border-color:rgba(255,255,255,.68) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(0,0,0,.38),
-    0 22px 48px rgba(0,0,0,.40),
-    0 0 30px rgba(255,255,255,.16),
-    0 0 0 1px rgba(255,255,255,.08) !important;
-}
-#pcView:hover{
-  transform:translate(-50%,-50%) scale(1.035) !important;
-  border-color:rgba(255,255,255,.68) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(0,0,0,.38),
-    0 24px 52px rgba(0,0,0,.42),
-    0 0 34px rgba(255,255,255,.17),
-    0 0 0 1px rgba(255,255,255,.08) !important;
-}
-.pc-row:hover{
-  transform:translateY(-4px) scale(1.018) !important;
-  border-color:rgba(255,255,255,.52) !important;
-}
-.social-contact:hover,.price-card:hover{
-  transform:translateY(-5px) scale(1.025) !important;
-}
-@media (prefers-reduced-motion: reduce){
-  .works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{transition:none !important;}
-}
-</style>
-
 
 <style id="page-pop-transition">
 /* Clean pop transition: only the page being entered animates. */
