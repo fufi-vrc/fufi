@@ -97,7 +97,7 @@ position:relative;top:0;}
 .works-counter{font-size:9px;color:#716a6f;letter-spacing:.08em;padding-bottom:3px}
 .works-stage{position:relative;display:grid;will-change:transform;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
 .work-card{
-  height:350px;
+  height:370px;
   border-radius:15px;
   overflow:hidden;
   border:1px solid #c8c8c8;
@@ -487,6 +487,16 @@ position:relative;top:0;}
   .works-panel,.hero{top:0 !important;}
 }
 </style>
+<style id="final-site-layout-fix">
+@media (min-width:901px){
+  .works-panel{
+    width:min(800px,100%) !important;
+    padding:28px 28px 18px !important;
+    margin-left:50px !important;
+  }
+  .work-card{height:350px !important;}
+}
+</style>
 
 <style id="discord-copy-and-price-note">
 .discord-contact.social-contact{
@@ -528,14 +538,14 @@ position:relative;top:0;}
   .works-panel{
     width:min(800px,100%) !important;
     margin-left:50px !important;
-    padding:26px 24px 16px !important;
+    padding:28px 28px 18px !important;
   }
   .works-stage{
     grid-template-columns:repeat(3,minmax(0,1fr)) !important;
     gap:12px !important;
   }
   .work-card{
-    height:285px !important;
+    height:350px !important;
     border-radius:15px !important;
   }
   .work-card img{
@@ -549,25 +559,441 @@ position:relative;top:0;}
 }
 </style>
 
-<style id="portfolio-height-fix">
-@media (min-width:901px){
-  .works-panel{
-    padding:34px 24px 28px !important;
-  }
-  .works-stage{
-    min-height:330px !important;
-  }
-  .work-card{
-    height:330px !important;
-  }
-  .works-dots{
-    margin-top:14px !important;
-  }
-  .price-row{
-    margin-top:10px !important;
+<style id="pc-switcher-style">
+.page-switcher{
+  position:fixed;
+  top:24px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  display:flex;
+  align-items:center;
+  padding:4px;
+  border:1px solid rgba(220,220,220,.34);
+  border-radius:999px;
+  background:linear-gradient(145deg,rgba(34,34,34,.94),rgba(12,12,12,.94));
+  box-shadow:0 10px 30px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.page-switcher button{
+  border:0;
+  background:transparent;
+  color:#8f898d;
+  min-width:112px;
+  height:38px;
+  padding:0 18px;
+  border-radius:999px;
+  font:800 10px/1 Inter,Arial,sans-serif;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:transform .18s ease,background .22s ease,color .22s ease,box-shadow .22s ease;
+}
+.page-switcher button:hover{color:#fff;transform:scale(1.03)}
+.page-switcher button.active{
+  color:#111;
+  background:linear-gradient(145deg,#f5f5f5,#c8c8c8);
+  box-shadow:0 4px 14px rgba(255,255,255,.12),inset 0 1px 0 rgba(255,255,255,.9);
+}
+.view{transition:opacity .26s ease,transform .26s ease}
+.view.hidden{
+  opacity:0;
+  transform:translateY(12px) scale(.985);
+  pointer-events:none;
+  position:absolute;
+  inset:0;
+}
+#pcView{
+  position:relative;
+  width:min(760px,calc(100vw - 40px));
+  margin:0 auto;
+  padding:34px 34px 32px;
+  border:1px solid rgba(220,220,220,.30);
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(78,78,78,.46),rgba(35,35,35,.52) 48%,rgba(10,10,10,.58));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -1px 0 rgba(0,0,0,.42),0 18px 55px rgba(0,0,0,.44);
+}
+#pcView::after{
+  content:"";position:absolute;inset:1px;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(120deg,rgba(255,255,255,.035),transparent 30%,transparent 72%,rgba(255,255,255,.018));
+}
+.pc-kicker{position:relative;z-index:1;text-align:center;color:#bdb7bb;font-size:9px;letter-spacing:.16em;font-weight:800}
+.pc-title{position:relative;z-index:1;margin:7px 0 26px;text-align:center;font-size:30px;line-height:1;font-weight:800;color:#f3f0f1}
+.pc-list{position:relative;z-index:1;display:grid;gap:9px}
+.pc-row{
+  display:grid;grid-template-columns:185px minmax(0,1fr);align-items:center;min-height:58px;padding:0 20px;
+  border:1px solid rgba(220,220,220,.10);border-radius:11px;background:rgba(10,10,11,.72);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+.pc-label{color:#8d878b;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.pc-value{color:#ece8ea;font-size:11px;font-weight:700;text-align:right;line-height:1.25}
+.pc-row:hover{background:rgba(28,28,30,.82);border-color:rgba(220,220,220,.18)}
+body.pc-mode main{display:none !important}
+body.pc-mode{overflow:hidden}
+body.pc-mode #pcView{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);margin:0;z-index:25}
+@media(max-width:700px){
+  .page-switcher{top:14px}
+  .page-switcher button{min-width:96px;height:34px;padding:0 14px}
+  #pcView{padding:22px;width:min(640px,calc(100vw - 28px))}
+  .pc-row{grid-template-columns:1fr;gap:5px;padding:11px 14px}
+  .pc-value{text-align:left}
+}
+</style>
+
+<style id="desktop-main-position-fix">
+@media (min-width:701px){
+  main{
+    min-height:100vh !important;
+    height:100vh !important;
+    padding:26px 56px !important;
+    align-items:center !important;
+    transform:translateY(-430px) scale(1.35) !important;
+    transform-origin:center center !important;
+    top:0 !important;
   }
 }
 </style>
+
+<style id="panel-white-black-hover-fix">
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
+  background:linear-gradient(145deg,rgba(255,255,255,.17) 0%,rgba(92,92,92,.12) 26%,rgba(16,16,18,.78) 72%,rgba(5,5,6,.92) 100%) !important;
+}
+.pc-kicker{font-size:11px !important}
+.pc-title{font-size:32px !important}
+.pc-label{font-size:13px !important}
+.pc-value{font-size:15px !important}
+.pc-row{min-height:58px !important}
+</style>
+
+<style id="ios-hover-strong">
+/* Stronger iOS-style hover */
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
+  transition:
+    transform .42s cubic-bezier(.2,.9,.2,1),
+    box-shadow .42s cubic-bezier(.2,.9,.2,1),
+    border-color .32s ease,
+    background .32s ease !important;
+  will-change:transform,box-shadow;
+}
+.works-panel:hover,.card:hover,.about:hover,.status-card:hover,.price-card:hover,.social-contact:hover,.pc-row:hover{
+  transform:translateY(-7px) scale(1.028) !important;
+  border-color:rgba(255,255,255,.68) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 22px 48px rgba(0,0,0,.40),
+    0 0 30px rgba(255,255,255,.16),
+    0 0 0 1px rgba(255,255,255,.08) !important;
+}
+#pcView:hover{
+  transform:translate(-50%,-50%) scale(1.035) !important;
+  border-color:rgba(255,255,255,.68) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 24px 52px rgba(0,0,0,.42),
+    0 0 34px rgba(255,255,255,.17),
+    0 0 0 1px rgba(255,255,255,.08) !important;
+}
+.pc-row:hover{
+  transform:translateY(-4px) scale(1.018) !important;
+  border-color:rgba(255,255,255,.52) !important;
+}
+.social-contact:hover,.price-card:hover{
+  transform:translateY(-5px) scale(1.025) !important;
+}
+@media (prefers-reduced-motion: reduce){
+  .works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{transition:none !important;}
+}
+</style>
+
+
+<style id="page-pop-transition">
+/* Clean pop transition: only the page being entered animates. */
+main.pop-animate{
+  animation:mainPagePop .52s cubic-bezier(.18,.88,.24,1.02) both;
+  transform-origin:center center !important;
+}
+#pcView.pop-animate{
+  animation:pcPagePop .52s cubic-bezier(.18,.88,.24,1.02) both;
+  transform-origin:center center !important;
+}
+@keyframes mainPagePop{
+  0%{opacity:0;transform:translateY(-410px) scale(.78) !important;}
+  62%{opacity:1;transform:translateY(-410px) scale(1.05) !important;}
+  100%{opacity:1;transform:translateY(-430px) scale(1.35) !important;}
+}
+@keyframes pcPagePop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.78) !important;}
+  62%{opacity:1;transform:translate(-50%,-50%) scale(1.035) !important;}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1) !important;}
+}
+@media(max-width:700px){
+  main.pop-animate{animation:mainPagePopMobile .52s cubic-bezier(.18,.88,.24,1.02) both;}
+}
+@keyframes mainPagePopMobile{
+  0%{opacity:0;transform:scale(.78) !important;}
+  62%{opacity:1;transform:scale(1.035) !important;}
+  100%{opacity:1;transform:scale(1) !important;}
+}
+@media (prefers-reduced-motion: reduce){
+  main.pop-animate,#pcView.pop-animate{animation:none !important;}
+}
+</style>
+<style id="gallery-layout-user-fix">
+@media (min-width:901px){
+  main{
+    grid-template-columns:minmax(850px,850px) minmax(390px,460px) !important;
+  }
+  .works-panel{
+    width:850px !important;
+    margin-left:0 !important;
+  }
+  .works-stage{
+    width:100% !important;
+    overflow:hidden !important;
+  }
+  .works-viewport{
+    width:744px !important;
+    max-width:100% !important;
+    margin:0 auto !important;
+    overflow:hidden !important;
+  }
+  .work-card{
+    flex:0 0 240px !important;
+    width:240px !important;
+  }
+  .works-track{
+    width:max-content !important;
+  }
+}
+</style>
+<style id="gallery-static-fix">
+.works-panel{overflow:visible !important;}
+.works-stage{position:relative !important; overflow:hidden !important; width:100% !important;}
+.works-track{display:grid !important; grid-template-columns:repeat(3,minmax(0,1fr)) !important; gap:12px !important; width:100% !important; transform:none !important; transition:none !important; animation:none !important;}
+.work-card{min-width:0 !important; width:auto !important; transform:none !important; animation:none !important; transition:none !important;}
+.work-card img{transform:none !important; animation:none !important; transition:none !important;}
+.gallery-prev,.gallery-next{position:absolute !important; top:50% !important; transform:translateY(-50%) !important; z-index:50 !important; margin:0 !important;}
+.gallery-prev{left:8px !important;}
+.gallery-next{right:8px !important;}
+</style><style id="gallery-final-layout">
+@media (min-width:901px){
+  .works-panel{
+    width:850px !important;
+    box-sizing:border-box !important;
+  }
+  .works-stage{
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    height:350px !important;
+    overflow:hidden !important;
+  }
+  .works-viewport{
+    display:block !important;
+    width:744px !important;
+    height:350px !important;
+    margin:0 auto !important;
+    overflow:hidden !important;
+  }
+  .works-track{
+    display:grid !important;
+    grid-template-columns:repeat(3, 240px) !important;
+    grid-template-rows:350px !important;
+    gap:12px !important;
+    width:744px !important;
+    height:350px !important;
+    margin:0 !important;
+    padding:0 !important;
+    transform:none !important;
+    transition:none !important;
+    animation:none !important;
+  }
+  .work-card{
+    width:240px !important;
+    min-width:240px !important;
+    max-width:240px !important;
+    height:350px !important;
+    min-height:350px !important;
+    max-height:350px !important;
+    box-sizing:border-box !important;
+    transform:none !important;
+    transition:none !important;
+    animation:none !important;
+  }
+  .work-card img{
+    width:100% !important;
+    height:100% !important;
+    transform:none !important;
+    transition:none !important;
+    animation:none !important;
+  }
+  .works-arrow.left{left:8px !important;}
+  .works-arrow.right{right:8px !important;}
+}
+</style>
+
+<style id="cool-effects">
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{position:relative;overflow:hidden;}
+.works-panel::before,.card::before,.about::before,.status-card::before,.price-card::before,.social-contact::before,#pcView::before,.pc-row::before{content:"";position:absolute;inset:-60%;background:linear-gradient(115deg,transparent 43%,rgba(255,255,255,.13) 50%,transparent 57%);transform:translateX(-45%) rotate(8deg);opacity:0;pointer-events:none;z-index:2;}
+.works-panel:hover::before,.card:hover::before,.about:hover::before,.status-card:hover::before,.price-card:hover::before,.social-contact:hover::before,#pcView:hover::before,.pc-row:hover::before{animation:panelShine .85s cubic-bezier(.2,.7,.2,1) 1;}
+@keyframes panelShine{0%{transform:translateX(-45%) rotate(8deg);opacity:0}18%{opacity:1}100%{transform:translateX(45%) rotate(8deg);opacity:0}}
+.works-arrow{position:absolute;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease!important;}
+.works-arrow:hover{transform:translateY(-50%) scale(1.1)!important;box-shadow:0 0 18px rgba(255,255,255,.22),0 8px 24px #000!important;border-color:rgba(255,255,255,.8)!important;}
+</style>
+
+<style id="clean-hover-effects-v2">
+/* Clean interactive effects: no overlay sweep over the content. */
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  transition:
+    transform .34s cubic-bezier(.2,.8,.2,1),
+    box-shadow .34s cubic-bezier(.2,.8,.2,1),
+    border-color .28s ease !important;
+}
+
+/* Disable the old full-panel gradient sweep that was covering the cards. */
+.works-panel::before,.card::before,.about::before,.status-card::before,
+.price-card::before,.social-contact::before,#pcView::before,.pc-row::before{
+  opacity:0 !important;
+  animation:none !important;
+  transition:none !important;
+  pointer-events:none !important;
+}
+
+/* Small glass highlight that stays inside the border. */
+.works-panel::after,.card::after,.about::after,.status-card::after,
+.price-card::after,.social-contact::after,#pcView::after,.pc-row::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  border-radius:inherit;
+  background:
+    linear-gradient(120deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0) 42%,
+      rgba(255,255,255,.09) 50%,
+      rgba(255,255,255,0) 58%,
+      rgba(255,255,255,0) 100%);
+  background-size:240% 100%;
+  background-position:120% 0;
+  opacity:0;
+  transition:opacity .25s ease,background-position .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.works-panel:hover::after,.card:hover::after,.about:hover::after,
+.status-card:hover::after,.price-card:hover::after,.social-contact:hover::after,
+#pcView:hover::after,.pc-row:hover::after{
+  opacity:1;
+  background-position:-20% 0;
+}
+
+.works-panel:hover,.card:hover,.about:hover,.status-card:hover,
+.price-card:hover,.social-contact:hover,.pc-row:hover{
+  transform:translateY(-5px) scale(1.018) !important;
+  border-color:rgba(255,255,255,.65) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 14px 38px rgba(0,0,0,.34),
+    0 0 22px rgba(255,255,255,.13) !important;
+}
+
+#pcView:hover{
+  transform:translate(-50%,-50%) scale(1.025) !important;
+  border-color:rgba(255,255,255,.65) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 20px 46px rgba(0,0,0,.38),
+    0 0 26px rgba(255,255,255,.14) !important;
+}
+
+/* Keep gallery mechanics completely static: only image content changes. */
+.works-stage,.works-viewport,.works-track,.work-card,.work-card img{
+  animation:none !important;
+  transition:none !important;
+}
+.works-track{
+  transform:none !important;
+}
+.work-card:hover{
+  transform:none !important;
+}
+.work-card img{
+  filter:none !important;
+}
+
+/* Controls get their own small feedback without moving the gallery. */
+.works-arrow,.work-dot,#mainTab,#pcTab{
+  transition:
+    transform .2s ease,
+    background-color .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease !important;
+}
+.works-arrow:hover{
+  transform:translateY(-50%) scale(1.08) !important;
+  box-shadow:0 0 16px rgba(255,255,255,.2);
+}
+.works-arrow:active{
+  transform:translateY(-50%) scale(.94) !important;
+}
+.work-dot:hover{
+  transform:scale(1.2) !important;
+}
+#mainTab:hover,#pcTab:hover{
+  transform:scale(1.035);
+  box-shadow:0 0 14px rgba(255,255,255,.16);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row,
+  .works-panel::after,.card::after,.about::after,.status-card::after,
+  .price-card::after,.social-contact::after,#pcView::after,.pc-row::after,
+  .works-arrow,.work-dot,#mainTab,#pcTab{
+    transition:none !important;
+  }
+}
+</style>
+
+
+<style id="clean-site-effect">
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
+  position:relative;
+}
+.works-panel:hover,.card:hover,.about:hover,.status-card:hover,.price-card:hover,.social-contact:hover,#pcView:hover,.pc-row:hover{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 20px 46px rgba(0,0,0,.42),
+    0 0 22px rgba(255,255,255,.13) !important;
+}
+.works-arrow,.page-switcher button,.work-dot{
+  transition:transform .22s ease,box-shadow .22s ease,background .22s ease !important;
+}
+.works-arrow:hover{
+  transform:translateY(-50%) scale(1.12) !important;
+  box-shadow:0 0 18px rgba(255,255,255,.22),inset 0 0 10px rgba(255,255,255,.08) !important;
+}
+.page-switcher button:hover{transform:scale(1.06) !important;}
+.work-dot:hover{transform:scale(1.35) !important;}
+</style>
+
+<style id="ambient-stars-effect">
+#ambientStars{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden;}
+.ambient-star{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.75);box-shadow:0 0 7px rgba(255,255,255,.55);opacity:0;animation:starTwinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay);}
+@keyframes starTwinkle{0%,100%{opacity:0;transform:scale(.65)}50%{opacity:var(--op);transform:scale(1.35)}}
+</style>
+<script id="ambient-stars-script">
+(()=>{
+ const field=document.createElement('div'); field.id='ambientStars'; document.body.appendChild(field);
+ const count=Math.min(42,Math.max(24,Math.floor(innerWidth/42)));
+ for(let i=0;i<count;i++){const e=document.createElement('i');e.className='ambient-star';e.style.left=(Math.random()*100)+'%';e.style.top=(Math.random()*100)+'%';e.style.setProperty('--dur',(3+Math.random()*5)+'s');e.style.setProperty('--delay',(-Math.random()*7)+'s');e.style.setProperty('--op',(0.28+Math.random()*0.55).toFixed(2));field.appendChild(e)}
+})();
+</script>
 </head>
 <body>
 <div id="cursorGridField" aria-hidden="true"></div>
@@ -581,6 +1007,23 @@ position:relative;top:0;}
 <div id="cursorGlow"></div>
 <div id="vignette"></div>
 
+<nav class="page-switcher" aria-label="Переключение страниц">
+  <button id="mainTab" class="active" type="button">Главное</button>
+  <button id="pcTab" type="button">Мой ПК</button>
+</nav>
+
+<section id="pcView" class="view hidden" aria-label="Характеристики компьютера">
+  <div class="pc-kicker">СИСТЕМА</div>
+  <h2 class="pc-title">ХАРАКТЕРИСТИКИ ПК</h2>
+  <div class="pc-list">
+    <div class="pc-row"><span class="pc-label">Motherboard</span><span class="pc-value">SOYO X99</span></div>
+    <div class="pc-row"><span class="pc-label">Processor</span><span class="pc-value">Intel Xeon E5-2676 v3</span></div>
+    <div class="pc-row"><span class="pc-label">Memory</span><span class="pc-value">32GB DDR3</span></div>
+    <div class="pc-row"><span class="pc-label">Graphics Card</span><span class="pc-value">EVGA RTX 3070</span></div>
+    <div class="pc-row"><span class="pc-label">Storage</span><span class="pc-value">Intel SSD D3-S4510 960GB</span></div>
+  </div>
+</section>
+
 <main>
   <section class="works-panel" id="worksPanel" aria-label="Примеры работ">
     <div class="works-head">
@@ -593,9 +1036,13 @@ position:relative;top:0;}
 
     <div class="works-stage" id="worksStage">
       <button class="works-arrow left" id="worksPrev" aria-label="Предыдущее фото">‹</button>
-      <div class="work-card"><img id="workA" src="works/work2.webp" alt="Пример работы 1" decoding="async"></div>
-      <div class="work-card"><img id="workB" src="works/work3.webp" alt="Пример работы 2" decoding="async"></div>
-      <div class="work-card"><img id="workC" src="works/work4.webp" alt="Пример работы 3" decoding="async"></div>
+      <div class="works-viewport">
+        <div class="works-track" id="worksTrack">
+          <div class="work-card"><img src="works/work2.webp" alt="Пример работы 1" decoding="sync" fetchpriority="high"></div>
+          <div class="work-card"><img src="works/work3.webp" alt="Пример работы 2" decoding="sync"></div>
+          <div class="work-card"><img src="works/work4.webp" alt="Пример работы 3" decoding="sync"></div>
+        </div>
+      </div>
       <button class="works-arrow right" id="worksNext" aria-label="Следующее фото">›</button>
     </div>
 
@@ -1049,68 +1496,60 @@ for (let i=0;i<24;i++) {
   d.style.top = (Math.random()*100) + "%";
   dots.appendChild(d);
 }
-// Work gallery: two square-ish cards, one-step circular navigation.
+// Work gallery: simple 3-card carousel, no animation.
 const workImages = ["works/work2.webp","works/work3.webp","works/work4.webp"];
-const workA = document.getElementById("workA");
-const workB = document.getElementById("workB");
-const workC = document.getElementById("workC");
+const worksTrack = document.getElementById("worksTrack");
 const worksCounter = document.getElementById("worksCounter");
 const worksDots = document.getElementById("worksDots");
+const worksPrev = document.getElementById("worksPrev");
+const worksNext = document.getElementById("worksNext");
+
 let workIndex = 0;
 
-function buildWorkDots() {
-  worksDots.innerHTML = "";
-  workImages.forEach((_, i) => {
-    const b = document.createElement("button");
-    b.className = "work-dot" + (i === 0 ? " active" : "");
-    b.setAttribute("aria-label", "Показать работу " + (i + 1));
-    b.addEventListener("click", () => { workIndex = i; renderWorks(); });
-    worksDots.appendChild(b);
+function setImage(card, index) {
+  const img = card?.querySelector("img");
+  if (!img) return;
+  img.src = workImages[index];
+  img.alt = `Пример работы ${index + 1}`;
+}
+
+function updateMeta() {
+  worksCounter.textContent =
+    String(workIndex + 1).padStart(2,"0") + " / " +
+    String(workImages.length).padStart(2,"0");
+  [...worksDots.children].forEach((d,i) =>
+    d.classList.toggle("active", i === workIndex)
+  );
+}
+
+function renderGallery() {
+  const cards = [...worksTrack.querySelectorAll(".work-card")];
+  for (let i = 0; i < 3; i++) {
+    setImage(cards[i], (workIndex + i) % workImages.length);
+  }
+  updateMeta();
+}
+
+function moveGallery(direction) {
+  workIndex = (workIndex + (direction > 0 ? 1 : -1) + workImages.length) % workImages.length;
+  renderGallery();
+}
+
+workImages.forEach((_, i) => {
+  const b = document.createElement("button");
+  b.className = "work-dot";
+  b.setAttribute("aria-label", "Показать работу " + (i + 1));
+  b.addEventListener("click", () => {
+    workIndex = i;
+    renderGallery();
   });
-}
-
-function preload(src) {
-  const im = new Image();
-  im.src = src;
-  return im;
-}
-
-function renderWorks() {
-  const a = workIndex;
-  const b = (workIndex + 1) % workImages.length;
-  const c = (workIndex + 2) % workImages.length;
-  workA.style.opacity = "0.18";
-  workB.style.opacity = "0.18";
-  workC.style.opacity = "0.18";
-
-  setTimeout(() => {
-    workA.src = workImages[a];
-    workB.src = workImages[b];
-    workC.src = workImages[c];
-    workA.alt = "Пример работы " + (a + 1);
-    workB.alt = "Пример работы " + (b + 1);
-    workC.alt = "Пример работы " + (c + 1);
-    worksCounter.textContent =
-      String(a + 1).padStart(2,"0") + " / " + String(workImages.length).padStart(2,"0");
-    workA.onload = () => workA.style.opacity = "1";
-    workB.onload = () => workB.style.opacity = "1";
-    workC.onload = () => workC.style.opacity = "1";
-    [...worksDots.children].forEach((d,i)=>d.classList.toggle("active",i===a));
-  }, 90);
-}
-
-document.getElementById("worksPrev").addEventListener("click", () => {
-  workIndex = (workIndex - 1 + workImages.length) % workImages.length;
-  renderWorks();
+  worksDots.appendChild(b);
 });
-document.getElementById("worksNext").addEventListener("click", () => {
-  workIndex = (workIndex + 1) % workImages.length;
-  renderWorks();
-});
-buildWorkDots();
-workImages.forEach(preload);
-renderWorks();
 
+worksPrev.addEventListener("click", () => moveGallery(-1));
+worksNext.addEventListener("click", () => moveGallery(1));
+
+renderGallery();
 </script>
 
 </div>
@@ -1133,6 +1572,58 @@ renderWorks();
       }
     } catch (_) {}
   });
+})();
+</script>
+
+<script id="pc-switcher-script">
+(() => {
+  const mainTab = document.getElementById("mainTab");
+  const pcTab = document.getElementById("pcTab");
+  const pcView = document.getElementById("pcView");
+  const mainView = document.querySelector("main");
+  if (!mainTab || !pcTab || !pcView || !mainView) return;
+
+  let switchToken = 0;
+  const stopPop = (el) => {
+    el.classList.remove("pop-animate");
+    el.style.removeProperty("animation");
+  };
+
+  const replay = (el) => {
+    stopPop(el);
+    void el.offsetWidth;
+    el.classList.add("pop-animate");
+    const token = ++switchToken;
+    const done = () => {
+      if (token === switchToken) stopPop(el);
+    };
+    el.addEventListener("animationend", done, {once:true});
+  };
+
+  const setMode = (pc) => {
+    // Cancel any in-flight page animation first, so rapid clicks never reveal the hidden page.
+    stopPop(mainView);
+    stopPop(pcView);
+    ++switchToken;
+
+    if (pc) {
+      pcView.classList.remove("hidden");
+      document.body.classList.add("pc-mode");
+      mainTab.classList.remove("active");
+      pcTab.classList.add("active");
+      requestAnimationFrame(() => replay(pcView));
+    } else {
+      // Hide PC completely before bringing the main page back.
+      pcView.classList.add("hidden");
+      document.body.classList.remove("pc-mode");
+      mainTab.classList.add("active");
+      pcTab.classList.remove("active");
+      requestAnimationFrame(() => replay(mainView));
+    }
+  };
+
+  mainTab.addEventListener("click", () => setMode(false));
+  pcTab.addEventListener("click", () => setMode(true));
 })();
 </script>
 </body>
