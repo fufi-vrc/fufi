@@ -97,7 +97,7 @@ position:relative;top:0;}
 .works-counter{font-size:9px;color:#716a6f;letter-spacing:.08em;padding-bottom:3px}
 .works-stage{position:relative;display:grid;will-change:transform;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
 .work-card{
-  height:370px;
+  height:350px;
   border-radius:15px;
   overflow:hidden;
   border:1px solid #c8c8c8;
@@ -167,6 +167,19 @@ position:relative;top:0;}
     0 9px 24px rgba(0,0,0,.32),
     0 0 8px rgba(255,255,255,.065);
 }
+.works-panel::after,.card::after,.about::after,.status-card::after{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:inherit;
+  pointer-events:none;
+  background:
+    linear-gradient(120deg,rgba(255,255,255,.035),transparent 28%,transparent 72%,rgba(255,255,255,.02));
+}
+.works-panel > *,.card > *,.about > *,.status-card > *{
+  position:relative;
+  z-index:1;
+}
 
 
 /* transparent liquid glass */
@@ -174,6 +187,14 @@ position:relative;top:0;}
   background:linear-gradient(135deg,rgba(35,94,140,.34),rgba(10,26,42,.50) 48%,rgba(5,17,29,.58)) !important;
   border-color:rgba(220,220,220,.28);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -1px 0 rgba(0,0,0,.28),0 10px 28px rgba(0,0,0,.28),0 0 9px rgba(255,255,255,.06);
+}
+.works-panel::after,.card::after,.about::after,.status-card::after{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(120deg,rgba(255,255,255,.035),transparent 28%,transparent 72%,rgba(255,255,255,.02));
 }
 .work-card{
   overflow:hidden;
@@ -194,6 +215,15 @@ position:relative;top:0;}
     inset 0 1px 0 rgba(255,255,255,.10),
     inset 0 -1px 0 rgba(0,0,0,.42),
     0 10px 28px rgba(0,0,0,.36) !important;
+}
+.works-panel::after,.card::after,.about::after,.status-card::after{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:inherit;
+  pointer-events:none;
+  background:
+    linear-gradient(120deg,rgba(255,255,255,.035),transparent 30%,transparent 72%,rgba(255,255,255,.018));
 }
 
 
@@ -304,6 +334,38 @@ position:relative;top:0;}
   background:radial-gradient(ellipse,rgba(255,255,255,.055) 0%,rgba(255,255,255,.018) 35%,rgba(255,255,255,0) 72%);
   pointer-events:none;
   z-index:-1;
+}
+.works-panel::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:110%;
+  height:120%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,255,255,.035) 0%,rgba(255,255,255,.012) 38%,rgba(255,255,255,0) 72%);
+  pointer-events:none;
+  z-index:-1;
+}
+
+
+/* subtle hover lift */
+.card,
+.about,
+.works-arrow,
+.discord-contact{
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover,
+.about:hover{
+  transform:translateY(-3px) scale(1.025);
+}
+.discord-contact:hover{
+  transform:translateX(-50%) translateY(-2px) scale(1.02);
+}
+.works-arrow:hover{
+  transform:translateY(-50%) scale(1.08);
 }
 
 
@@ -595,12 +657,69 @@ body.pc-mode #pcView{position:fixed;top:50%;left:50%;transform:translate(-50%,-5
 .works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
   background:linear-gradient(145deg,rgba(255,255,255,.17) 0%,rgba(92,92,92,.12) 26%,rgba(16,16,18,.78) 72%,rgba(5,5,6,.92) 100%) !important;
 }
+.works-panel::before,.card::before,.about::before,.status-card::before,.price-card::before,.social-contact::before,#pcView::before,.pc-row::before{
+  opacity:0;
+  background:linear-gradient(115deg,rgba(255,255,255,.92),rgba(255,255,255,.14) 24%,transparent 52%,rgba(255,255,255,.45) 78%,rgba(255,255,255,.92)) !important;
+  background-size:220% 220% !important;
+  transition:opacity .34s ease,background-position 1s cubic-bezier(.22,1,.36,1) !important;
+}
+.works-panel:hover::before,.card:hover::before,.about:hover::before,.status-card:hover::before,.price-card:hover::before,.social-contact:hover::before,#pcView:hover::before,.pc-row:hover::before{
+  opacity:1 !important;
+  background-position:100% 0 !important;
+}
 .pc-kicker{font-size:11px !important}
 .pc-title{font-size:32px !important}
 .pc-label{font-size:13px !important}
 .pc-value{font-size:15px !important}
 .pc-row{min-height:58px !important}
 </style>
+
+<style id="ios-hover-strong">
+/* Stronger iOS-style hover */
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
+  transition:
+    transform .42s cubic-bezier(.2,.9,.2,1),
+    box-shadow .42s cubic-bezier(.2,.9,.2,1),
+    border-color .32s ease,
+    background .32s ease !important;
+  will-change:transform,box-shadow;
+}
+.works-panel:hover,.card:hover,.about:hover,.status-card:hover,.price-card:hover,.social-contact:hover,.pc-row:hover{
+  transform:translateY(-7px) scale(1.028) !important;
+  border-color:rgba(255,255,255,.68) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 22px 48px rgba(0,0,0,.40),
+    0 0 30px rgba(255,255,255,.16),
+    0 0 0 1px rgba(255,255,255,.08) !important;
+}
+#pcView:hover{
+  transform:translate(-50%,-50%) scale(1.035) !important;
+  border-color:rgba(255,255,255,.68) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 24px 52px rgba(0,0,0,.42),
+    0 0 34px rgba(255,255,255,.17),
+    0 0 0 1px rgba(255,255,255,.08) !important;
+}
+.works-panel:hover::before,.card:hover::before,.about:hover::before,.status-card:hover::before,.price-card:hover::before,.social-contact:hover::before,#pcView:hover::before,.pc-row:hover::before{
+  opacity:1 !important;
+  background-position:100% 0 !important;
+}
+.pc-row:hover{
+  transform:translateY(-4px) scale(1.018) !important;
+  border-color:rgba(255,255,255,.52) !important;
+}
+.social-contact:hover,.price-card:hover{
+  transform:translateY(-5px) scale(1.025) !important;
+}
+@media (prefers-reduced-motion: reduce){
+  .works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{transition:none !important;}
+}
+</style>
+
 
 <style id="page-pop-transition">
 /* Clean pop transition: only the page being entered animates. */
@@ -634,6 +753,46 @@ main.pop-animate{
   main.pop-animate,#pcView.pop-animate{animation:none !important;}
 }
 </style>
+
+<style id="saber-hover-border">
+/* Soft white Saber-style sweep, aligned directly with the panel border. */
+.saber-overlay{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:visible;
+  pointer-events:none;
+  z-index:20;
+  opacity:0;
+}
+.saber-overlay rect{
+  fill:none;
+  stroke:#fff;
+  stroke-width:1.1;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+  opacity:0;
+  filter:
+    drop-shadow(0 0 1.2px rgba(255,255,255,.95))
+    drop-shadow(0 0 3.5px rgba(255,255,255,.26));
+}
+.saber-active > .saber-overlay{opacity:1}
+.saber-active > .saber-overlay rect{
+  opacity:.86;
+  animation:saberStroke 1.25s cubic-bezier(.22,.61,.36,1) 1 both;
+}
+@keyframes saberStroke{
+  0%{stroke-dasharray:10 90;stroke-dashoffset:100}
+  100%{stroke-dasharray:10 90;stroke-dashoffset:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .saber-overlay{display:none}
+}
+</style>
+
+
+
 <style id="gallery-layout-user-fix">
 @media (min-width:901px){
   main{
@@ -725,34 +884,6 @@ main.pop-animate{
   }
   .works-arrow.left{left:8px !important;}
   .works-arrow.right{right:8px !important;}
-}
-</style>
-
-<style id="ambient-stars-effect">
-#ambientStars{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden;}
-.ambient-star{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.75);box-shadow:0 0 7px rgba(255,255,255,.55);opacity:0;animation:starTwinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay);}
-@keyframes starTwinkle{0%,100%{opacity:0;transform:scale(.65)}50%{opacity:var(--op);transform:scale(1.35)}}
-</style>
-<script id="ambient-stars-script">
-(()=>{
- const field=document.createElement('div'); field.id='ambientStars'; document.body.appendChild(field);
- const count=Math.min(42,Math.max(24,Math.floor(innerWidth/42)));
- for(let i=0;i<count;i++){const e=document.createElement('i');e.className='ambient-star';e.style.left=(Math.random()*100)+'%';e.style.top=(Math.random()*100)+'%';e.style.setProperty('--dur',(3+Math.random()*5)+'s');e.style.setProperty('--delay',(-Math.random()*7)+'s');e.style.setProperty('--op',(0.28+Math.random()*0.55).toFixed(2));field.appendChild(e)}
-})();
-</script>
-
-<style id="no-panel-effects">
-/* Panels stay completely static on hover. */
-.works-panel,.card,.about,.status-card,.price-card,.social-contact,.pc-row{
-  transition:none !important;
-}
-.works-panel:hover,.card:hover,.about:hover,.status-card:hover,.price-card:hover,.social-contact:hover,.pc-row:hover{
-  transform:none !important;
-  box-shadow:inherit !important;
-  border-color:inherit !important;
-}
-body.pc-mode #pcView:hover{
-  transform:translate(-50%,-50%) !important;
 }
 </style>
 </head>
@@ -1385,6 +1516,54 @@ renderGallery();
 
   mainTab.addEventListener("click", () => setMode(false));
   pcTab.addEventListener("click", () => setMode(true));
+})();
+</script>
+
+<script id="saber-border-script">
+(() => {
+  const selectors = [
+    '.works-panel', '.card', '.about', '.status-card',
+    '.price-card', '.social-contact', '#pcView', '.pc-row'
+  ];
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const panels = document.querySelectorAll(selectors.join(','));
+
+  panels.forEach(panel => {
+    if (panel.querySelector(':scope > .saber-overlay')) return;
+
+    const svg = document.createElementNS(ns, 'svg');
+    svg.classList.add('saber-overlay');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+
+    const rect = document.createElementNS(ns, 'rect');
+    rect.setAttribute('x', '0.55');
+    rect.setAttribute('y', '0.55');
+    rect.setAttribute('width', 'calc(100% - 1.1px)');
+    rect.setAttribute('height', 'calc(100% - 1.1px)');
+    const radius = parseFloat(getComputedStyle(panel).borderTopLeftRadius) || 13;
+    rect.setAttribute('rx', String(Math.max(1, radius - 0.55)));
+    rect.setAttribute('pathLength', '100');
+
+    svg.appendChild(rect);
+    panel.appendChild(svg);
+
+    const reset = () => {
+      panel.classList.remove('saber-active');
+      rect.style.animation = 'none';
+      void rect.getBoundingClientRect();
+    };
+
+    panel.addEventListener('mouseenter', () => {
+      reset();
+      panel.classList.add('saber-active');
+    });
+
+    panel.addEventListener('mouseleave', () => {
+      panel.classList.remove('saber-active');
+    });
+  });
 })();
 </script>
 </body>
