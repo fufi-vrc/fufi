@@ -549,23 +549,169 @@ position:relative;top:0;}
 }
 </style>
 
-<style id="portfolio-height-fix">
-@media (min-width:901px){
-  .works-panel{
-    padding:34px 24px 28px !important;
-  }
-  .works-stage{
-    min-height:330px !important;
-  }
-  .work-card{
-    height:330px !important;
-  }
-  .works-dots{
-    margin-top:14px !important;
-  }
-  .price-row{
-    margin-top:10px !important;
-  }
+<style id="pc-switcher-style">
+.page-switcher{
+  position:fixed;
+  top:24px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:20;
+  display:flex;
+  align-items:center;
+  padding:4px;
+  border:1px solid rgba(220,220,220,.34);
+  border-radius:999px;
+  background:linear-gradient(145deg,rgba(34,34,34,.94),rgba(12,12,12,.94));
+  box-shadow:0 10px 30px rgba(0,0,0,.42),inset 0 1px 0 rgba(
+<nav class="page-switcher" aria-label="Переключение страниц">
+  <button id="mainTab" class="active" type="button">Главное</button>
+  <button id="pcTab" type="button">Мой ПК</button>
+</nav>
+
+<section id="pcView" class="view hidden" aria-label="Характеристики компьютера">
+  <div class="pc-kicker">СИСТЕМА</div>
+  <h2 class="pc-title">ХАРАКТЕРИСТИКИ ПК</h2>
+  <div class="pc-list">
+    <div class="pc-row"><span class="pc-label">OS</span><span class="pc-value">CachyOS KDE Plasma<br>(Arch Linux Wayland)</span></div>
+    <div class="pc-row"><span class="pc-label">Processor</span><span class="pc-value">Xeon 2670v3</span></div>
+    <div class="pc-row"><span class="pc-label">Memory</span><span class="pc-value">2×16GB RAM DDR4 3200MHz</span></div>
+    <div class="pc-row"><span class="pc-label">Graphics Card</span><span class="pc-value">RX 5700</span></div>
+    <div class="pc-row"><span class="pc-label">Motherboard</span><span class="pc-value">Atermiter X99</span></div>
+    <div class="pc-row"><span class="pc-label">Storage</span><span class="pc-value">2×500GB HDD + 256GB NVME</span></div>
+    <div class="pc-row"><span class="pc-label">PSU</span><span class="pc-value">860W</span></div>
+    <div class="pc-row"><span class="pc-label">Monitor 1</span><span class="pc-value">LG 1080p 60Hz</span></div>
+    <div class="pc-row"><span class="pc-label">Keyboard</span><span class="pc-value">Ajazz AK820 Max Plus (Modded)</span></div>
+    <div class="pc-row"><span class="pc-label">Mouse</span><span class="pc-value">Glorious Model I</span></div>
+  </div>
+</section>
+255,255,255,.08);
+}
+.page-switcher button{
+  border:0;
+  background:transparent;
+  color:#8f898d;
+  min-width:112px;
+  height:38px;
+  padding:0 18px;
+  border-radius:999px;
+  font:800 10px/1 Inter,Arial,sans-serif;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:transform .18s ease,background .22s ease,color .22s ease,box-shadow .22s ease;
+}
+.page-switcher button:hover{color:#fff;transform:scale(1.03)}
+.page-switcher button.active{
+  color:#111;
+  background:linear-gradient(145deg,#f5f5f5,#c8c8c8);
+  box-shadow:0 4px 14px rgba(255,255,255,.12),inset 0 1px 0 rgba(255,255,255,.9);
+}
+.view{
+  transition:opacity .26s ease,transform .26s ease;
+}
+.view.hidden{
+  opacity:0;
+  transform:translateY(12px) scale(.985);
+  pointer-events:none;
+  position:absolute;
+  inset:0;
+}
+#pcView{
+  position:relative;
+  width:min(560px,calc(100vw - 40px));
+  margin:0 auto;
+  padding:28px;
+  border:1px solid rgba(220,220,220,.30);
+  border-radius:20px;
+  background:
+    linear-gradient(145deg,rgba(78,78,78,.46),rgba(35,35,35,.52) 48%,rgba(10,10,10,.58));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -1px 0 rgba(0,0,0,.42),0 18px 55px rgba(0,0,0,.44);
+}
+#pcView::after{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(120deg,rgba(255,255,255,.035),transparent 30%,transparent 72%,rgba(255,255,255,.018));
+}
+.pc-kicker{
+  position:relative;z-index:1;
+  text-align:center;
+  color:#bdb7bb;
+  font-size:9px;
+  letter-spacing:.16em;
+  font-weight:800;
+}
+.pc-title{
+  position:relative;z-index:1;
+  margin:7px 0 22px;
+  text-align:center;
+  font-size:26px;
+  line-height:1;
+  font-weight:800;
+  color:#f3f0f1;
+}
+.pc-list{
+  position:relative;z-index:1;
+  display:grid;
+  gap:9px;
+}
+.pc-row{
+  display:grid;
+  grid-template-columns:155px minmax(0,1fr);
+  align-items:center;
+  min-height:48px;
+  padding:0 16px;
+  border:1px solid rgba(220,220,220,.10);
+  border-radius:11px;
+  background:rgba(10,10,11,.72);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+.pc-label{
+  color:#8d878b;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+.pc-value{
+  color:#ece8ea;
+  font-size:11px;
+  font-weight:700;
+  text-align:right;
+  line-height:1.25;
+}
+.pc-row:hover{
+  background:rgba(28,28,30,.82);
+  border-color:rgba(220,220,220,.18);
+}
+body.pc-mode main{
+  display:none !important;
+}
+body.pc-mode{
+  overflow:hidden;
+}
+body.pc-mode #pcView{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  margin:0;
+  z-index:8;
+}
+@media(max-width:700px){
+  .page-switcher{top:14px}
+  .page-switcher button{min-width:96px;height:34px;padding:0 14px}
+  #pcView{padding:22px}
+  .pc-row{grid-template-columns:1fr;gap:5px;padding:11px 14px}
+  .pc-value{text-align:left}
+}
+</style>
+
+<style id="pc-switcher-layout">
+@media (min-width:701px){
+  main{padding-top:88px !important;}
 }
 </style>
 </head>
@@ -1133,6 +1279,25 @@ renderWorks();
       }
     } catch (_) {}
   });
+})();
+</script>
+
+<script id="pc-switcher-script">
+(() => {
+  const mainTab = document.getElementById("mainTab");
+  const pcTab = document.getElementById("pcTab");
+  const pcView = document.getElementById("pcView");
+  if (!mainTab || !pcTab || !pcView) return;
+
+  const setMode = (pc) => {
+    document.body.classList.toggle("pc-mode", pc);
+    mainTab.classList.toggle("active", !pc);
+    pcTab.classList.toggle("active", pc);
+    pcView.classList.toggle("hidden", !pc);
+  };
+
+  mainTab.addEventListener("click", () => setMode(false));
+  pcTab.addEventListener("click", () => setMode(true));
 })();
 </script>
 </body>
