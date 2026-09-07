@@ -13,8 +13,6 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;font-family:Inter,Arial,sans-serif}
-button,input,textarea,select{font-family:Inter,Arial,sans-serif}
-*{font-family:Inter,Arial,sans-serif !important;}
 body{background:var(--bg);color:var(--text);overflow:hidden}
 #scene{
   position:fixed;
@@ -606,9 +604,9 @@ position:relative;top:0;}
 }
 #pcView{
   position:relative;
-  width:min(640px,calc(100vw - 40px));
+  width:min(760px,calc(100vw - 40px));
   margin:0 auto;
-  padding:28px;
+  padding:34px 34px 32px;
   border:1px solid rgba(220,220,220,.30);
   border-radius:20px;
   background:linear-gradient(145deg,rgba(78,78,78,.46),rgba(35,35,35,.52) 48%,rgba(10,10,10,.58));
@@ -619,10 +617,10 @@ position:relative;top:0;}
   background:linear-gradient(120deg,rgba(255,255,255,.035),transparent 30%,transparent 72%,rgba(255,255,255,.018));
 }
 .pc-kicker{position:relative;z-index:1;text-align:center;color:#bdb7bb;font-size:9px;letter-spacing:.16em;font-weight:800}
-.pc-title{position:relative;z-index:1;margin:7px 0 22px;text-align:center;font-size:26px;line-height:1;font-weight:800;color:#f3f0f1}
+.pc-title{position:relative;z-index:1;margin:7px 0 26px;text-align:center;font-size:30px;line-height:1;font-weight:800;color:#f3f0f1}
 .pc-list{position:relative;z-index:1;display:grid;gap:9px}
 .pc-row{
-  display:grid;grid-template-columns:155px minmax(0,1fr);align-items:center;min-height:48px;padding:0 16px;
+  display:grid;grid-template-columns:185px minmax(0,1fr);align-items:center;min-height:58px;padding:0 20px;
   border:1px solid rgba(220,220,220,.10);border-radius:11px;background:rgba(10,10,11,.72);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
 }
@@ -648,63 +646,163 @@ body.pc-mode #pcView{position:fixed;top:50%;left:50%;transform:translate(-50%,-5
     height:100vh !important;
     padding:26px 56px !important;
     align-items:center !important;
-    transform:translateY(-350px) scale(1.35) !important;
+    transform:translateY(-410px) scale(1.35) !important;
     transform-origin:center center !important;
     top:0 !important;
   }
 }
 </style>
 
-<style id="ios-panel-hover">
-/* iOS-style unified hover: soft lift, scale and luminous edge */
-.works-panel,.card,.about,.price-card,.social-contact,#pcView,.pc-row{
-  transition:transform .38s cubic-bezier(.22,1,.36,1),
-             box-shadow .38s cubic-bezier(.22,1,.36,1),
-             border-color .38s ease,
-             background .38s ease;
+<style id="panel-white-black-hover-fix">
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
+  background:linear-gradient(145deg,rgba(255,255,255,.17) 0%,rgba(92,92,92,.12) 26%,rgba(16,16,18,.78) 72%,rgba(5,5,6,.92) 100%) !important;
 }
-.works-panel,.card,.about,.price-card,.social-contact,#pcView,.pc-row{
-  position:relative;
-  isolation:isolate;
-}
-.works-panel::before,.card::before,.about::before,.price-card::before,.social-contact::before,#pcView::before,.pc-row::before{
-  content:"";
-  position:absolute;
-  inset:-1px;
-  border-radius:inherit;
-  padding:1px;
-  background:linear-gradient(125deg,rgba(255,255,255,.0) 10%,rgba(255,255,255,.0) 35%,rgba(255,255,255,.78) 50%,rgba(255,255,255,.0) 65%,rgba(255,255,255,.0) 90%);
-  background-size:220% 220%;
+.works-panel::before,.card::before,.about::before,.status-card::before,.price-card::before,.social-contact::before,#pcView::before,.pc-row::before{
   opacity:0;
-  pointer-events:none;
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
-  transition:opacity .28s ease,background-position .7s cubic-bezier(.22,1,.36,1);
-  z-index:4;
+  background:linear-gradient(115deg,rgba(255,255,255,.92),rgba(255,255,255,.14) 24%,transparent 52%,rgba(255,255,255,.45) 78%,rgba(255,255,255,.92)) !important;
+  background-size:220% 220% !important;
+  transition:opacity .34s ease,background-position 1s cubic-bezier(.22,1,.36,1) !important;
 }
-.works-panel:hover,.card:hover,.about:hover,.price-card:hover,.social-contact:hover,#pcView:hover,.pc-row:hover{
-  transform:translateY(-4px) scale(1.018);
-  border-color:rgba(255,255,255,.48) !important;
+.works-panel:hover::before,.card:hover::before,.about:hover::before,.status-card:hover::before,.price-card:hover::before,.social-contact:hover::before,#pcView:hover::before,.pc-row:hover::before{
+  opacity:1 !important;
+  background-position:100% 0 !important;
+}
+.pc-kicker{font-size:11px !important}
+.pc-title{font-size:32px !important}
+.pc-label{font-size:13px !important}
+.pc-value{font-size:15px !important}
+.pc-row{min-height:58px !important}
+</style>
+
+<style id="ios-hover-strong">
+/* Stronger iOS-style hover */
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
+  transition:
+    transform .42s cubic-bezier(.2,.9,.2,1),
+    box-shadow .42s cubic-bezier(.2,.9,.2,1),
+    border-color .32s ease,
+    background .32s ease !important;
+  will-change:transform,box-shadow;
+}
+.works-panel:hover,.card:hover,.about:hover,.status-card:hover,.price-card:hover,.social-contact:hover,.pc-row:hover{
+  transform:translateY(-7px) scale(1.028) !important;
+  border-color:rgba(255,255,255,.68) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.12),
-    inset 0 -1px 0 rgba(0,0,0,.32),
-    0 16px 34px rgba(0,0,0,.34),
-    0 0 18px rgba(255,255,255,.10);
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 22px 48px rgba(0,0,0,.40),
+    0 0 30px rgba(255,255,255,.16),
+    0 0 0 1px rgba(255,255,255,.08) !important;
 }
-.works-panel:hover::before,.card:hover::before,.about:hover::before,.price-card:hover::before,.social-contact:hover::before,#pcView:hover::before,.pc-row:hover::before{
-  opacity:1;
-  background-position:100% 0;
+#pcView:hover{
+  transform:translate(-50%,-50%) scale(1.035) !important;
+  border-color:rgba(255,255,255,.68) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 24px 52px rgba(0,0,0,.42),
+    0 0 34px rgba(255,255,255,.17),
+    0 0 0 1px rgba(255,255,255,.08) !important;
 }
-.social-contact:hover{transform:translateY(-3px) scale(1.018) !important;}
-.price-card:hover{transform:translateY(-3px) scale(1.018);}
-.pc-row:hover{transform:translateY(-2px) scale(1.012);}
-.works-arrow{transition:transform .32s cubic-bezier(.22,1,.36,1),box-shadow .32s ease,border-color .32s ease,background .32s ease;}
-.works-arrow:hover{transform:translateY(-50%) scale(1.08);box-shadow:0 10px 26px rgba(0,0,0,.36),0 0 12px rgba(255,255,255,.10);}
+.works-panel:hover::before,.card:hover::before,.about:hover::before,.status-card:hover::before,.price-card:hover::before,.social-contact:hover::before,#pcView:hover::before,.pc-row:hover::before{
+  opacity:1 !important;
+  background-position:100% 0 !important;
+}
+.pc-row:hover{
+  transform:translateY(-4px) scale(1.018) !important;
+  border-color:rgba(255,255,255,.52) !important;
+}
+.social-contact:hover,.price-card:hover{
+  transform:translateY(-5px) scale(1.025) !important;
+}
 @media (prefers-reduced-motion: reduce){
-  .works-panel,.card,.about,.price-card,.social-contact,#pcView,.pc-row,.works-arrow{transition:none!important;}
+  .works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{transition:none !important;}
 }
 </style>
+
+
+<style id="page-pop-transition">
+/* Clean pop transition: only the page being entered animates. */
+main.pop-animate{
+  animation:mainPagePop .52s cubic-bezier(.18,.88,.24,1.02) both;
+  transform-origin:center center !important;
+}
+#pcView.pop-animate{
+  animation:pcPagePop .52s cubic-bezier(.18,.88,.24,1.02) both;
+  transform-origin:center center !important;
+}
+@keyframes mainPagePop{
+  0%{opacity:0;transform:translateY(-410px) scale(.78) !important;}
+  62%{opacity:1;transform:translateY(-410px) scale(1.05) !important;}
+  100%{opacity:1;transform:translateY(-410px) scale(1.35) !important;}
+}
+@keyframes pcPagePop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.78) !important;}
+  62%{opacity:1;transform:translate(-50%,-50%) scale(1.035) !important;}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1) !important;}
+}
+@media(max-width:700px){
+  main.pop-animate{animation:mainPagePopMobile .52s cubic-bezier(.18,.88,.24,1.02) both;}
+}
+@keyframes mainPagePopMobile{
+  0%{opacity:0;transform:scale(.78) !important;}
+  62%{opacity:1;transform:scale(1.035) !important;}
+  100%{opacity:1;transform:scale(1) !important;}
+}
+@media (prefers-reduced-motion: reduce){
+  main.pop-animate,#pcView.pop-animate{animation:none !important;}
+}
+</style>
+
+<style id="saber-hover-border">
+/* Soft white Saber-style sweep, aligned directly with the panel border. */
+.saber-overlay{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:visible;
+  pointer-events:none;
+  z-index:20;
+  opacity:0;
+}
+.saber-overlay rect{
+  fill:none;
+  stroke:#fff;
+  stroke-width:1.1;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+  opacity:0;
+  filter:
+    drop-shadow(0 0 1.2px rgba(255,255,255,.95))
+    drop-shadow(0 0 3.5px rgba(255,255,255,.26));
+}
+.saber-active > .saber-overlay{opacity:1}
+.saber-active > .saber-overlay rect{
+  opacity:.86;
+  animation:saberStroke 1.25s cubic-bezier(.22,.61,.36,1) 1 both;
+}
+@keyframes saberStroke{
+  0%{stroke-dasharray:10 90;stroke-dashoffset:100}
+  100%{stroke-dasharray:10 90;stroke-dashoffset:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .saber-overlay{display:none}
+}
+</style>
+
+<style id="gallery-slide-animation">
+.works-stage{position:relative;display:block !important;width:100%;}
+.works-viewport{position:relative;width:100%;overflow:hidden;}
+.works-track{display:flex;flex-wrap:nowrap;gap:12px;width:100%;transform:translate3d(0,0,0);box-sizing:border-box;will-change:transform;}
+.work-card{flex:0 0 calc((100% - 24px) / 3);width:calc((100% - 24px) / 3);min-width:0;box-sizing:border-box;will-change:transform;}
+.works-arrow{z-index:5;}
+.works-arrow:disabled{pointer-events:none;opacity:.72;}
+@media (max-width:900px){.work-card{flex-basis:calc((100% - 12px) / 2);width:calc((100% - 12px) / 2);}}
+@media (max-width:520px){.work-card{flex-basis:100%;width:100%;}}
+@media (prefers-reduced-motion:reduce){.works-track{transition:none !important;}}
+</style>
+
 </head>
 <body>
 <div id="cursorGridField" aria-hidden="true"></div>
@@ -747,9 +845,13 @@ body.pc-mode #pcView{position:fixed;top:50%;left:50%;transform:translate(-50%,-5
 
     <div class="works-stage" id="worksStage">
       <button class="works-arrow left" id="worksPrev" aria-label="Предыдущее фото">‹</button>
-      <div class="work-card"><img id="workA" src="works/work2.webp" alt="Пример работы 1" decoding="async"></div>
-      <div class="work-card"><img id="workB" src="works/work3.webp" alt="Пример работы 2" decoding="async"></div>
-      <div class="work-card"><img id="workC" src="works/work4.webp" alt="Пример работы 3" decoding="async"></div>
+      <div class="works-viewport">
+        <div class="works-track" id="worksTrack">
+          <div class="work-card"><img id="workA" src="works/work2.webp" alt="Пример работы 1" decoding="async"></div>
+          <div class="work-card"><img id="workB" src="works/work3.webp" alt="Пример работы 2" decoding="async"></div>
+          <div class="work-card"><img id="workC" src="works/work4.webp" alt="Пример работы 3" decoding="async"></div>
+        </div>
+      </div>
       <button class="works-arrow right" id="worksNext" aria-label="Следующее фото">›</button>
     </div>
 
@@ -1203,68 +1305,74 @@ for (let i=0;i<24;i++) {
   d.style.top = (Math.random()*100) + "%";
   dots.appendChild(d);
 }
-// Work gallery: two square-ish cards, one-step circular navigation.
+// Work gallery: stable infinite carousel; the panels themselves slide.
 const workImages = ["works/work2.webp","works/work3.webp","works/work4.webp"];
-const workA = document.getElementById("workA");
-const workB = document.getElementById("workB");
-const workC = document.getElementById("workC");
+const worksTrack = document.getElementById("worksTrack");
 const worksCounter = document.getElementById("worksCounter");
 const worksDots = document.getElementById("worksDots");
-let workIndex = 0;
+const worksPrev = document.getElementById("worksPrev");
+const worksNext = document.getElementById("worksNext");
 
-function buildWorkDots() {
-  worksDots.innerHTML = "";
-  workImages.forEach((_, i) => {
-    const b = document.createElement("button");
-    b.className = "work-dot" + (i === 0 ? " active" : "");
-    b.setAttribute("aria-label", "Показать работу " + (i + 1));
-    b.addEventListener("click", () => { workIndex = i; renderWorks(); });
+let workIndex = 0;
+let galleryBusy = false;
+let galleryTimer = null;
+
+function preload(src){const im=new Image();im.src=src;}
+function getStep(){
+  const first=worksTrack.querySelector(".work-card");
+  if(!first) return 0;
+  const gap=parseFloat(getComputedStyle(worksTrack).gap)||0;
+  return first.getBoundingClientRect().width+gap;
+}
+function setGalleryMeta(){
+  worksCounter.textContent=`${String(workIndex+1).padStart(2,"0")} / ${String(workImages.length).padStart(2,"0")}`;
+  [...worksDots.children].forEach((d,i)=>d.classList.toggle("active",i===workIndex));
+}
+function buildWorkDots(){
+  worksDots.innerHTML="";
+  workImages.forEach((_,i)=>{
+    const b=document.createElement("button");
+    b.className="work-dot";
+    b.setAttribute("aria-label","Показать работу "+(i+1));
+    b.addEventListener("click",()=>{
+      if(galleryBusy||i===workIndex) return;
+      const total=workImages.length;
+      const forward=(i-workIndex+total)%total;
+      moveGallery(forward<=total/2?1:-1);
+    });
     worksDots.appendChild(b);
   });
 }
-
-function preload(src) {
-  const im = new Image();
-  im.src = src;
-  return im;
+function finishGallery(direction){
+  worksTrack.style.transition="none";
+  if(direction>0) worksTrack.appendChild(worksTrack.firstElementChild);
+  else worksTrack.insertBefore(worksTrack.lastElementChild,worksTrack.firstElementChild);
+  worksTrack.style.transform="translate3d(0,0,0)";
+  void worksTrack.offsetWidth;
+  worksTrack.style.removeProperty("transition");
+  galleryBusy=false;
+  worksPrev.disabled=false;
+  worksNext.disabled=false;
+  setGalleryMeta();
 }
-
-function renderWorks() {
-  const a = workIndex;
-  const b = (workIndex + 1) % workImages.length;
-  const c = (workIndex + 2) % workImages.length;
-  workA.style.opacity = "0.18";
-  workB.style.opacity = "0.18";
-  workC.style.opacity = "0.18";
-
-  setTimeout(() => {
-    workA.src = workImages[a];
-    workB.src = workImages[b];
-    workC.src = workImages[c];
-    workA.alt = "Пример работы " + (a + 1);
-    workB.alt = "Пример работы " + (b + 1);
-    workC.alt = "Пример работы " + (c + 1);
-    worksCounter.textContent =
-      String(a + 1).padStart(2,"0") + " / " + String(workImages.length).padStart(2,"0");
-    workA.onload = () => workA.style.opacity = "1";
-    workB.onload = () => workB.style.opacity = "1";
-    workC.onload = () => workC.style.opacity = "1";
-    [...worksDots.children].forEach((d,i)=>d.classList.toggle("active",i===a));
-  }, 90);
+function moveGallery(direction){
+  if(galleryBusy||!direction) return;
+  galleryBusy=true;
+  worksPrev.disabled=true;
+  worksNext.disabled=true;
+  workIndex=(workIndex+(direction>0?1:-1)+workImages.length)%workImages.length;
+  const step=getStep();
+  if(!step){finishGallery(direction);return;}
+  worksTrack.style.transition="transform .48s cubic-bezier(.22,.9,.2,1)";
+  worksTrack.style.transform=`translate3d(${direction>0?-step:step}px,0,0)`;
+  if(galleryTimer) clearTimeout(galleryTimer);
+  galleryTimer=setTimeout(()=>{galleryTimer=null;finishGallery(direction);},510);
 }
-
-document.getElementById("worksPrev").addEventListener("click", () => {
-  workIndex = (workIndex - 1 + workImages.length) % workImages.length;
-  renderWorks();
-});
-document.getElementById("worksNext").addEventListener("click", () => {
-  workIndex = (workIndex + 1) % workImages.length;
-  renderWorks();
-});
+worksPrev.addEventListener("click",()=>moveGallery(-1));
+worksNext.addEventListener("click",()=>moveGallery(1));
 buildWorkDots();
+setGalleryMeta();
 workImages.forEach(preload);
-renderWorks();
-
 </script>
 
 </div>
@@ -1295,17 +1403,98 @@ renderWorks();
   const mainTab = document.getElementById("mainTab");
   const pcTab = document.getElementById("pcTab");
   const pcView = document.getElementById("pcView");
-  if (!mainTab || !pcTab || !pcView) return;
+  const mainView = document.querySelector("main");
+  if (!mainTab || !pcTab || !pcView || !mainView) return;
+
+  let switchToken = 0;
+  const stopPop = (el) => {
+    el.classList.remove("pop-animate");
+    el.style.removeProperty("animation");
+  };
+
+  const replay = (el) => {
+    stopPop(el);
+    void el.offsetWidth;
+    el.classList.add("pop-animate");
+    const token = ++switchToken;
+    const done = () => {
+      if (token === switchToken) stopPop(el);
+    };
+    el.addEventListener("animationend", done, {once:true});
+  };
 
   const setMode = (pc) => {
-    document.body.classList.toggle("pc-mode", pc);
-    mainTab.classList.toggle("active", !pc);
-    pcTab.classList.toggle("active", pc);
-    pcView.classList.toggle("hidden", !pc);
+    // Cancel any in-flight page animation first, so rapid clicks never reveal the hidden page.
+    stopPop(mainView);
+    stopPop(pcView);
+    ++switchToken;
+
+    if (pc) {
+      pcView.classList.remove("hidden");
+      document.body.classList.add("pc-mode");
+      mainTab.classList.remove("active");
+      pcTab.classList.add("active");
+      requestAnimationFrame(() => replay(pcView));
+    } else {
+      // Hide PC completely before bringing the main page back.
+      pcView.classList.add("hidden");
+      document.body.classList.remove("pc-mode");
+      mainTab.classList.add("active");
+      pcTab.classList.remove("active");
+      requestAnimationFrame(() => replay(mainView));
+    }
   };
 
   mainTab.addEventListener("click", () => setMode(false));
   pcTab.addEventListener("click", () => setMode(true));
+})();
+</script>
+
+<script id="saber-border-script">
+(() => {
+  const selectors = [
+    '.works-panel', '.card', '.about', '.status-card',
+    '.price-card', '.social-contact', '#pcView', '.pc-row'
+  ];
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const panels = document.querySelectorAll(selectors.join(','));
+
+  panels.forEach(panel => {
+    if (panel.querySelector(':scope > .saber-overlay')) return;
+
+    const svg = document.createElementNS(ns, 'svg');
+    svg.classList.add('saber-overlay');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+
+    const rect = document.createElementNS(ns, 'rect');
+    rect.setAttribute('x', '0.55');
+    rect.setAttribute('y', '0.55');
+    rect.setAttribute('width', 'calc(100% - 1.1px)');
+    rect.setAttribute('height', 'calc(100% - 1.1px)');
+    const radius = parseFloat(getComputedStyle(panel).borderTopLeftRadius) || 13;
+    rect.setAttribute('rx', String(Math.max(1, radius - 0.55)));
+    rect.setAttribute('pathLength', '100');
+
+    svg.appendChild(rect);
+    panel.appendChild(svg);
+
+    const reset = () => {
+      panel.classList.remove('saber-active');
+      rect.style.animation = 'none';
+      void rect.getBoundingClientRect();
+    };
+
+    panel.addEventListener('mouseenter', () => {
+      reset();
+      panel.classList.add('saber-active');
+    });
+
+    panel.addEventListener('mouseleave', () => {
+      panel.classList.remove('saber-active');
+    });
+  });
 })();
 </script>
 </body>
