@@ -833,155 +833,6 @@ main.pop-animate{
 }
 </style>
 
-<style id="cool-effects">
-.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{position:relative;overflow:hidden;}
-.works-panel::before,.card::before,.about::before,.status-card::before,.price-card::before,.social-contact::before,#pcView::before,.pc-row::before{content:"";position:absolute;inset:-60%;background:linear-gradient(115deg,transparent 43%,rgba(255,255,255,.13) 50%,transparent 57%);transform:translateX(-45%) rotate(8deg);opacity:0;pointer-events:none;z-index:2;}
-.works-panel:hover::before,.card:hover::before,.about:hover::before,.status-card:hover::before,.price-card:hover::before,.social-contact:hover::before,#pcView:hover::before,.pc-row:hover::before{animation:panelShine .85s cubic-bezier(.2,.7,.2,1) 1;}
-@keyframes panelShine{0%{transform:translateX(-45%) rotate(8deg);opacity:0}18%{opacity:1}100%{transform:translateX(45%) rotate(8deg);opacity:0}}
-.works-arrow{position:absolute;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease!important;}
-.works-arrow:hover{transform:translateY(-50%) scale(1.1)!important;box-shadow:0 0 18px rgba(255,255,255,.22),0 8px 24px #000!important;border-color:rgba(255,255,255,.8)!important;}
-</style>
-
-<style id="clean-hover-effects-v2">
-/* Clean interactive effects: no overlay sweep over the content. */
-.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
-  position:relative;
-  isolation:isolate;
-  overflow:hidden;
-  transition:
-    transform .34s cubic-bezier(.2,.8,.2,1),
-    box-shadow .34s cubic-bezier(.2,.8,.2,1),
-    border-color .28s ease !important;
-}
-
-/* Disable the old full-panel gradient sweep that was covering the cards. */
-.works-panel::before,.card::before,.about::before,.status-card::before,
-.price-card::before,.social-contact::before,#pcView::before,.pc-row::before{
-  opacity:0 !important;
-  animation:none !important;
-  transition:none !important;
-  pointer-events:none !important;
-}
-
-/* Small glass highlight that stays inside the border. */
-.works-panel::after,.card::after,.about::after,.status-card::after,
-.price-card::after,.social-contact::after,#pcView::after,.pc-row::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  border-radius:inherit;
-  background:
-    linear-gradient(120deg,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0) 42%,
-      rgba(255,255,255,.09) 50%,
-      rgba(255,255,255,0) 58%,
-      rgba(255,255,255,0) 100%);
-  background-size:240% 100%;
-  background-position:120% 0;
-  opacity:0;
-  transition:opacity .25s ease,background-position .7s cubic-bezier(.2,.8,.2,1);
-}
-
-.works-panel:hover::after,.card:hover::after,.about:hover::after,
-.status-card:hover::after,.price-card:hover::after,.social-contact:hover::after,
-#pcView:hover::after,.pc-row:hover::after{
-  opacity:1;
-  background-position:-20% 0;
-}
-
-.works-panel:hover,.card:hover,.about:hover,.status-card:hover,
-.price-card:hover,.social-contact:hover,.pc-row:hover{
-  transform:translateY(-5px) scale(1.018) !important;
-  border-color:rgba(255,255,255,.65) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    0 14px 38px rgba(0,0,0,.34),
-    0 0 22px rgba(255,255,255,.13) !important;
-}
-
-#pcView:hover{
-  transform:translate(-50%,-50%) scale(1.025) !important;
-  border-color:rgba(255,255,255,.65) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    0 20px 46px rgba(0,0,0,.38),
-    0 0 26px rgba(255,255,255,.14) !important;
-}
-
-/* Keep gallery mechanics completely static: only image content changes. */
-.works-stage,.works-viewport,.works-track,.work-card,.work-card img{
-  animation:none !important;
-  transition:none !important;
-}
-.works-track{
-  transform:none !important;
-}
-.work-card:hover{
-  transform:none !important;
-}
-.work-card img{
-  filter:none !important;
-}
-
-/* Controls get their own small feedback without moving the gallery. */
-.works-arrow,.work-dot,#mainTab,#pcTab{
-  transition:
-    transform .2s ease,
-    background-color .2s ease,
-    box-shadow .2s ease,
-    border-color .2s ease !important;
-}
-.works-arrow:hover{
-  transform:translateY(-50%) scale(1.08) !important;
-  box-shadow:0 0 16px rgba(255,255,255,.2);
-}
-.works-arrow:active{
-  transform:translateY(-50%) scale(.94) !important;
-}
-.work-dot:hover{
-  transform:scale(1.2) !important;
-}
-#mainTab:hover,#pcTab:hover{
-  transform:scale(1.035);
-  box-shadow:0 0 14px rgba(255,255,255,.16);
-}
-
-@media (prefers-reduced-motion:reduce){
-  .works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row,
-  .works-panel::after,.card::after,.about::after,.status-card::after,
-  .price-card::after,.social-contact::after,#pcView::after,.pc-row::after,
-  .works-arrow,.work-dot,#mainTab,#pcTab{
-    transition:none !important;
-  }
-}
-</style>
-
-
-<style id="clean-site-effect">
-.works-panel,.card,.about,.status-card,.price-card,.social-contact,#pcView,.pc-row{
-  position:relative;
-}
-.works-panel:hover,.card:hover,.about:hover,.status-card:hover,.price-card:hover,.social-contact:hover,#pcView:hover,.pc-row:hover{
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(0,0,0,.38),
-    0 20px 46px rgba(0,0,0,.42),
-    0 0 22px rgba(255,255,255,.13) !important;
-}
-.works-arrow,.page-switcher button,.work-dot{
-  transition:transform .22s ease,box-shadow .22s ease,background .22s ease !important;
-}
-.works-arrow:hover{
-  transform:translateY(-50%) scale(1.12) !important;
-  box-shadow:0 0 18px rgba(255,255,255,.22),inset 0 0 10px rgba(255,255,255,.08) !important;
-}
-.page-switcher button:hover{transform:scale(1.06) !important;}
-.work-dot:hover{transform:scale(1.35) !important;}
-</style>
-
 <style id="ambient-stars-effect">
 #ambientStars{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden;}
 .ambient-star{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.75);box-shadow:0 0 7px rgba(255,255,255,.55);opacity:0;animation:starTwinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay);}
@@ -994,6 +845,21 @@ main.pop-animate{
  for(let i=0;i<count;i++){const e=document.createElement('i');e.className='ambient-star';e.style.left=(Math.random()*100)+'%';e.style.top=(Math.random()*100)+'%';e.style.setProperty('--dur',(3+Math.random()*5)+'s');e.style.setProperty('--delay',(-Math.random()*7)+'s');e.style.setProperty('--op',(0.28+Math.random()*0.55).toFixed(2));field.appendChild(e)}
 })();
 </script>
+
+<style id="no-panel-effects">
+/* Panels stay completely static on hover. */
+.works-panel,.card,.about,.status-card,.price-card,.social-contact,.pc-row{
+  transition:none !important;
+}
+.works-panel:hover,.card:hover,.about:hover,.status-card:hover,.price-card:hover,.social-contact:hover,.pc-row:hover{
+  transform:none !important;
+  box-shadow:inherit !important;
+  border-color:inherit !important;
+}
+body.pc-mode #pcView:hover{
+  transform:translate(-50%,-50%) !important;
+}
+</style>
 </head>
 <body>
 <div id="cursorGridField" aria-hidden="true"></div>
