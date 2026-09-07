@@ -13,6 +13,8 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;font-family:Inter,Arial,sans-serif}
+button,input,textarea,select{font-family:Inter,Arial,sans-serif}
+*{font-family:Inter,Arial,sans-serif !important;}
 body{background:var(--bg);color:var(--text);overflow:hidden}
 #scene{
   position:fixed;
@@ -650,6 +652,57 @@ body.pc-mode #pcView{position:fixed;top:50%;left:50%;transform:translate(-50%,-5
     transform-origin:center center !important;
     top:0 !important;
   }
+}
+</style>
+
+<style id="ios-panel-hover">
+/* iOS-style unified hover: soft lift, scale and luminous edge */
+.works-panel,.card,.about,.price-card,.social-contact,#pcView,.pc-row{
+  transition:transform .38s cubic-bezier(.22,1,.36,1),
+             box-shadow .38s cubic-bezier(.22,1,.36,1),
+             border-color .38s ease,
+             background .38s ease;
+}
+.works-panel,.card,.about,.price-card,.social-contact,#pcView,.pc-row{
+  position:relative;
+  isolation:isolate;
+}
+.works-panel::before,.card::before,.about::before,.price-card::before,.social-contact::before,#pcView::before,.pc-row::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  padding:1px;
+  background:linear-gradient(125deg,rgba(255,255,255,.0) 10%,rgba(255,255,255,.0) 35%,rgba(255,255,255,.78) 50%,rgba(255,255,255,.0) 65%,rgba(255,255,255,.0) 90%);
+  background-size:220% 220%;
+  opacity:0;
+  pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  transition:opacity .28s ease,background-position .7s cubic-bezier(.22,1,.36,1);
+  z-index:4;
+}
+.works-panel:hover,.card:hover,.about:hover,.price-card:hover,.social-contact:hover,#pcView:hover,.pc-row:hover{
+  transform:translateY(-4px) scale(1.018);
+  border-color:rgba(255,255,255,.48) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(0,0,0,.32),
+    0 16px 34px rgba(0,0,0,.34),
+    0 0 18px rgba(255,255,255,.10);
+}
+.works-panel:hover::before,.card:hover::before,.about:hover::before,.price-card:hover::before,.social-contact:hover::before,#pcView:hover::before,.pc-row:hover::before{
+  opacity:1;
+  background-position:100% 0;
+}
+.social-contact:hover{transform:translateY(-3px) scale(1.018) !important;}
+.price-card:hover{transform:translateY(-3px) scale(1.018);}
+.pc-row:hover{transform:translateY(-2px) scale(1.012);}
+.works-arrow{transition:transform .32s cubic-bezier(.22,1,.36,1),box-shadow .32s ease,border-color .32s ease,background .32s ease;}
+.works-arrow:hover{transform:translateY(-50%) scale(1.08);box-shadow:0 10px 26px rgba(0,0,0,.36),0 0 12px rgba(255,255,255,.10);}
+@media (prefers-reduced-motion: reduce){
+  .works-panel,.card,.about,.price-card,.social-contact,#pcView,.pc-row,.works-arrow{transition:none!important;}
 }
 </style>
 </head>
