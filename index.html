@@ -476,6 +476,17 @@ position:relative;top:0;}
 @media(max-width:600px){
   .social-row{width:min(330px,calc(100% - 32px));}
 }
+
+.ai-credit{
+  width:100%;
+  margin-top:10px;
+  text-align:center;
+  color:#777277;
+  font-size:7px;
+  line-height:1.3;
+  letter-spacing:.02em;
+  white-space:nowrap;
+}
 </style>
 
 <style id="final-layout-fix">
@@ -886,6 +897,734 @@ main.pop-animate{
   .works-arrow.right{right:8px !important;}
 }
 </style>
+
+<style id="responsive-adaptation">
+/* Responsive adaptation: desktop, tablet and mobile. */
+html{
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+}
+body{
+  overflow-x:hidden !important;
+}
+
+/* Flexible desktop/tablet layout: no hard-sized canvas or forced oversized transform. */
+@media (min-width:701px){
+  main{
+    width:100%;
+    min-height:100svh !important;
+    height:100svh !important;
+    grid-template-columns:minmax(0,1fr) minmax(320px,32vw) !important;
+    align-items:start !important;
+    justify-content:center !important;
+    gap:clamp(22px,4vw,70px) !important;
+    padding:clamp(84px,8vh,108px) clamp(18px,3vw,56px) 28px !important;
+    transform:none !important;
+    top:0 !important;
+  }
+
+  .works-panel{
+    width:100% !important;
+    max-width:none !important;
+    margin-left:0 !important;
+    padding:clamp(20px,2vw,28px) !important;
+  }
+
+  .hero{
+    width:min(460px,100%) !important;
+  }
+
+  .works-stage{
+    width:100% !important;
+  }
+
+  .works-viewport{
+    width:100% !important;
+    max-width:100% !important;
+  }
+
+  .works-track{
+    width:100% !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:clamp(8px,1vw,12px) !important;
+  }
+
+  .work-card{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    height:clamp(280px,28vw,350px) !important;
+    min-height:280px !important;
+    max-height:350px !important;
+  }
+
+  .work-card img{
+    width:100% !important;
+    height:100% !important;
+    padding:clamp(4px,0.5vw,8px) !important;
+  }
+
+  .works-arrow.left{left:clamp(6px,0.8vw,12px) !important;}
+  .works-arrow.right{right:clamp(6px,0.8vw,12px) !important;}
+
+  .about,
+  .card,
+  .social-row{
+    width:min(330px,100%) !important;
+  }
+
+  .ai-credit{
+    max-width:100%;
+  }
+}
+
+/* Keep the main interface directly beneath the top page switcher on desktop. */
+@media (min-width:701px){
+  main{
+    align-items:start !important;
+    padding-top:clamp(84px,8vh,108px) !important;
+  }
+}
+
+/* Medium desktop / tablet: keep both columns until the layout becomes cramped. */
+@media (min-width:701px) and (max-width:1050px){
+  main{
+    grid-template-columns:minmax(0,1fr) minmax(280px,36vw) !important;
+    gap:22px !important;
+    padding:18px !important;
+  }
+
+  .works-panel{
+    padding:20px !important;
+  }
+
+  .works-head h2{
+    font-size:clamp(18px,2.5vw,24px) !important;
+  }
+
+  .work-card{
+    height:clamp(250px,31vw,320px) !important;
+    min-height:250px !important;
+  }
+}
+
+/* Tablets and small screens: switch to a single vertical flow. */
+@media (max-width:900px){
+  body{overflow-y:auto !important;}
+  main{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+    margin:0 auto !important;
+    padding:76px 18px 28px !important;
+    gap:24px !important;
+    transform:none !important;
+    top:0 !important;
+  }
+  .works-panel{order:1;width:100% !important;max-width:760px !important;margin:0 !important;}
+  .hero{order:2;width:100% !important;max-width:460px !important;}
+  .works-stage{display:block !important;position:relative !important;width:100% !important;height:auto !important;overflow:visible !important;}
+  .works-viewport{width:100% !important;max-width:none !important;margin:0 !important;overflow:hidden !important;}
+  .works-track{display:grid !important;grid-template-columns:1fr !important;grid-template-rows:auto !important;width:100% !important;height:auto !important;gap:0 !important;}
+  .work-card{display:none !important;width:100% !important;min-width:0 !important;max-width:none !important;height:min(58vh,390px) !important;min-height:240px !important;max-height:390px !important;}
+  .work-card:first-child{display:grid !important;}
+  .work-card img{width:100% !important;height:100% !important;padding:5px !important;}
+  .works-arrow.left{left:7px !important;}
+  .works-arrow.right{right:7px !important;}
+}
+
+@media (max-width:700px){
+  body{
+    overflow-y:auto !important;
+    min-height:100svh;
+  }
+
+  .page-switcher{
+    position:sticky !important;
+    top:10px !important;
+    left:50% !important;
+    transform:translateX(-50%) !important;
+    width:max-content !important;
+    max-width:calc(100vw - 20px) !important;
+    margin:10px auto 0 !important;
+  }
+
+  .page-switcher button{
+    min-width:clamp(82px,28vw,112px) !important;
+    height:34px !important;
+    padding:0 12px !important;
+    font-size:9px !important;
+  }
+
+  main{
+    position:relative !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+    margin:0 auto !important;
+    padding:76px 12px 24px !important;
+    gap:20px !important;
+    transform:none !important;
+    top:0 !important;
+  }
+
+  .works-panel{
+    order:1;
+    width:100% !important;
+    max-width:680px !important;
+    margin:0 !important;
+    padding:18px !important;
+    border-radius:18px !important;
+  }
+
+  .works-head{
+    align-items:center !important;
+    gap:10px !important;
+    margin-bottom:12px !important;
+  }
+
+  .works-head h2{
+    font-size:clamp(18px,6vw,24px) !important;
+    line-height:1.05 !important;
+  }
+
+  .works-counter{
+    flex:none;
+    font-size:8px !important;
+  }
+
+  .works-stage{
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    height:auto !important;
+    overflow:visible !important;
+  }
+
+  .works-viewport{
+    width:100% !important;
+    height:auto !important;
+    margin:0 !important;
+    overflow:hidden !important;
+  }
+
+  .works-track{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto !important;
+    width:100% !important;
+    height:auto !important;
+    gap:0 !important;
+    transform:none !important;
+  }
+
+  .work-card{
+    display:none !important;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    height:min(62vh,360px) !important;
+    min-height:230px !important;
+    max-height:360px !important;
+    border-radius:14px !important;
+  }
+
+  .work-card:first-child{
+    display:grid !important;
+  }
+
+  .work-card img{
+    width:100% !important;
+    height:100% !important;
+    padding:4px !important;
+  }
+
+  .works-arrow{
+    width:36px !important;
+    height:36px !important;
+    font-size:24px !important;
+  }
+
+  .works-arrow.left{left:6px !important;}
+  .works-arrow.right{right:6px !important;}
+
+  .works-dots{
+    margin-top:10px !important;
+  }
+
+  .price-row{
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+    margin-top:10px !important;
+  }
+
+  .price-card{
+    min-height:48px !important;
+  }
+
+  .hero{
+    order:2;
+    width:100% !important;
+    max-width:460px !important;
+  }
+
+  .avatar-wrap{
+    width:92px !important;
+    height:92px !important;
+    margin-bottom:16px !important;
+  }
+
+  .avatar{
+    width:92px !important;
+    height:92px !important;
+  }
+
+  h1{
+    font-size:clamp(26px,8vw,30px) !important;
+    margin-bottom:18px !important;
+  }
+
+  .card,
+  .about,
+  .social-row{
+    width:100% !important;
+    max-width:460px !important;
+  }
+
+  .card{
+    padding:12px !important;
+  }
+
+  .about{
+    margin-top:10px !important;
+    padding:13px 14px !important;
+  }
+
+  .about p{
+    font-size:10px !important;
+    line-height:1.5 !important;
+  }
+
+  .social-row{
+    grid-template-columns:1fr 1fr !important;
+    gap:8px !important;
+    margin-top:10px !important;
+  }
+
+  .social-contact{
+    min-width:0 !important;
+    min-height:54px !important;
+    padding:8px 9px !important;
+  }
+
+  .discord-copy strong{
+    font-size:9px !important;
+  }
+
+  .ai-credit{
+    margin-top:8px !important;
+    padding:0 6px !important;
+    font-size:7px !important;
+    line-height:1.45 !important;
+    white-space:normal !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  .connection{
+    margin-top:8px !important;
+  }
+}
+
+/* Narrow phones: tighter spacing, no horizontal overflow. */
+@media (max-width:430px){
+  .page-switcher{
+    padding:3px !important;
+  }
+
+  .page-switcher button{
+    min-width:0 !important;
+    width:calc((100vw - 26px)/2) !important;
+    max-width:150px !important;
+    padding:0 8px !important;
+    font-size:8px !important;
+  }
+
+  main{
+    padding:68px 9px 18px !important;
+    gap:16px !important;
+  }
+
+  .works-panel{
+    padding:14px !important;
+  }
+
+  .works-head h2{
+    font-size:18px !important;
+  }
+
+  .work-card{
+    height:min(60vh,320px) !important;
+    min-height:210px !important;
+  }
+
+  .works-arrow{
+    width:34px !important;
+    height:34px !important;
+    font-size:22px !important;
+  }
+
+  .social-row{
+    grid-template-columns:1fr 1fr !important;
+  }
+
+  .social-contact .discord-icon,
+  .social-contact .steam-icon{
+    width:29px !important;
+    height:29px !important;
+    flex-basis:29px !important;
+  }
+
+  .discord-copy span{
+    font-size:5.5px !important;
+  }
+
+  .discord-copy strong{
+    font-size:8px !important;
+  }
+}
+
+/* Very narrow phones: stack social buttons instead of squeezing text. */
+@media (max-width:340px){
+  .social-row{
+    grid-template-columns:1fr !important;
+  }
+
+  .social-contact{
+    width:100% !important;
+  }
+
+  .about p{
+    font-size:9px !important;
+  }
+}
+
+/* PC view also adapts to small screens. */
+@media (max-width:700px){
+  body.pc-mode{
+    overflow-y:auto !important;
+  }
+
+  body.pc-mode #pcView{
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    transform:none !important;
+    width:calc(100vw - 18px) !important;
+    max-width:680px !important;
+    margin:68px auto 18px !important;
+    padding:20px 14px !important;
+  }
+
+  .pc-title{
+    font-size:clamp(22px,7vw,30px) !important;
+    margin-bottom:20px !important;
+  }
+
+  .pc-list{
+    gap:8px !important;
+  }
+
+  .pc-row{
+    grid-template-columns:minmax(90px,36%) minmax(0,1fr) !important;
+    min-height:52px !important;
+    padding:9px 12px !important;
+  }
+
+  .pc-label{
+    font-size:9px !important;
+  }
+
+  .pc-value{
+    font-size:10px !important;
+    overflow-wrap:anywhere !important;
+  }
+}
+</style>
+
+<style id="desktop-main-raise-more">
+@media (min-width:1051px){
+  main{
+    transform:translateY(clamp(-240px,-34vh,-150px)) !important;
+  }
+}
+</style>
+
+<style id="works-panel-height-15x">
+/* Only the works/examples panel: increase its working image area ~1.5x. */
+@media (min-width:901px){
+  .works-stage{height:525px !important;}
+  .works-viewport{height:525px !important;}
+  .works-track{height:525px !important;grid-template-rows:525px !important;}
+  .work-card{height:525px !important;min-height:525px !important;max-height:525px !important;}
+}
+@media (min-width:701px) and (max-width:900px){
+  .work-card{height:480px !important;min-height:480px !important;max-height:480px !important;}
+}
+@media (max-width:700px){
+  .works-panel{padding-bottom:18px !important;}
+  .work-card{height:min(72vh,540px) !important;min-height:280px !important;max-height:540px !important;}
+}
+</style>
+<style id="main-panels-raise-100">@media (min-width:701px){main{transform:translateY(-100px) !important;}}</style>
+<style id="main-interface-raise-final">
+@media (min-width:701px){
+  body:not(.pc-mode) main{
+    position:relative !important;
+    top:-300px !important;
+  }
+}
+</style>
+
+<style id="final-scale-125">
+@media (min-width:701px){
+  main{transform:translateY(-300px) scale(1.25) !important;transform-origin:center center !important;}
+}
+@media (max-width:700px){
+  main{transform:none !important;}
+}
+@media (min-width:701px){
+  body.pc-mode #pcView{transform:translate(-50%,-50%) scale(1.25) !important;transform-origin:center center !important;}
+}
+@media (max-width:700px){
+  body.pc-mode #pcView{transform:none !important;}
+}
+</style>
+
+<style id="scale-125-layout-fix">
+/* Final 125% desktop layout: keep the enlarged interface fully inside the viewport. */
+@media (min-width:701px){
+  body:not(.pc-mode) main{
+    position:relative !important;
+    top:0 !important;
+    transform:translateY(-155px) scale(1.25) !important;
+    transform-origin:center center !important;
+  }
+  body.pc-mode #pcView{
+    transform:translate(-50%,-50%) scale(1.25) !important;
+    transform-origin:center center !important;
+    max-height:calc(100vh - 28px) !important;
+    max-width:calc(100vw - 28px) !important;
+    box-sizing:border-box !important;
+    overflow:auto !important;
+  }
+}
+@media (max-width:700px){
+  body:not(.pc-mode) main{transform:none !important; top:0 !important;}
+  body.pc-mode #pcView{transform:none !important;}
+}
+</style>
+
+<style id="final-fit-layout-fix">
+@media (min-width:701px){
+  body:not(.pc-mode) main{
+    width:100% !important;
+    max-width:100vw !important;
+    box-sizing:border-box !important;
+    grid-template-columns:minmax(0, min(690px,52vw)) minmax(280px,360px) !important;
+    gap:clamp(34px,4vw,70px) !important;
+    padding-left:clamp(54px,7vw,120px) !important;
+    padding-right:clamp(24px,3vw,60px) !important;
+    justify-content:center !important;
+    align-items:start !important;
+    transform:translateY(-55px) scale(1.15) !important;
+    transform-origin:center top !important;
+  }
+  body:not(.pc-mode) .works-panel{
+    width:100% !important;
+    max-width:690px !important;
+    box-sizing:border-box !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
+  body:not(.pc-mode) .hero{
+    width:min(360px,100%) !important;
+    margin-left:auto !important;
+    margin-right:0 !important;
+  }
+  body.pc-mode #pcView{
+    width:min(720px,calc(100vw - 48px)) !important;
+    max-width:720px !important;
+    transform:translate(-50%,-50%) scale(1.15) !important;
+    transform-origin:center center !important;
+  }
+}
+@media (max-width:700px){
+  .works-panel{
+    width:calc(100vw - 24px) !important;
+    max-width:none !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    box-sizing:border-box !important;
+  }
+  .works-stage,.works-viewport,.works-track{
+    width:100% !important;
+    max-width:100% !important;
+  }
+  .work-card{
+    max-width:100% !important;
+  }
+  body.pc-mode #pcView{
+    width:calc(100vw - 18px) !important;
+    max-width:none !important;
+  }
+}
+</style>
+
+
+<style id="main-panels-up-250">
+@media (min-width:701px){
+  body:not(.pc-mode) main{
+    top:-250px !important;
+  }
+}
+</style>
+
+<style id="raise-panels-extra-150">
+@media (min-width:701px){
+  body:not(.pc-mode) main{
+    top:-420px !important;
+  }
+  body.pc-mode #pcView{
+    transform:translate(-50%,-50%) scale(1.15) !important;
+  }
+}
+</style>
+<style id="works-panel-wider-extra">
+@media (min-width:1051px){
+  body:not(.pc-mode) .works-panel{
+    width:min(760px,calc(100vw - 420px)) !important;
+    max-width:760px !important;
+  }
+}
+@media (min-width:701px) and (max-width:1050px){
+  body:not(.pc-mode) .works-panel{
+    width:calc(100% - 10px) !important;
+    max-width:none !important;
+  }
+}
+</style>
+
+
+<style id="works-panel-widen-left-200">
+@media (min-width:1051px){
+  body:not(.pc-mode) .works-panel{
+    width:990px !important;
+    max-width:990px !important;
+    margin-left:-300px !important;
+    margin-right:0 !important;
+  }
+}
+@media (min-width:701px) and (max-width:1050px){
+  body:not(.pc-mode) .works-panel{
+    width:min(calc(100vw - 110px),760px) !important;
+    max-width:760px !important;
+    margin-left:-80px !important;
+    margin-right:0 !important;
+  }
+}
+@media (max-width:700px){
+  body:not(.pc-mode) .works-panel{
+    width:calc(100vw - 24px) !important;
+    max-width:none !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+}
+</style>
+
+<style id="right-panel-scale-125-final">
+/* Only the right information column: enlarge it ~25% without touching the works panel. */
+.hero{
+  transform:scale(1.25) !important;
+  transform-origin:center top !important;
+}
+@media (max-width:700px){
+  .hero{
+    width:100% !important;
+    transform:scale(1.25) !important;
+    transform-origin:center top !important;
+  }
+}
+@media (max-width:430px){
+  .hero .card,
+  .hero .about,
+  .hero .social-row{
+    width:min(330px,calc((100vw - 20px)/1.25)) !important;
+    max-width:none !important;
+  }
+  .hero .avatar-wrap{
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+}
+</style>
+
+<style id="works-font-size-125">
+@media (min-width:701px){
+  .works-panel .works-kicker{font-size:11.5px !important;}
+  .works-panel .works-head h2{font-size:31px !important;}
+  .works-panel .works-counter{font-size:11.5px !important;}
+  .works-panel .works-arrow{font-size:37px !important;}
+  .works-panel .price-label{font-size:10px !important;}
+  .works-panel .price-card strong{font-size:22.5px !important;}
+  .works-panel .price-note{font-size:9px !important;}
+}
+@media (max-width:700px){
+  .works-panel .works-kicker{font-size:11px !important;}
+  .works-panel .works-head h2{font-size:23px !important;}
+  .works-panel .works-counter{font-size:10px !important;}
+  .works-panel .works-arrow{font-size:30px !important;}
+  .works-panel .price-label{font-size:10px !important;}
+  .works-panel .price-card strong{font-size:20px !important;}
+  .works-panel .price-note{font-size:8.5px !important;}
+}
+</style>
+
+<style id="works-font-size-more">
+/* Only typography inside the works/examples panel. */
+@media (min-width:701px){
+  .works-panel .works-kicker{font-size:15px !important;}
+  .works-panel .works-head h2{font-size:40px !important;}
+  .works-panel .works-counter{font-size:15px !important;}
+  .works-panel .works-arrow{font-size:48px !important;}
+  .works-panel .price-label{font-size:13px !important;}
+  .works-panel .price-card strong{font-size:29px !important;}
+  .works-panel .price-note{font-size:11.5px !important;}
+  .works-panel .work-card{font-size:16px !important;}
+}
+@media (max-width:700px){
+  .works-panel .works-kicker{font-size:14px !important;}
+  .works-panel .works-head h2{font-size:30px !important;}
+  .works-panel .works-counter{font-size:13px !important;}
+  .works-panel .works-arrow{font-size:39px !important;}
+  .works-panel .price-label{font-size:13px !important;}
+  .works-panel .price-card strong{font-size:26px !important;}
+  .works-panel .price-note{font-size:11px !important;}
+  .works-panel .work-card{font-size:15px !important;}
+}
+</style>
+<style id="arrow-centering-fix">
+.works-arrow{display:grid !important;place-items:center !important;line-height:0 !important;font-family:Arial,Helvetica,sans-serif !important;padding:0 !important;text-align:center !important;}
+.works-arrow::before{line-height:1 !important;}
+</style>
 </head>
 <body>
 <div id="cursorGridField" aria-hidden="true"></div>
@@ -1003,6 +1742,7 @@ main.pop-animate{
     <div class="discord-copy"><span>STEAM</span><strong>fufi</strong></div>
   </a>
 </div>
+    <div class="ai-credit">Данный сайт полностью сгенерирован с нуля ChatGPT.</div>
 
 </main>
 
@@ -1568,3 +2308,32 @@ renderGallery();
 </script>
 </body>
 </html>
+
+<style id="right-panel-font-15">
+@media (min-width:701px){
+  .hero h1{font-size:37.5px !important;}
+  .hero .top{font-size:11.25px !important;}
+  .hero .title{font-size:15px !important;}
+  .hero .sub,.hero .timer,.hero .connection{font-size:10px !important;}
+  .hero .about-kicker{font-size:10px !important;}
+  .hero .about p{font-size:11.25px !important;}
+  .hero .discord-copy span{font-size:7.5px !important;}
+  .hero .discord-copy strong{font-size:12.5px !important;}
+  .hero .price-label{font-size:10px !important;}
+  .hero .price-card strong{font-size:22.5px !important;}
+  .hero .ai-credit{font-size:8.75px !important;}
+}
+@media (max-width:700px){
+  .hero h1{font-size:37.5px !important;}
+  .hero .top{font-size:11.25px !important;}
+  .hero .title{font-size:15px !important;}
+  .hero .sub,.hero .timer,.hero .connection{font-size:10px !important;}
+  .hero .about-kicker{font-size:10px !important;}
+  .hero .about p{font-size:12.5px !important;}
+  .hero .discord-copy span{font-size:7.5px !important;}
+  .hero .discord-copy strong{font-size:11.25px !important;}
+  .hero .price-label{font-size:10px !important;}
+  .hero .price-card strong{font-size:22.5px !important;}
+  .hero .ai-credit{font-size:8.75px !important;}
+}
+</style>
