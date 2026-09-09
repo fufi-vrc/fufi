@@ -1625,6 +1625,26 @@ body{
 .works-arrow{display:grid !important;place-items:center !important;line-height:0 !important;font-family:Arial,Helvetica,sans-serif !important;padding:0 !important;text-align:center !important;}
 .works-arrow::before{line-height:1 !important;}
 </style>
+
+<style id="all-panels-scale-95">
+/* Reduce only panel scale by 5% while keeping page structure intact. */
+@media (min-width:701px){
+  .works-panel,.card,.about,.status-card,.price-card,.social-contact,.pc-row{
+    zoom:.95 !important;
+  }
+  #pcView{
+    zoom:.95 !important;
+  }
+}
+@media (max-width:700px){
+  .works-panel,.card,.about,.status-card,.price-card,.social-contact,.pc-row{
+    zoom:.95 !important;
+  }
+  #pcView{
+    zoom:.95 !important;
+  }
+}
+</style>
 </head>
 <body>
 <div id="cursorGridField" aria-hidden="true"></div>
